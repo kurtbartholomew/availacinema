@@ -1,5 +1,91 @@
+$bgColor: #d47576;
+$font: 'Roboto', sans-serif;
+
+* {
+    box-sizing: border-box;
+}
+
 html, body {
     padding: 0;
     margin: 0;
     font-family: sans-serif;
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    background-color: $bgColor;
+    overflow: hidden;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+}
+
+.main {
+    height: 30rem;
+    width: 60rem;
+    margin: 3rem auto 0;
+    display: flex;
+    color: white;
+    font-family: $font;
+    flex-direction: row;
+
+    &__left, &__right {
+        width: 50%;
+    }
+
+    &__description {
+        margin-left: 3rem;
+    }
+
+    &__title {
+        font-size: 3rem;
+        margin-top: 8rem;
+        font-weight: bold;
+    }
+
+    &__description {
+        font-size: 1.2rem;
+    }
+
+    &__blurb {
+        width: 75%;
+        margin-top: 2rem;
+        color: rgba(255,255,255,0.75);
+        font-weight: lighter;
+    }
+
+    &__right {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__cta {
+        margin-top: 8rem;
+        display: flex;
+        flex-direction: column;
+
+        & > button {
+            width: 15rem;
+            height: 3rem;
+            font-size: 1rem;
+            border-radius: 3rem;
+            border: none;
+            background-color: #75a6d4;
+            color: rgba(0,0,0,0.6);
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.25s;
+
+            &:hover {
+                background-color: #3c7fbf;
+            }
+        }
+    }
+
+    &__login {
+        margin-top: 2rem;
+    }
 }
