@@ -1,4 +1,6 @@
-$bgColor: #d47576;
+$bgColor: #c84e4f;
+$compColor1: #4ec8c6;
+$compColor2: #8bc84e;
 $font: 'Roboto', sans-serif;
 
 * {
@@ -15,6 +17,7 @@ html, body {
 
 body {
     background-color: $bgColor;
+    background: linear-gradient(to top,lighten($bgColor,10%),$bgColor);
     overflow: hidden;
 }
 
@@ -73,19 +76,58 @@ body {
             font-size: 1rem;
             border-radius: 3rem;
             border: none;
-            background-color: #75a6d4;
+            background-color: $compColor1;
             color: rgba(0,0,0,0.6);
             font-weight: bold;
             cursor: pointer;
             transition: background-color 0.25s;
+            box-shadow: 0 0.5rem 0.5rem 0.125rem rgba(0,0,0,0.4);
 
             &:hover {
-                background-color: #3c7fbf;
+                background-color: darken($compColor1,10%);
             }
         }
     }
 
     &__login {
         margin-top: 2rem;
+    }
+}
+
+.navbar {
+    display: flex;
+    flex-direction: row;
+    height: 3rem;
+    background-color: rgba(0,0,0,0.7);
+    color: white;
+    padding: 0 2rem;
+    align-items: center;
+
+    &__logo {
+        background-image: url('video-play.svg');
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+    
+    &__brand {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+
+    &__name {
+        font-size: 1.5rem;
+        margin-left: 0.5rem;
+        margin-top: 0.25rem;
+    }
+    
+    &__options {
+        display: flex;
+        flex-direction: row;
+        margin-left: auto;
+    }
+    
+    &__option {
+        margin-left: 2rem;
     }
 }

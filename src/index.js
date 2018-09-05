@@ -8,12 +8,13 @@ class App extends React.Component {
             <div className="container">
                 <div className="navbar">
                     <div className="navbar__brand">
-                        <div className="navbar__logo">O</div>
+                        <div className="navbar__logo"></div>
                         <div className="navbar__name">AvailaCinema</div>
                     </div>
                     <div className="navbar__options">
                         <div className="navbar__option option__login">Login</div>
                         <div className="navbar__option option__about">About</div>
+                        <div className="navbar__option option__contact">Contact</div>
                     </div>
                 </div>
                 <div className="main">
@@ -40,7 +41,6 @@ class App extends React.Component {
                         </div>
                     </div>
                 </div>
-            
             </div>
         )
     }
