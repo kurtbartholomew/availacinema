@@ -2,21 +2,20 @@ import Enzyme, { shallow } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 
 Enzyme.configure({ adapter: new Adapter() });
-
 import React from 'react';
-import App from './App';
+import Main from './Main';
 
-describe('App', () => {
+describe('Main', () => {
 
-    let app;
+    let main;
 
     beforeEach(() => {
-        app = shallow(
-            <App />
+        main = shallow(
+            <Main />
         );
     });
 
     it('should render properly',() => {
-        expect(app).toBeDefined();
+        expect(main).toBeDefined();
     });
 });

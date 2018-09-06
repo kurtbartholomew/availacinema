@@ -4,19 +4,19 @@ import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
-import App from './App';
+import Nav from './Nav';
 
-describe('App', () => {
+describe('Nav', () => {
 
-    let app;
+    let nav;
 
     beforeEach(() => {
-        app = shallow(
-            <App />
+        nav = shallow(
+            <Nav />
         );
     });
 
     it('should render properly',() => {
-        expect(app).toBeDefined();
+        expect(nav).toBeDefined();
     });
 });
