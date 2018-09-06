@@ -3,9 +3,9 @@ $compColor1: #4ec8c6;
 $compColor2: #8bc84e;
 $font: 'Roboto', sans-serif;
 
-@import './Nav/nav.scss';
-@import './Main/main.scss';
-@import './Signup/signup.scss';
+@import '../Nav/nav.scss';
+@import '../Main/main.scss';
+@import '../Signup/signup.scss';
 
 * {
     box-sizing: border-box;
