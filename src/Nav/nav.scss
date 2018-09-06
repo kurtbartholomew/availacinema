@@ -1,4 +1,4 @@
-$logo : '../images/video-play.svg';
+@import '../styles/variables.scss';
 
 .navbar {
     display: flex;
@@ -8,6 +8,11 @@ $logo : '../images/video-play.svg';
     color: white;
     padding: 0 2rem;
     align-items: center;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
 
     &__logo {
         background-image: url($logo);

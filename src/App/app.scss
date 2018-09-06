@@ -1,11 +1,4 @@
-$bgColor: #c84e4f;
-$compColor1: #4ec8c6;
-$compColor2: #8bc84e;
-$font: 'Roboto', sans-serif;
-
-@import '../Nav/nav.scss';
-@import '../Main/main.scss';
-@import '../Signup/signup.scss';
+@import '../styles/variables.scss';
 
 * {
     box-sizing: border-box;
@@ -28,72 +21,4 @@ body {
 #root {
     height: 100%;
     width: 100%;
-}
-
-.main {
-    height: 30rem;
-    width: 60rem;
-    margin: 3rem auto 0;
-    display: flex;
-    color: white;
-    font-family: $font;
-    flex-direction: row;
-
-    &__left, &__right {
-        width: 50%;
-    }
-
-    &__description {
-        margin-left: 3rem;
-    }
-
-    &__title {
-        font-size: 3rem;
-        margin-top: 8rem;
-        font-weight: bold;
-    }
-
-    &__description {
-        font-size: 1.2rem;
-    }
-
-    &__blurb {
-        width: 75%;
-        margin-top: 2rem;
-        color: rgba(255,255,255,0.75);
-        font-weight: lighter;
-    }
-
-    &__right {
-        display: flex;
-        justify-content: center;
-    }
-
-    &__cta {
-        margin-top: 8rem;
-        display: flex;
-        flex-direction: column;
-
-        & > button {
-            width: 15rem;
-            height: 3rem;
-            font-size: 1rem;
-            border-radius: 3rem;
-            border: none;
-            background-color: $compColor1;
-            color: rgba(0,0,0,0.6);
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.25s;
-            box-shadow: 0 0.5rem 0.5rem 0.125rem rgba(0,0,0,0.4);
-
-            &:hover {
-                background-color: darken($compColor1,10%);
-            }
-        }
-    }
-
-    &__login {
-        margin-top: 2rem;
-    }
 }

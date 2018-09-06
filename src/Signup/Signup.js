@@ -4,7 +4,7 @@ import './signup.css';
 class Signup extends React.Component {
     render() {
         return (
-            <div></div>
+            <div>Hello</div>
         )
     }
 }
