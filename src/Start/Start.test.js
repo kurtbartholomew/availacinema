@@ -4,19 +4,19 @@ import Adapter from 'enzyme-adapter-react-16';
 Enzyme.configure({ adapter: new Adapter() });
 
 import React from 'react';
-import Signup from './Signup';
+import Start from './Start';
 
-describe('Signup', () => {
+describe('Start', () => {
 
-    let signup;
+    let start;
 
     beforeEach(() => {
-        signup = shallow(
-            <Signup />
+        start = shallow(
+            <Start />
         );
     });
 
     it('should render properly',() => {
-        expect(signup).toBeDefined();
+        expect(start).toBeDefined();
     });
 });

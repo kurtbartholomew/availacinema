@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './main.css';
 
 class Main extends React.Component {
@@ -19,12 +20,16 @@ class Main extends React.Component {
                 <div className="main__right">
                     <div className="main__cta">
                         
-                        <button className="main__start">
-                            Find great movies!
-                        </button>
-                        <button className="main__login">
-                            Login
-                        </button>
+                        <Link to={"/start"}>
+                            <button className="main__start">
+                                Find great movies!
+                            </button>
+                        </Link>
+                        {/* <Link to={"/login"}>
+                            <button className="main__login">
+                                Login
+                            </button>
+                        </Link> */}
                     </div>
                 </div>
             </div>
