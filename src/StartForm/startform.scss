@@ -31,34 +31,31 @@
     }
 
     &__title {
-        height: 5rem;
+        height: 3.5rem;
         font-size: 1.5rem;
         display: flex;
         align-items: center;
         margin-left: 2rem;
     }
 
-    &__submit {
-        display: none;
-    }
-
-    &__notification, &__quality, &__genre {
-        // display: none;
-        // height: 0;
+    &__content {
+        overflow: hidden;
+        height: 0;
+        transition: height 1s;
+        display: flex;
+        background: rgba(255, 255, 255, 0.5);
+        justify-content: center;
     }
 
     &__choice--active {
         
         .startform__titlebox {
-            background: $compColor1;
+            background: linear-gradient(to top, lighten($compColor1, 10%), $compColor1);
             box-shadow: none;
         }
         
-        .startform__notification, .startform__quality, .startform__genre {
-            display: flex;
-            height: 15rem;
-            background: rgba(255, 255, 255, 0.5);
-            justify-content: center;
+        .startform__content {
+            height: 20rem;
         }
 
     }

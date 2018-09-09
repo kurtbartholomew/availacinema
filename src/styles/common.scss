@@ -1,0 +1,17 @@
+%button {
+    width: 15rem;
+    height: 3rem;
+    font-size: 1rem;
+    border-radius: 3rem;
+    border: none;
+    background-color: $compColor1;
+    color: rgba(0,0,0,0.6);
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.25s;
+    box-shadow: 0 0.5rem 0.5rem 0.125rem rgba(0,0,0,0.4);
+
+    &:hover {
+        background-color: darken($compColor1,10%);
+    }
+}
