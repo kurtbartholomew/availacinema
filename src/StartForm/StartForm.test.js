@@ -6,7 +6,7 @@ Enzyme.configure({ adapter: new Adapter() });
 import React from 'react';
 import StartForm from './StartForm';
 
-describe('Start', () => {
+describe('StartForm', () => {
 
     let startform;
 

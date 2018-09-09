@@ -2,6 +2,10 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDirections, faTimesCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
+import GenreForm from '../GenreForm/GenreForm';
+import NotificationForm from '../NotificationForm/NotificationForm';
+import QualityForm from '../QualityForm/QualityForm';
+import SubmitForm from '../SubmitForm/SubmitForm';
 
 class StartForm extends React.Component {
     state = {
