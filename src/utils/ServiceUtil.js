@@ -3,7 +3,7 @@ function getGenres(successCb, errorCb) {
         accept: 'application/json'
     })
     .then(checkForSuccess)
-    .then((response)=>{response.json()})
+    .then((response)=>{return response.json()})
     .then(successCb)
     .catch((error) => errorCb(error));
 }

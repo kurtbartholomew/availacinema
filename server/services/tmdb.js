@@ -14,10 +14,7 @@ function getGenres(cb) {
     }
     rp(options)
     .then((genreResponse) => {
-        const genres = genreResponse.genres;
-        return genres.map((genre) => {
-            return genre.name;
-        });
+        return genreResponse.genres;
     })
     .then(cb)
     .catch((error) => {

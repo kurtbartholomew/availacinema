@@ -9,7 +9,7 @@ class GenreForm extends React.Component {
 
     componentWillMount() {
         ServiceUtil.getGenres((genres)=>{
-            console.log(genres);
+            this.setState({genres: genres});
         },(error)=>{
             console.log("Error! ",error);
         });
@@ -20,7 +20,7 @@ class GenreForm extends React.Component {
             <div>
                 {
                     this.state.genres.map((genre)=>{
-                        return <p>genre</p>;
+                        return <p key={genre.id}>{genre.name}</p>;
                     })
                 }
             </div>
