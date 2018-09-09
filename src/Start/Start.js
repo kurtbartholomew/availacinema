@@ -23,13 +23,13 @@ class Start extends React.Component {
                     <li className="startform__choice startform__genre">
                         <div className="startform__titlebox">
                             <FontAwesomeIcon icon={faDirections} className="progressicon" size="3x"/>
-                            <div className="startform__title">Genre Filters</div>
+                            <div className="startform__title">Genre Options</div>
                         </div>
                     </li>
                     <li className="startform__choice startform__quality">
                         <div className="startform__titlebox">
                             <FontAwesomeIcon icon={faDirections} className="progressicon"  size="3x"/>
-                            <div className="startform__title">Quality Filters</div>
+                            <div className="startform__title">Quality Options</div>
                         </div>
                     </li>
                     <li className="startform__choice startform__notification">
