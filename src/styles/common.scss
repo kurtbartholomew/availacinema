@@ -1,3 +1,5 @@
+@import './variables.scss';
+
 %button {
     width: 15rem;
     height: 3rem;
@@ -13,5 +15,11 @@
 
     &:hover {
         background-color: darken($compColor1,10%);
+    }
+
+    &:disabled {
+        // background-color: desaturate($compColor1, 40%);
+        opacity: 0.5;
+        cursor: default;
     }
 }

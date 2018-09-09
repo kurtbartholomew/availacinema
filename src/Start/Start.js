@@ -7,7 +7,7 @@ class Start extends React.Component {
         return (
             <div className="startform__container">
                 <StartForm />
-                <button className="startform__submit">Submit</button>
+                <button type="submit" disabled={true} className="startform__submit">Submit</button>
             </div>
         )
     }
