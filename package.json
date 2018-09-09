@@ -12,7 +12,8 @@
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "1.1.5"
+    "react-scripts": "1.1.5",
+    "shortid": "^2.2.13"
   },
   "proxy": "http://localhost:8080",
   "nodemonConfig": {
