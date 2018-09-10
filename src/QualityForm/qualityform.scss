@@ -2,8 +2,18 @@
 
 .qualityform {
 
-    &__rating {
-        margin-bottom: 1rem;
+    &__rating-text {
+        margin-bottom: 2.5rem;
+        font-size: 6rem;
+    }
+
+    &__rating-input {
+        margin-bottom: 2.5rem;
+        height: 6rem;
+        width: 12rem;
+        font-size: 6rem;
+        border: none;
+        text-align: center;
     }
 
     &__inputs {
@@ -41,9 +51,5 @@
             outline: 1px solid white;
             outline-offset: -1px;
         }
-    }
-
-    &__rating {
-        font-size: 6rem;
     }
 }
