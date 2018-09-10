@@ -69,11 +69,12 @@ class StartForm extends React.Component {
                     id={form.id}
                     active={form.id === activeIdx}
                     category={form.category}
-                    onClick={this.handleOnClick}
                     condition={form.condition}
                 >
                     <PanelTitle
+                        id={form.id}
                         condition={form.condition}
+                        onClick={this.handleOnClick}
                     >
                         {form.title}
                     </PanelTitle>
@@ -102,14 +103,7 @@ class FormPanel extends React.Component {
         });
 
         return (
-            <div 
-                onClick={() => {
-                    let cond = this.props.condition;
-                    if(cond === PANEL_STATE.UNTOUCHED) {
-                        cond = PANEL_STATE.IN_PROGRESS;
-                    }
-                    this.props.onClick(this.props.id, cond);
-                }}
+            <div
                 className={classes}
             >
                 {this.props.children}
@@ -136,7 +130,15 @@ class PanelTitle extends React.Component {
         }
 
         return (
-            <div className="startform__titlebox" >
+            <div className="startform__titlebox"
+                onClick={() => {
+                    let cond = this.props.condition;
+                    if(cond === PANEL_STATE.UNTOUCHED) {
+                        cond = PANEL_STATE.IN_PROGRESS;
+                    }
+                    this.props.onClick(this.props.id, cond);
+                }}
+            >
                 <FontAwesomeIcon icon={iconType} className="progressicon" size="2x" />
                 <div className="startform__title">
                     {this.props.children}

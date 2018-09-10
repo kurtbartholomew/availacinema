@@ -1,0 +1,30 @@
+.genreform {
+
+    &__inputs {
+        padding: 0 2rem 2rem;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    &__container {
+        padding: 0.5rem;
+        box-sizing: border-box;
+        width: 33%;
+    }
+
+    &__surroundbox {
+        font-size: 1.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 2rem;
+        transition: background-color 0.25s;
+        cursor: pointer;
+
+        &--selected {
+            background-color: grey;
+            border-radius: 0.5rem;
+        }
+    }
+}
