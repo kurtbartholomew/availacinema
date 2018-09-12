@@ -1,0 +1,61 @@
+@import "../styles/variables.scss";
+
+
+.notification {
+    width: 100%;
+    height: 100%;
+
+    &__options {
+        display: flex;
+        direction: row;
+        width: 100%;
+        height: 100%;
+        outline: 1px solid black;
+    }
+
+    &__option {
+        width: 50%;
+
+        &--email {
+            
+        }
+
+        &--text {
+
+        }
+    }
+
+    &__form {
+        height: 100%;
+        padding: 3em 2rem 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        input {
+            height: 2rem;
+            width: 2rem;
+            background-color: $bgColor;
+        }
+    }
+
+    &__box {
+        cursor: pointer;
+        margin-bottom: 3rem;
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+
+        transition: background-color 0.25s;
+
+        &:hover {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+        }
+    }
+
+    &__text {
+        margin-left: 1rem;
+        
+    }
+}

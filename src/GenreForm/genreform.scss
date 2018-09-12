@@ -11,6 +11,12 @@
         padding: 0.5rem;
         box-sizing: border-box;
         width: 33%;
+        transition: background-color 0.25s;
+
+        &:hover {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 0.5rem;
+        }
     }
 
     &__surroundbox {

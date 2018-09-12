@@ -43,21 +43,20 @@
         height: 0;
         transition: height 1s;
         display: flex;
-        // background: rgba(255, 255, 255, 0.5);
+        background: rgba(255, 255, 255, 0.1);
         justify-content: center;
     }
 
     &__choice--active {
-        
+
         .startform__titlebox {
             background: linear-gradient(to top, lighten($compColor1, 10%), $compColor1);
             box-shadow: none;
         }
-        
         .startform__content {
             height: 22rem;
         }
-
     }
+
 }
     

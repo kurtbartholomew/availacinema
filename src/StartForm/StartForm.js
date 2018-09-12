@@ -29,14 +29,14 @@ class StartForm extends React.Component {
     }
 
     state = {
-        activeIdx: -1,
+        activeIdx: 2,
         formChoices: [
             {
                 id: 0,
                 category: 'genre',
                 title: 'Genre Filters',
                 childForm: GenreForm,
-                condition: PANEL_STATE.UNTOUCHED
+                condition: PANEL_STATE.UNTOUCHED,
             },
             {
                 id: 1,
