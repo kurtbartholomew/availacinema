@@ -8,13 +8,8 @@ import GenreForm from '../GenreForm/GenreForm';
 import NotificationForm from '../NotificationForm/NotificationForm';
 import QualityForm from '../QualityForm/QualityForm';
 import ReactTooltip from 'react-tooltip';
+import { PANEL_STATE } from '../constants';
 
-const PANEL_STATE = {
-    UNTOUCHED: 0,
-    IN_PROGRESS: 1,
-    INVALID: 2,
-    VALID: 3
-};
 
 class StartForm extends React.Component {
 
@@ -54,6 +49,7 @@ class StartForm extends React.Component {
                 tooltip: 'What genres do you want to know about?',
                 childForm: GenreForm,
                 condition: PANEL_STATE.UNTOUCHED,
+                invalidMessage: 'Please select at least one genre.'
             },
             {
                 id: 1,
@@ -61,7 +57,8 @@ class StartForm extends React.Component {
                 title: 'Quality Filters',
                 tooltip: 'How highly rated should each movie be?',
                 childForm: QualityForm,
-                condition: PANEL_STATE.UNTOUCHED
+                condition: PANEL_STATE.UNTOUCHED,
+                invalidMessage: 'Please select a minimum rating.'
             },
             {
                 id: 2,
@@ -69,7 +66,8 @@ class StartForm extends React.Component {
                 title: 'Notification Options',
                 tooltip: 'How do you want to be notified?',
                 childForm: NotificationForm,
-                condition: PANEL_STATE.UNTOUCHED
+                condition: PANEL_STATE.UNTOUCHED,
+                invalidMessage: 'Please choose a way you can be notified.'
             }
         ]
     }
@@ -95,11 +93,15 @@ class StartForm extends React.Component {
                         condition={form.condition}
                         onClick={this.handleOnClick}
                         tooltip={form.tooltip}
+                        invalidMessage={form.invalidMessage}
                     >
                         {form.title}
                     </PanelTitle>
                     <PanelContent>
-                        {React.createElement(form.childForm)}
+                        {React.createElement(form.childForm,{
+                                handlePanelStateChange: (conditionId) => {this.handlePanelStateChange(form.id,conditionId)}
+                            }
+                        )}
                     </PanelContent>
                 </FormPanel>
             );
@@ -134,17 +136,20 @@ class FormPanel extends React.Component {
 
 class PanelTitle extends React.Component {
     render() {
-        let iconType;
+        let iconType, iconColor;
         switch(this.props.condition) {
             case(PANEL_STATE.VALID):
                 iconType = faCheckCircle;
+                iconColor = "green";
                 break;
             case(PANEL_STATE.INVALID):
                 iconType = faTimesCircle;
+                iconColor = "red";
                 break;
             case(PANEL_STATE.UNTOUCHED):
             case(PANEL_STATE.IN_PROGRESS):
                 iconType = faCircle;
+                iconColor = "black";
                 break;
             default:
                 break;
@@ -160,9 +165,16 @@ class PanelTitle extends React.Component {
                     this.props.onClick(this.props.id, cond);
                 }}
             >
-                <FontAwesomeIcon icon={iconType} className="progressicon" size="2x" />
+                <FontAwesomeIcon icon={iconType}
+                    className="progressicon"
+                    size="2x"
+                    color={iconColor}
+                />
                 <div  data-tip={this.props.tooltip}  className="startform__title">
                     {this.props.children}
+                    {this.props.condition === PANEL_STATE.INVALID && 
+                        <span className="startform__err">{this.props.invalidMessage}</span>
+                    }
                 </div>
                 <ReactTooltip className="tooltip" effect="solid" place="right" />
             </div>

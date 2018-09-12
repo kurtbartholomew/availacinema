@@ -3,6 +3,7 @@ import './genreform.css';
 import ServiceUtil from '../utils/ServiceUtil';
 import { Object } from 'core-js';
 import classnames from 'classnames';
+import { PANEL_STATE } from '../constants';
 
 class GenreForm extends React.Component {
     state = {
@@ -20,6 +21,17 @@ class GenreForm extends React.Component {
                            ...this.state.genres.slice(genreId+1)
                           ]
         this.setState({genres:newGenres});
+        this.handlePanelUpdate(newGenres);
+    }
+
+    handlePanelUpdate(newGenres) {
+        for(let genre of newGenres) {
+            if(genre.selected) {
+                this.props.handlePanelStateChange(PANEL_STATE.VALID);
+                return;
+            }
+        }
+        this.props.handlePanelStateChange(PANEL_STATE.INVALID);
     }
 
     componentWillMount() {
