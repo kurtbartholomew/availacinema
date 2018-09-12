@@ -26,7 +26,8 @@
         color: rgba(0,0,0,0.6);
         cursor: pointer;
         &:hover {
-            background: white;
+            background: lighten($compColor1, 30%);
+            box-shadow: none;
         }
     }
 

@@ -6,6 +6,7 @@ import classNames from 'classnames';
 import GenreForm from '../GenreForm/GenreForm';
 import NotificationForm from '../NotificationForm/NotificationForm';
 import QualityForm from '../QualityForm/QualityForm';
+import ReactTooltip from 'react-tooltip';
 
 const PANEL_STATE = {
     UNTOUCHED: 0,
@@ -35,6 +36,7 @@ class StartForm extends React.Component {
                 id: 0,
                 category: 'genre',
                 title: 'Genre Filters',
+                tooltip: 'What genres do you want to know about?',
                 childForm: GenreForm,
                 condition: PANEL_STATE.UNTOUCHED,
             },
@@ -42,6 +44,7 @@ class StartForm extends React.Component {
                 id: 1,
                 category: 'quality',
                 title: 'Quality Filters',
+                tooltip: 'How highly rated should each movie be?',
                 childForm: QualityForm,
                 condition: PANEL_STATE.UNTOUCHED
             },
@@ -49,6 +52,7 @@ class StartForm extends React.Component {
                 id: 2,
                 category: 'notification',
                 title: 'Notification Options',
+                tooltip: 'What methods of notification do you want?',
                 childForm: NotificationForm,
                 condition: PANEL_STATE.UNTOUCHED
             }
@@ -75,6 +79,7 @@ class StartForm extends React.Component {
                         id={form.id}
                         condition={form.condition}
                         onClick={this.handleOnClick}
+                        tooltip={form.tooltip}
                     >
                         {form.title}
                     </PanelTitle>
@@ -140,9 +145,10 @@ class PanelTitle extends React.Component {
                 }}
             >
                 <FontAwesomeIcon icon={iconType} className="progressicon" size="2x" />
-                <div className="startform__title">
+                <div  data-tip={this.props.tooltip}  className="startform__title">
                     {this.props.children}
                 </div>
+                <ReactTooltip effect="solid" />
             </div>
         );
     }
