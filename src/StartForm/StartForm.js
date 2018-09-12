@@ -36,7 +36,18 @@ class StartForm extends React.Component {
 
     handlePanelStateChange(formId, stateId){
         const newForms = this.updatePanelState(formId,stateId);
+        let areAllFormsValid = true;
+        console.log(PANEL_STATE);
+        console.log(newForms);
+        for(let form of newForms) {
+            if(form.condition !== PANEL_STATE.VALID) {
+                areAllFormsValid = false;
+                break;
+            }
+        }
+        console.log(areAllFormsValid);
         this.setState({formChoices: newForms});
+        this.props.handleAllFormsValid(areAllFormsValid);
     }
 
     state = {
@@ -63,8 +74,8 @@ class StartForm extends React.Component {
             {
                 id: 2,
                 category: 'notification',
-                title: 'Notification Options',
-                tooltip: 'How do you want to be notified?',
+                title: 'Notification',
+                tooltip: 'If a movie matches your filters, how often would you like to be notified?',
                 childForm: NotificationForm,
                 condition: PANEL_STATE.UNTOUCHED,
                 invalidMessage: 'Please choose a way you can be notified.'
@@ -172,10 +183,10 @@ class PanelTitle extends React.Component {
                 />
                 <div  data-tip={this.props.tooltip}  className="startform__title">
                     {this.props.children}
-                    {this.props.condition === PANEL_STATE.INVALID && 
+                </div>
+                {this.props.condition === PANEL_STATE.INVALID && 
                         <span className="startform__err">{this.props.invalidMessage}</span>
                     }
-                </div>
                 <ReactTooltip className="tooltip" effect="solid" place="right" />
             </div>
         );

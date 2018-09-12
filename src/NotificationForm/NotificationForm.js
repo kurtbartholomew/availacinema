@@ -2,6 +2,7 @@ import React from 'react';
 import './notificationform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare, faCheckSquare} from '@fortawesome/free-regular-svg-icons';
+import { PANEL_STATE } from '../constants';
 
 class NotificationForm extends React.Component {
     state = {
@@ -11,10 +12,22 @@ class NotificationForm extends React.Component {
         textWeekly: false
     }
 
+    handlePanelUpdate(options) {
+        for(let option in options) {
+            if(options[option]) {
+                this.props.handlePanelStateChange(PANEL_STATE.VALID);
+                return;
+            }
+        }
+        this.props.handlePanelStateChange(PANEL_STATE.INVALID);
+    }
+
     toggleOption(option) {
         const newOption = {};
         newOption[option] = !this.state[option];
-        this.setState(newOption);
+        const newOptions = Object.assign({},this.state,newOption);
+        this.setState(newOptions);
+        this.handlePanelUpdate(newOptions);
     }
 
     render() {

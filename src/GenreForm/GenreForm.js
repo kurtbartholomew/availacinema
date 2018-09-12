@@ -27,6 +27,7 @@ class GenreForm extends React.Component {
     handlePanelUpdate(newGenres) {
         for(let genre of newGenres) {
             if(genre.selected) {
+                console.log(PANEL_STATE);
                 this.props.handlePanelStateChange(PANEL_STATE.VALID);
                 return;
             }
