@@ -15,27 +15,15 @@
 
     &__option {
         width: 50%;
-
-        &--email {
-            
-        }
-
-        &--text {
-
-        }
     }
 
     &__form {
         height: 100%;
-        padding: 3em 2rem 2rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
+        padding: 4em 2rem 2rem;
 
-        input {
-            height: 2rem;
-            width: 2rem;
-            background-color: $bgColor;
+        label {
+            cursor: pointer;
+            font-size: 1.25rem;
         }
     }
 
@@ -56,6 +44,29 @@
 
     &__text {
         margin-left: 1rem;
+    }
+
+    &__contact {
+        width: 10rem;
+        height: 2rem;
+        background-color: white;
+        border: 1px solid rgba(0,0,0,0.3);
+        border-radius: 0.25rem;
+        font-size: 1rem;
         
+        padding-left: 0.25rem;
+
+        &::placeholder {
+            color: rgba(0,0,0,0.5);
+        }
+
+        &:focus {
+            border: 2px solid rgb(99, 164, 194);
+            color: rgba(0,0,0,0.75);
+        }
+
+        &--valid, &--invalid {
+            margin-left: 0.5rem;
+        }
     }
 }

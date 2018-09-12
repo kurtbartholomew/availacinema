@@ -37,15 +37,12 @@ class StartForm extends React.Component {
     handlePanelStateChange(formId, stateId){
         const newForms = this.updatePanelState(formId,stateId);
         let areAllFormsValid = true;
-        console.log(PANEL_STATE);
-        console.log(newForms);
         for(let form of newForms) {
             if(form.condition !== PANEL_STATE.VALID) {
                 areAllFormsValid = false;
                 break;
             }
         }
-        console.log(areAllFormsValid);
         this.setState({formChoices: newForms});
         this.props.handleAllFormsValid(areAllFormsValid);
     }
