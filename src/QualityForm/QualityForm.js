@@ -35,25 +35,13 @@ class QualityForm extends React.Component {
             <div className="qualityform">
                 <form className="qualityform__inputs">
                     <h2>Minimum Rating</h2>
-                    {this.state.editable ?
-                        // TODO: Change this to component so I can use HOC click outside wrapper
-                        <input
-                            className="qualityform__rating-input"
-                            onChange={(e)=>{this.handleInputChange(e)}}
-                            onBlur={()=>this.handleLoseFocus()}
-                            type="number"
-                            min="0"
-                            max="10"
-                            step="0.1"
-                            value={this.state.quality}
-                        /> :
-                        <div
-                            className="qualityform__rating-text"
-                            onClick={()=>{this.handleRatingClick()}}
-                        >
-                            {this.state.quality}
-                        </div>
-                    }
+                    <EditableTextInput 
+                        editable={this.state.editable}
+                        handleInputChange={(e)=>{this.handleInputChange(e)}}
+                        handleLoseFocus={()=>this.handleLoseFocus()}
+                        quality={this.state.quality}
+                        handleRatingClick={()=>{this.handleRatingClick()}}
+                    />
                     <input 
                         onChange={(e)=>{this.handleSliderChange(e)}} 
                         min="0" 
@@ -65,6 +53,34 @@ class QualityForm extends React.Component {
                 </form>
             </div>
         )
+    }
+}
+
+class EditableTextInput extends React.Component {
+    render() {
+        return (
+            <React.Fragment>
+                {this.props.editable ?
+                    // TODO: Change this to component so I can use HOC click outside wrapper
+                    <input
+                        className="qualityform__rating-input"
+                        onChange={this.props.handleInputChange}
+                        onBlur={this.props.handleLoseFocus}
+                        type="number"
+                        min="0"
+                        max="10"
+                        step="0.1"
+                        value={this.props.quality}
+                    /> :
+                    <div
+                        className="qualityform__rating-text"
+                        onClick={this.props.handleRatingClick}
+                    >
+                        {this.props.quality}
+                    </div>
+                }
+            </React.Fragment>
+        );
     }
 }
 
