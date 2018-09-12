@@ -1,7 +1,8 @@
 import React from 'react';
 import './startform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDirections, faTimesCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faTimesCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
 import classNames from 'classnames';
 import GenreForm from '../GenreForm/GenreForm';
 import NotificationForm from '../NotificationForm/NotificationForm';
@@ -17,16 +18,30 @@ const PANEL_STATE = {
 
 class StartForm extends React.Component {
 
-    handleOnClick = (idx, condition) => {
-        if(this.state.activeIdx === idx) { idx = -1; }
+    handleOnClick = (idx, conditionId) => {
+        if(this.state.activeIdx === idx) {
+            idx = -1;
+            this.setState({activeIdx: idx});
+        } else {
+            const formId = this.state.formChoices.findIndex((form)=>{return idx === form.id});
+            const newForms = this.updatePanelState(formId, conditionId);
+            this.setState({activeIdx: idx, formChoices: newForms});
+        }
+    }
+
+    updatePanelState = (formId, conditionId) => {
         const formChoices = this.state.formChoices;
-        const formId = formChoices.findIndex((form)=>{return idx === form.id});
         const formChoice = formChoices[formId];
-        const newForm = Object.assign({},formChoice,{condition: condition});
+        const newForm = Object.assign({},formChoice,{condition: conditionId});
         const newForms = [...formChoices.slice(0,formId),
                           newForm,
-                          ...formChoices.slice(formId+1,formChoices.length)]
-        this.setState({activeIdx: idx, newForms});
+                          ...formChoices.slice(formId+1,formChoices.length)] 
+        return newForms;
+    }
+
+    handlePanelStateChange(formId, stateId){
+        const newForms = this.updatePanelState(formId,stateId);
+        this.setState({formChoices: newForms});
     }
 
     state = {
@@ -52,7 +67,7 @@ class StartForm extends React.Component {
                 id: 2,
                 category: 'notification',
                 title: 'Notification Options',
-                tooltip: 'What methods of notification do you want?',
+                tooltip: 'How do you want to be notified?',
                 childForm: NotificationForm,
                 condition: PANEL_STATE.UNTOUCHED
             }
@@ -128,7 +143,8 @@ class PanelTitle extends React.Component {
                 iconType = faTimesCircle;
                 break;
             case(PANEL_STATE.UNTOUCHED):
-                iconType = faDirections;
+            case(PANEL_STATE.IN_PROGRESS):
+                iconType = faCircle;
                 break;
             default:
                 break;
@@ -148,7 +164,7 @@ class PanelTitle extends React.Component {
                 <div  data-tip={this.props.tooltip}  className="startform__title">
                     {this.props.children}
                 </div>
-                <ReactTooltip effect="solid" />
+                <ReactTooltip className="tooltip" effect="solid" place="right" />
             </div>
         );
     }

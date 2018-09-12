@@ -6,12 +6,12 @@
     &__rating-text {
         margin-bottom: 2.5rem;
         font-size: 6rem;
-        height: 6rem;
+        height: 7rem;
     }
 
     &__rating-input {
         margin-bottom: 2.5rem;
-        height: 6rem;
+        height: 7rem;
         width: 12rem;
         font-size: 6rem;
         border: none;
@@ -23,6 +23,10 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
+        
+        h2 {
+            margin-bottom: 0;
+        }
 
         input[type=range] {
             -webkit-appearance: none;

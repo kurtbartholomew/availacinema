@@ -9,7 +9,7 @@ class GenreForm extends React.Component {
         genres: []
     }
 
-    handleClick = (id) => {
+    handleClick(id) {
         const genreId = this.state.genres.findIndex((genre)=>{
             return genre.id === id;
         });
@@ -40,7 +40,7 @@ class GenreForm extends React.Component {
                         id={genre.id}
                         name={genre.name}
                         selected={genre.selected}
-                        handleClick={this.handleClick}
+                        handleClick={() => this.handleClick(genre.id)}
                     />
         });
 
@@ -58,7 +58,7 @@ class GenreCheckbox extends React.Component {
 
     render() {
         
-        const { name, selected, id, handleClick } = this.props;
+        const { name, selected} = this.props;
 
         const classes = classnames({
             'genreform__surroundbox': true,
@@ -66,7 +66,7 @@ class GenreCheckbox extends React.Component {
         });
 
         return (
-            <div onClick={()=>{handleClick(id)}} className="genreform__container" >
+            <div onClick={this.props.handleClick} className="genreform__container" >
                 <div className={classes}>
                     {name}
                 </div>
