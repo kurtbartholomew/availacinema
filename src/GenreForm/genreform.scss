@@ -1,4 +1,12 @@
+@import "../styles/common.scss";
+
 .genreform {
+
+    &__buttons {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
 
     &__inputs {
         padding: 0 2rem 2rem;
@@ -31,6 +39,23 @@
         &--selected {
             background-color: grey;
             border-radius: 0.5rem;
+        }
+    }
+
+    &__select {
+        @extend %button;
+        height: 2rem;
+        width: 8rem;
+        margin: 1rem 0;
+        box-shadow: none;
+        background-color: white;
+
+        &:last-of-type {
+            margin-left: 3rem;
+        }
+
+        &:hover {
+            background-color: darken(white,10%);
         }
     }
 }

@@ -24,6 +24,15 @@ class GenreForm extends React.Component {
         this.handlePanelUpdate(newGenres);
     }
 
+    handleSelectButtonClick(addAll) {
+        const newGenres = this.state.genres.map((genre)=> {
+            const newGenre = Object.assign({},genre,{selected: addAll});
+            return newGenre;
+        });
+        this.setState({genres:newGenres});
+        this.handlePanelUpdate(newGenres);
+    }
+
     handlePanelUpdate(newGenres) {
         for(let genre of newGenres) {
             if(genre.selected) {
@@ -59,6 +68,16 @@ class GenreForm extends React.Component {
 
         return (
             <div className="genreform">
+                <div className="genreform__buttons">
+                    <button 
+                        className="genreform__select genreform__select--all"
+                        onClick={()=>{this.handleSelectButtonClick(true)}}
+                    >Select All</button>
+                    <button 
+                        className="genreform__select genreform__select--none"
+                        onClick={()=>{this.handleSelectButtonClick(false)}}
+                    >Select None</button>
+                </div>
                 <form className="genreform__inputs">
                     {genres}
                 </form>

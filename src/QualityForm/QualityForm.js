@@ -5,7 +5,8 @@ import { PANEL_STATE } from '../constants';
 class QualityForm extends React.Component {
     state = {
         quality: 5,
-        editable: false
+        editable: false,
+        chosen: false
     }
 
     handlePanelUpdate() {
@@ -15,9 +16,12 @@ class QualityForm extends React.Component {
     handleSliderChange(event) {
         this.setState(Object.assign({},this.state,{
             quality: event.target.value,
-            editable: false
+            editable: false,
+            chosen: true
         }));
-        this.handlePanelUpdate();
+        if(!this.state.chosen) {
+            this.handlePanelUpdate();
+        }
     }
 
     handleRatingClick() {
@@ -29,8 +33,13 @@ class QualityForm extends React.Component {
         if(rating !== "") {
             rating = Math.max(Math.min(rating, 10),0);
         }
-        this.setState(Object.assign({},this.state,{quality: rating}));
-        this.handlePanelUpdate(); 
+        this.setState(Object.assign({},this.state,{
+            quality: rating,
+            chosen: true
+        }));
+        if(!this.state.chosen) {
+            this.handlePanelUpdate();
+        }
     }
 
     handleLoseFocus() {
