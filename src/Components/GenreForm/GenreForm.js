@@ -3,7 +3,7 @@ import './genreform.css';
 import ServiceUtil from '../utils/ServiceUtil';
 import { Object } from 'core-js';
 import classnames from 'classnames';
-import { PANEL_STATE } from '../constants';
+import { PANEL_STATE } from '../../Constants';
 
 class GenreForm extends React.Component {
     state = {

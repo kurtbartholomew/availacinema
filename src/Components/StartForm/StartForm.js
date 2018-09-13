@@ -8,7 +8,7 @@ import GenreForm from '../GenreForm/GenreForm';
 import NotificationForm from '../NotificationForm/NotificationForm';
 import QualityForm from '../QualityForm/QualityForm';
 import ReactTooltip from 'react-tooltip';
-import { PANEL_STATE } from '../constants';
+import { PANEL_STATE } from '../../Constants';
 
 
 class StartForm extends React.Component {
@@ -75,7 +75,7 @@ class StartForm extends React.Component {
                 tooltip: 'If a movie matches your filters, how often would you like to be notified?',
                 childForm: NotificationForm,
                 condition: PANEL_STATE.UNTOUCHED,
-                invalidMessage: 'Please choose a way you can be notified.'
+                invalidMessage: 'Please choose a valid way you can be notified.'
             }
         ]
     }

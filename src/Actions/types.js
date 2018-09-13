@@ -1,0 +1,1 @@
+export const GENRE_SELECTED = 'genre_selected';

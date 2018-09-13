@@ -1,6 +1,6 @@
 import React from 'react';
 import './qualityform.css';
-import { PANEL_STATE } from '../constants';
+import { PANEL_STATE } from '../../Constants';
 
 class QualityForm extends React.Component {
     state = {

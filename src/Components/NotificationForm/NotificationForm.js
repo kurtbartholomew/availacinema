@@ -3,7 +3,7 @@ import './notificationform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faCheckSquare} from '@fortawesome/free-regular-svg-icons';
-import { PANEL_STATE } from '../constants';
+import { PANEL_STATE } from '../../Constants';
 import validator from 'validator';
 import { isValidNumber } from 'libphonenumber-js';
 
