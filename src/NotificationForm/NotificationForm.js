@@ -5,6 +5,7 @@ import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faCheckSquare} from '@fortawesome/free-regular-svg-icons';
 import { PANEL_STATE } from '../constants';
 import validator from 'validator';
+import { isValidNumber } from 'libphonenumber-js';
 
 class NotificationForm extends React.Component {
     state = {
@@ -24,20 +25,25 @@ class NotificationForm extends React.Component {
         }
     }
 
-    handlePanelUpdate(options) {
-        for(let option in options) {
-            if(options[option]) {
-                if((option === "emailDaily" || option === "emailWeekly") && this.state.contactEmail.valid) {
-                    this.props.handlePanelStateChange(PANEL_STATE.VALID);
-                    return;
-                }
-                if((option === "textDaily" || option === "textWeekly") && this.state.contactPhone.valid) {
-                    this.props.handlePanelStateChange(PANEL_STATE.VALID);
-                    return;
-                }
+    handlePanelUpdate(options, email, phone) {
+        let valid = false;
+        if(options["emailDaily"] || options["emailWeekly"]) {
+            if(email.valid) {
+                valid = true;
+            } else {
+                this.props.handlePanelStateChange(PANEL_STATE.INVALID);
+                return; 
             }
         }
-        this.props.handlePanelStateChange(PANEL_STATE.INVALID);
+        if(options["textDaily"] || options["textWeekly"]) {
+            if(phone.valid) {
+                valid = true;
+            } else {
+                this.props.handlePanelStateChange(PANEL_STATE.INVALID);
+                return;
+            }
+        }
+        this.props.handlePanelStateChange(valid ? PANEL_STATE.VALID : PANEL_STATE.INVALID);
     }
 
     toggleOption(option) {
@@ -45,17 +51,22 @@ class NotificationForm extends React.Component {
         newOption[option] = !this.state.contactOptions[option];
         const newOptions = Object.assign({},this.state.contactOptions,newOption);
         this.setState({contactOptions: newOptions});
-        this.handlePanelUpdate(newOptions);
+        this.handlePanelUpdate(newOptions,this.state.contactEmail,this.state.contactPhone);
     }
 
     handlePhoneChange(phone) {
-        const isValid = validator.isMobilePhone(phone);
-        this.setState({contactPhone: Object.assign({},this.state.contactPhone,{value: phone,valid: isValid})});
+        const isValid = isValidNumber(phone, 'US');
+        const newPhone = Object.assign({},this.state.contactPhone,{value: phone,valid: isValid})
+        this.setState({contactPhone: newPhone});
+        // TODO: Changing input content doesn't change valid correctly
+        this.handlePanelUpdate(this.state.contactOptions,this.state.contactEmail, newPhone);
     }
 
     handleEmailChange(email) {
         const isValid = validator.isEmail(email);
-        this.setState({contactEmail: Object.assign({},this.state.contactEmail,{value: email,valid: isValid})});
+        const newEmail = Object.assign({},this.state.contactEmail,{value: email,valid: isValid});
+        this.setState({contactEmail: newEmail});
+        this.handlePanelUpdate(this.state.contactOptions,newEmail, this.state.contactPhone);
     }
 
     render() {
@@ -109,7 +120,7 @@ class NotificationForm extends React.Component {
                                 <NotificationInput
                                     type="Phone"
                                     value={this.state.contactPhone.value}
-                                    valid={this.state.contactEmail.valid}
+                                    valid={this.state.contactPhone.valid}
                                     onChange={(e)=>this.handlePhoneChange(e.target.value)}
                                 />
                             }

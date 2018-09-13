@@ -48,7 +48,7 @@ class StartForm extends React.Component {
     }
 
     state = {
-        activeIdx: 2,
+        activeIdx: 0,
         formChoices: [
             {
                 id: 0,
