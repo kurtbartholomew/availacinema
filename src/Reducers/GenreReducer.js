@@ -2,9 +2,9 @@ import {
     GENRE_SELECTED
 } from '../Actions/types';
 
-const INITIAL_STATE = {
-    genres: []
-}
+const INITIAL_STATE = [
+
+];
 
 
 export default ( state=INITIAL_STATE, action ) => {
