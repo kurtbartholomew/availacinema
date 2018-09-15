@@ -3,75 +3,22 @@ import './notificationform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faCheckSquare} from '@fortawesome/free-regular-svg-icons';
-import { PANEL_STATE } from '../../Constants';
-import validator from 'validator';
-import { isValidNumber } from 'libphonenumber-js';
+import { CONTACT_OPTIONS} from '../../Constants';
 
 class NotificationForm extends React.Component {
-    state = {
-        contactOptions : {
-            emailDaily: false,
-            emailWeekly: false,
-            textDaily: false,
-            textWeekly: false,
-        },
-        contactPhone: {
-            value: undefined,
-            valid: false
-        },
-        contactEmail: {
-            value: undefined,
-            valid: false
-        }
-    }
-
-    handlePanelUpdate(options, email, phone) {
-        let valid = false;
-        if(options["emailDaily"] || options["emailWeekly"]) {
-            if(email.valid) {
-                valid = true;
-            } else {
-                this.props.handlePanelStateChange(PANEL_STATE.INVALID);
-                return; 
-            }
-        }
-        if(options["textDaily"] || options["textWeekly"]) {
-            if(phone.valid) {
-                valid = true;
-            } else {
-                this.props.handlePanelStateChange(PANEL_STATE.INVALID);
-                return;
-            }
-        }
-        this.props.handlePanelStateChange(valid ? PANEL_STATE.VALID : PANEL_STATE.INVALID);
-    }
-
-    toggleOption(option) {
-        const newOption = {};
-        newOption[option] = !this.state.contactOptions[option];
-        const newOptions = Object.assign({},this.state.contactOptions,newOption);
-        this.setState({contactOptions: newOptions});
-        this.handlePanelUpdate(newOptions,this.state.contactEmail,this.state.contactPhone);
-    }
-
-    handlePhoneChange(phone) {
-        const isValid = isValidNumber(phone, 'US');
-        const newPhone = Object.assign({},this.state.contactPhone,{value: phone,valid: isValid})
-        this.setState({contactPhone: newPhone});
-        // TODO: Changing input content doesn't change valid correctly
-        this.handlePanelUpdate(this.state.contactOptions,this.state.contactEmail, newPhone);
-    }
-
-    handleEmailChange(email) {
-        const isValid = validator.isEmail(email);
-        const newEmail = Object.assign({},this.state.contactEmail,{value: email,valid: isValid});
-        this.setState({contactEmail: newEmail});
-        this.handlePanelUpdate(this.state.contactOptions,newEmail, this.state.contactPhone);
-    }
-
     render() {
 
-        const { textDaily, textWeekly, emailDaily, emailWeekly } = this.state.contactOptions;
+        const {
+            EMAIL_DAILY,
+            EMAIL_WEEKLY,
+            TEXT_DAILY,
+            TEXT_WEEKLY,
+            handleToggleNotifyOption,
+            handlePhoneChange,
+            handleEmailChange,
+            contactEmail,
+            contactPhone
+        } = this.props;
 
         return (
             <div className="notification">
@@ -79,24 +26,23 @@ class NotificationForm extends React.Component {
                     <div className="notification__option notification__option--email">
                         <div className="notification__form">
                             <NotificationOption 
-                                id="email__daily"
-                                handleClick={() => {this.toggleOption("emailDaily")}}
-                                option={emailDaily}
-                                text={"Email Daily"}
+                                handleToggleOption={handleToggleNotifyOption}
+                                option={CONTACT_OPTIONS.EMAIL_DAILY}
+                                isSelected={EMAIL_DAILY}
                             />
                             <NotificationOption 
-                                id="email__weekly"
-                                handleClick={() => {this.toggleOption("emailWeekly")}}
-                                option={emailWeekly}
-                                text={"Email Weekly"}
+                                handleToggleOption={handleToggleNotifyOption}
+                                option={CONTACT_OPTIONS.EMAIL_WEEKLY}
+                                isSelected={EMAIL_WEEKLY}
                             />
-                            {(emailDaily || emailWeekly) && 
+                            {(EMAIL_WEEKLY || EMAIL_WEEKLY) && 
                                 <NotificationInput
                                     type="Email"
-                                    value={this.state.contactEmail.value}
-                                    valid={this.state.contactEmail.valid}
-                                    onChange={(e)=>{
-                                        this.handleEmailChange(e.target.value)}
+                                    value={contactEmail.value}
+                                    valid={contactEmail.valid}
+                                    onChange={ (e) => {
+                                            handleEmailChange(e.target.value)
+                                        }
                                     }
                                 />
                             }
@@ -105,23 +51,24 @@ class NotificationForm extends React.Component {
                     <div className="notification__option notification__option--text">
                         <div className="notification__form">
                             <NotificationOption 
-                                id="text__daily"
-                                handleClick={() => {this.toggleOption("textDaily")}}
-                                option={textDaily}
-                                text={"Text Daily"}
+                                handleToggleOption={handleToggleNotifyOption}
+                                option={CONTACT_OPTIONS.TEXT_DAILY}
+                                isSelected={TEXT_DAILY}
                             />
                             <NotificationOption 
-                                id="text__weekly"
-                                handleClick={() => {this.toggleOption("textWeekly")}}
-                                option={textWeekly}
-                                text={"Text Weekly"}
+                                handleToggleOption={handleToggleNotifyOption}
+                                option={CONTACT_OPTIONS.TEXT_WEEKLY}
+                                isSelected={TEXT_WEEKLY}
                             />
-                            {(textDaily || textWeekly) &&
+                            {(TEXT_DAILY || TEXT_WEEKLY) &&
                                 <NotificationInput
                                     type="Phone"
-                                    value={this.state.contactPhone.value}
-                                    valid={this.state.contactPhone.valid}
-                                    onChange={(e)=>this.handlePhoneChange(e.target.value)}
+                                    value={contactPhone.value}
+                                    valid={contactPhone.valid}
+                                    onChange={ (e) => {
+                                            handlePhoneChange(e.target.value)
+                                        }
+                                    }
                                 />
                             }
                         </div>
@@ -134,12 +81,15 @@ class NotificationForm extends React.Component {
 
 class NotificationOption extends React.Component {
     render() {
-        const { handleClick, option, text } = this.props;
+        const { handleToggleOption, option, isSelected } = this.props;
 
         return (
-            <div className="notification__box" onClick={handleClick}>
+            <div
+                className="notification__box"
+                onClick={ () => { handleToggleOption(option) }}
+            >
                 <FontAwesomeIcon 
-                    icon={option ? faCheckSquare : faSquare}
+                    icon={isSelected ? faCheckSquare : faSquare}
                     size="2x"
                 />
                 <span className="notification__text">
@@ -153,7 +103,7 @@ class NotificationOption extends React.Component {
 class NotificationInput extends React.Component {
 
     render() {
-        const { type, value, onChange, valid} = this.props;
+        const { type, value, onChange, valid } = this.props;
 
         return (
             <React.Fragment>

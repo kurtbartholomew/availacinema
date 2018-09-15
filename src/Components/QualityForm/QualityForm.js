@@ -1,69 +1,33 @@
 import React from 'react';
 import './qualityform.css';
-import { PANEL_STATE } from '../../Constants';
 
 class QualityForm extends React.Component {
-    state = {
-        quality: 5,
-        editable: false,
-        chosen: false
-    }
-
-    handlePanelUpdate() {
-        this.props.handlePanelStateChange(PANEL_STATE.VALID);
-    }
-
-    handleSliderChange(event) {
-        this.setState(Object.assign({},this.state,{
-            quality: event.target.value,
-            editable: false,
-            chosen: true
-        }));
-        if(!this.state.chosen) {
-            this.handlePanelUpdate();
-        }
-    }
-
-    handleRatingClick() {
-        this.setState(Object.assign({},this.state,{editable: true}));
-    }
-
-    handleInputChange(event) {
-        let rating = event.target.value;
-        if(rating !== "") {
-            rating = Math.max(Math.min(rating, 10),0);
-        }
-        this.setState(Object.assign({},this.state,{
-            quality: rating,
-            chosen: true
-        }));
-        if(!this.state.chosen) {
-            this.handlePanelUpdate();
-        }
-    }
-
-    handleLoseFocus() {
-        this.setState(Object.assign({},this.state,{editable: false})); 
-    }
-
     render() {
+
+        const {
+            value,
+            editable,
+            handleRatingUpdated,
+            handleRatingTextFieldToggled
+        } = this.props;
+
         return (
             <div className="qualityform">
                 <form className="qualityform__inputs">
                     <h2>Minimum Rating</h2>
                     <EditableTextInput 
-                        editable={this.state.editable}
-                        handleInputChange={(e)=>{this.handleInputChange(e)}}
-                        handleLoseFocus={()=>this.handleLoseFocus()}
-                        quality={this.state.quality}
-                        handleRatingClick={()=>{this.handleRatingClick()}}
+                        editable={ editable }
+                        handleInputChange={ (e) => { handleRatingUpdated(e.target.value); }}
+                        handleLoseFocus={ handleRatingTextFieldToggled }
+                        quality={ value }
+                        handleRatingClick={ handleRatingTextFieldToggled }
                     />
                     <input 
-                        onChange={(e)=>{this.handleSliderChange(e)}} 
+                        onChange={ (e) => { handleRatingUpdated(e.target.value); }} 
                         min="0" 
                         max="10" 
                         step="0.1" 
-                        value={this.state.quality} type="range"
+                        value={ value } type="range"
                         className="qualityform__slider"
                     />
                 </form>
@@ -80,19 +44,19 @@ class EditableTextInput extends React.Component {
                     // TODO: Change this to component so I can use HOC click outside wrapper
                     <input
                         className="qualityform__rating-input"
-                        onChange={this.props.handleInputChange}
-                        onBlur={this.props.handleLoseFocus}
+                        onChange={ this.props.handleInputChange }
+                        onBlur={ this.props.handleLoseFocus }
                         type="number"
                         min="0"
                         max="10"
                         step="0.1"
-                        value={this.props.quality}
+                        value={ this.props.quality }
                     /> :
                     <div
                         className="qualityform__rating-text"
-                        onClick={this.props.handleRatingClick}
+                        onClick={ this.props.handleRatingClick }
                     >
-                        {this.props.quality}
+                        { this.props.quality }
                     </div>
                 }
             </React.Fragment>

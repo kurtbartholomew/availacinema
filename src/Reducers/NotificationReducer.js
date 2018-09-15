@@ -1,28 +1,39 @@
 import {
-    EMAIL_DAILY_TOGGLED,
-    EMAIL_WEEKLY_TOGGLED,
-    TEXT_DAILY_TOGGLED,
-    TEXT_WEEKLY_TOGGLED,
+    CONTACT_OPTION_TOGGLED,
     CONTACT_EMAIL_UPDATED,
-    CONTACT_EMAIL_VALIDATED,
-    CONTACT_PHONE_UPDATED,
-    CONTACT_PHONE_VALIDATED
+    CONTACT_PHONE_UPDATED
 } from '../Actions/types';
+import { CONTACT_OPTIONS } from '../Constants';
 
 const INITIAL_STATE = {
-
+    contactOptions: {},
+    contactPhone: {
+        value: "",
+        valid: false
+    },
+    contactEmail: {
+        value: "",
+        valid: false
+    }
 };
 
-export default (state=INITIAL_STATE, action) => {
-    switch(action.type) {
-        case EMAIL_DAILY_TOGGLED:
-        case EMAIL_WEEKLY_TOGGLED:
-        case TEXT_DAILY_TOGGLED:
-        case TEXT_WEEKLY_TOGGLED:
+for( let option in CONTACT_OPTIONS ) {
+    INITIAL_STATE.contactOptions[option] = false;
+}
+
+export default ( state=INITIAL_STATE, action) => {
+    switch( action.type ) {
+        case CONTACT_OPTION_TOGGLED:
+            const option = action.payload;
+            const newOptions = {...state.contactOptions}
+            newOptions[option] = !newOptions[option];
+            return  {...state, contactOptions: newOptions};
         case CONTACT_EMAIL_UPDATED:
-        case CONTACT_EMAIL_VALIDATED:
+            const newContactEmail = { ...state.contactEmail, contactEmail: action.payload }
+            return { ...state, contactEmail: newContactEmail };
         case CONTACT_PHONE_UPDATED:
-        case CONTACT_PHONE_VALIDATED:
+            const newContactPhone = { ...state.contactPhone, contactPhone: action.payload }
+            return { ...state, contactPhone: newContactPhone };
         default:
             return state;
     }

@@ -19,5 +19,5 @@ function checkForSuccess(response) {
     }
 }
 
-const ServiceUtil = { getGenres };
-export default ServiceUtil;
+const ClientService = { getGenres };
+export default ClientService;

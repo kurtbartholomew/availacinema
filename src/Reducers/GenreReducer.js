@@ -1,17 +1,58 @@
 import {
-    GENRE_SELECTED
+    GENRE_TOGGLED,
+    ALL_GENRES_SELECTED,
+    ALL_GENRES_DESELECTED,
+    GENRES_LIST_REQUEST,
+    GENRES_LIST_SUCCESS,
+    GENRES_LIST_FAILURE
 } from '../Actions/types';
 
-const INITIAL_STATE = [
+const INITIAL_STATE = {
+    isFetching: "false",
+    genreList : []
+};
 
-];
-
-
-export default ( state=INITIAL_STATE, action ) => {
+export default ( state = INITIAL_STATE, action ) => {
     switch(action.type) {
-        case GENRE_SELECTED:
-            return { ...state, genres: action.payload };
+        case GENRE_TOGGLED:
+            const genreId = state.genreList.findIndex((genre) => genre.id == action.payload);
+            const oldGenre = state.genreList[genreId];
+            const newGenre = Object.assign({}, oldGenre, {selected: !oldGenre.selected});
+            const newGenreList = [...state.genreList.slice(genreId),
+                                  newGenre,
+                                  ...state.genreList.slice(genreId+1)
+            ];
+            return { ...state, genreList: newGenreList};
+        case ALL_GENRES_SELECTED:
+            const newGenreList = state.genreList.map(( genre )=> {
+                const newGenre = Object.assign({}, genre, { selected: true });
+                return newGenre;
+            });
+            return { ...state, genreList: newGenreList};
+
+        case ALL_GENRES_DESELECTED:
+            const newGenreList = state.genreList.map(( genre )=> {
+                const newGenre = Object.assign({}, genre, { selected: false });
+                return newGenre;
+            });
+            return { ...state, genreList: newGenreList};
         default:
             return state;
     }
 }
+
+// const INITIAL_GENRE_STATE = {
+//     id: -1,
+//     name: "",
+//     selected: false
+// };
+
+// const GenreReducer = ( genre = INITIAL_GENRE_STATE, action ) => {
+//     switch(action.type) {
+//         case GENRE_TOGGLED:
+//             const newGenre = Object.assign({}, ...genre, { selected: true });
+//             return Object.assign({}, ...genre, { selected: true });
+//         default:
+//             return genre;
+//     }
+// }

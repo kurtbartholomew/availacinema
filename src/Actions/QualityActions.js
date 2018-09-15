@@ -1,18 +1,17 @@
 import {
-    RATING_SELECTED,
-    RATING_UPDATED
+    RATING_UPDATED,
+    RATING_TEXT_FIELD_TOGGLED
 } from './types';
 
-export const ratingSelected = (rating) => {
+export const ratingUpdated = ( rating ) => {
     return {
-        type: RATING_SELECTED,
+        type: RATING_UPDATED,
         payload: rating
     }
 }
 
-export const ratingUpdated = (rating) => {
+export const ratingTextFieldToggled = () => {
     return {
-        type: RATING_UPDATED,
-        payload: rating
+        type: RATING_TEXT_FIELD_TOGGLED
     }
 }
