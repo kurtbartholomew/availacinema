@@ -1,24 +1,19 @@
 import React from 'react';
 import './genreform.css';
-import ClientService from '../../Services/ClientService';
-import { Object } from 'core-js';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 
 class GenreForm extends React.Component {
 
     componentWillMount() {
-        ClientService.getGenres((genres)=>{
-            this.setState({genres: genres.map((genre)=>{
-                return Object.assign({}, genre, {selected: false});
-            })});
-        },(error)=>{
-            console.log("Error! ",error);
-        });
+        this.props.dispatch(genreListRequest());
     }
 
     render() {
 
         const {
+            isFetching,
             genreList,
             handleGenreToggle,
             handleAllGenresSelected,
@@ -37,19 +32,25 @@ class GenreForm extends React.Component {
 
         return (
             <div className="genreform">
-                <div className="genreform__buttons">
-                    <button 
-                        className="genreform__select genreform__select--all"
-                        onClick={ () => { handleAllGenresSelected() }}
-                    >Select All</button>
-                    <button 
-                        className="genreform__select genreform__select--none"
-                        onClick={ () => { handleAllGenresDeselected() }}
-                    >Select None</button>
-                </div>
-                <form className="genreform__inputs">
-                    {genres}
-                </form>
+                {isFetching ? 
+                    <FontAwesomeIcon icon={ faSpinner } spin={true} />
+                    :
+                    <React.Fragment>
+                        <div className="genreform__buttons">
+                            <button 
+                                className="genreform__select genreform__select--all"
+                                onClick={ () => { handleAllGenresSelected() }}
+                            >Select All</button>
+                            <button 
+                                className="genreform__select genreform__select--none"
+                                onClick={ () => { handleAllGenresDeselected() }}
+                            >Select None</button>
+                        </div>
+                        <form className="genreform__inputs">
+                            {genres}
+                        </form>
+                    </React.Fragment>
+                }
             </div>
         )
     }

@@ -8,7 +8,7 @@ import {
 } from '../Actions/types';
 
 const INITIAL_STATE = {
-    isFetching: "false",
+    isFetching: false,
     genreList : []
 };
 
@@ -23,6 +23,7 @@ export default ( state = INITIAL_STATE, action ) => {
                                   ...state.genreList.slice(genreId+1)
             ];
             return { ...state, genreList: newGenreList};
+
         case ALL_GENRES_SELECTED:
             const newGenreList = state.genreList.map(( genre )=> {
                 const newGenre = Object.assign({}, genre, { selected: true });
@@ -36,6 +37,17 @@ export default ( state = INITIAL_STATE, action ) => {
                 return newGenre;
             });
             return { ...state, genreList: newGenreList};
+
+        case GENRES_LIST_REQUEST:
+            return { ...state, isFetching: true };
+
+        case GENRES_LIST_SUCCESS:
+            return { ...state, genreList: action.payload, isFetching: false };
+
+        // TODO: Deal with failure
+        case GENRES_LIST_FAILURE:
+            return { ...state, isFetching: false };
+
         default:
             return state;
     }

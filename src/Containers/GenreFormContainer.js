@@ -1,7 +1,8 @@
 import {
     genreToggled,
     allGenresSelected,
-    allGenresDeselected
+    allGenresDeselected,
+    genreListRequest
 } from '../Actions';
 import { connect } from 'react-redux';
 import GenreForm from '../Components/GenreForm/GenreForm';
@@ -10,7 +11,7 @@ import GenreForm from '../Components/GenreForm/GenreForm';
 export const mapStateToProps = ( state ) => {
     return {
         isFetching: state.genres.isFetching,
-        genreList: state.genreList
+        genreList: state.genres.genreList
     }
 }
 
