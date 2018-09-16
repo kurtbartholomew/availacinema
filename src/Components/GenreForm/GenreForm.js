@@ -3,6 +3,8 @@ import './genreform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
+import { PANEL_STATE } from '../../Constants';
+import { genreListRequest } from '../../Actions';
 
 class GenreForm extends React.Component {
 
@@ -17,7 +19,8 @@ class GenreForm extends React.Component {
             genreList,
             handleGenreToggle,
             handleAllGenresSelected,
-            handleAllGenresDeselected
+            handleAllGenresDeselected,
+            handlePanelStateChange
         } = this.props;
 
         const genres = genreList.map(( genre ) => {
@@ -26,7 +29,17 @@ class GenreForm extends React.Component {
                         id={ genre.id }
                         name={ genre.name }
                         selected={ genre.selected }
-                        handleClick={ () => handleGenreToggle( genre.id ) }
+                        handleClick={ () => {
+                            handleGenreToggle( genre.id );
+                            let valid = true;
+                            for(let genre in genreList) {
+                                if( !genre.selected ) {
+                                    valid = false;
+                                    break;
+                                }
+                            }
+                            handlePanelStateChange(valid ? PANEL_STATE.VALID : PANEL_STATE.INVALID);
+                        }}
                     />
         });
 

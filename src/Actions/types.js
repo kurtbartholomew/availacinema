@@ -17,7 +17,11 @@ export const CONTACT_EMAIL_VALIDATED = 'contact_email_validated';
 export const CONTACT_PHONE_UPDATED = 'contact_phone_updated';
 export const CONTACT_PHONE_VALIDATED = 'contact_phone_validated';
 
-// STARTFORM ACTION TYPES
+// START OVERALL ACTION TYPES
 export const SUBSCRIPTION_SUBMIT_REQUEST = 'subscription_submit_request';
 export const SUBSCRIPTION_SUBMIT_SUCCESS = 'subscription_submit_success';
 export const SUBSCRIPTION_SUBMIT_FAILURE = 'subscription_submit_failure';
+
+// START FORM ACTION TYPES
+export const TOGGLE_SELECTED_FORM = 'toggle_selected_form';
+export const CHANGE_PANEL_STATE = 'change_panel_state';

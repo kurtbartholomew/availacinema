@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
     return {
-        allFormsValid: state.allFormsValid
+        allFormsValid: state.start.allFormsValid
     }
 }
 

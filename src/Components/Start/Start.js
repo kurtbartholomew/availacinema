@@ -1,32 +1,22 @@
 import React from 'react';
 import './start.css';
-import StartForm from '../StartForm/StartForm';
+import StartFormContainer from '../../Containers/StartFormContainer';
 
 class Start extends React.Component {
-    state = {
-        formsAllValid: false
-    }
-    handleAllFormsValid = (areValid) => {
-        this.setState({formsAllValid: areValid});
-    }
-
-    // TODO: Refactor to Redux to contain state better
-    handleOnSubmit = (e) => {
-        e.preventDefault();
-    }
-
     render() {
+
+        const { handleOnSubmit, allFormsValid } = this.props;
+
         return (
             <div className="startform__container">
-                <StartForm 
-                    handleAllFormsValid={this.handleAllFormsValid}
-                />
-                <button type="submit" 
-                    onSubmit={this.handleOnSubmit}
-                    disabled={!this.state.formsAllValid}
+                <StartFormContainer />
+                <button type="submit"
+                    onSubmit={ handleOnSubmit }
+                    disabled={ !allFormsValid }
                     className="startform__submit"
                 >
-                Submit</button>
+                    Submit
+                </button>
             </div>
         )
     }

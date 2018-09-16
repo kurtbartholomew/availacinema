@@ -1,9 +1,11 @@
 import {
     ratingUpdated,
-    ratingTextFieldToggled
+    ratingTextFieldToggled,
+    changePanelState
 } from '../Actions';
 import { connect } from 'react-redux';
 import QualityForm from '../Components/QualityForm/QualityForm';
+import { PANEL_STATE } from '../Constants';
 
 const mapStateToProps = ( state ) => {
     return {
@@ -15,11 +17,11 @@ const mapStateToProps = ( state ) => {
 const mapDispatchToProps = ( dispatch ) => {
     return {
         handleRatingUpdated: (rating) => {
-            let rating = value;
             if(rating !== "") {
                 rating = Math.max(Math.min(rating, 10),0);
             }
             dispatch(ratingUpdated(rating));
+            dispatch( changePanelState(PANEL_STATE.VALID) );
         },
         handleRatingTextFieldToggled: () => {
             dispatch(ratingTextFieldToggled());

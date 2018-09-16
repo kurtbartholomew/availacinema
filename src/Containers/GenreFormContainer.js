@@ -2,10 +2,11 @@ import {
     genreToggled,
     allGenresSelected,
     allGenresDeselected,
-    genreListRequest
+    changePanelState
 } from '../Actions';
 import { connect } from 'react-redux';
 import GenreForm from '../Components/GenreForm/GenreForm';
+import { PANEL_STATE } from '../Constants';
 
 
 export const mapStateToProps = ( state ) => {
@@ -18,13 +19,18 @@ export const mapStateToProps = ( state ) => {
 export const mapDispatchToProps = ( dispatch ) => {
     return {
         handleGenreToggle: (genreId) => {
-            dispatch(genreToggled(genreId));
+            dispatch( genreToggled(genreId) );
         },
         handleAllGenresSelected: () => {
-            dispatch(allGenresSelected());
+            dispatch( allGenresSelected() );
+            dispatch( changePanelState(PANEL_STATE.VALID));
         },
         handleAllGenresDeselected: () => {
-            dispatch(allGenresDeselected());
+            dispatch( allGenresDeselected() );
+            dispatch( changePanelState(PANEL_STATE.INVALID));
+        },
+        handlePanelStateChange: (panelState) => {
+            dispatch( changePanelState(panelState) );
         }
     }
 }

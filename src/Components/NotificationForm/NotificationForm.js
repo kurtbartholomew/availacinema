@@ -93,7 +93,7 @@ class NotificationOption extends React.Component {
                     size="2x"
                 />
                 <span className="notification__text">
-                    {text}
+                    {option}
                 </span>
             </div>
         )

@@ -1,15 +1,14 @@
 const PANEL_STATE = {
-    UNTOUCHED,
-    IN_PROGRESS,
-    INVALID,
-    VALID
+    UNTOUCHED: 0,
+    INVALID: 1,
+    VALID: 2
 };
 
 const CONTACT_OPTIONS = {
-    EMAIL_DAILY,
-    EMAIL_WEEKLY,
-    TEXT_DAILY,
-    TEXT_WEEKLY
+    EMAIL_DAILY: 0,
+    EMAIL_WEEKLY: 1,
+    TEXT_DAILY: 2,
+    TEXT_WEEKLY: 3
 }
 
 export {

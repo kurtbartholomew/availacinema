@@ -13,26 +13,27 @@ const INITIAL_STATE = {
 };
 
 export default ( state = INITIAL_STATE, action ) => {
+    let newGenreList;
     switch(action.type) {
         case GENRE_TOGGLED:
-            const genreId = state.genreList.findIndex((genre) => genre.id == action.payload);
+            const genreId = state.genreList.findIndex((genre) => genre.id === action.payload);
             const oldGenre = state.genreList[genreId];
             const newGenre = Object.assign({}, oldGenre, {selected: !oldGenre.selected});
-            const newGenreList = [...state.genreList.slice(genreId),
+            newGenreList = [...state.genreList.slice(genreId),
                                   newGenre,
                                   ...state.genreList.slice(genreId+1)
             ];
             return { ...state, genreList: newGenreList};
 
         case ALL_GENRES_SELECTED:
-            const newGenreList = state.genreList.map(( genre )=> {
+            newGenreList = state.genreList.map(( genre )=> {
                 const newGenre = Object.assign({}, genre, { selected: true });
                 return newGenre;
             });
             return { ...state, genreList: newGenreList};
 
         case ALL_GENRES_DESELECTED:
-            const newGenreList = state.genreList.map(( genre )=> {
+            newGenreList = state.genreList.map(( genre )=> {
                 const newGenre = Object.assign({}, genre, { selected: false });
                 return newGenre;
             });

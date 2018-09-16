@@ -1,10 +1,14 @@
 import {
-    contactOptionToggled, contactEmailUpdated, contactPhoneUpdated
+    contactOptionToggled,
+    contactEmailUpdated,
+    contactPhoneUpdated,
+    changePanelState
 } from '../Actions';
 import NotificationForm from '../Components/NotificationForm/NotificationForm';
 import { connect } from 'react-redux';
 import validator from 'validator';
 import { isValidNumber } from 'libphonenumber-js';
+import { PANEL_STATE } from '../Constants';
 
 const mapStateToProps = ( state ) => {
     return {
@@ -33,6 +37,9 @@ const mapDispatchToProps = ( dispatch ) => {
                 value: email,
                 valid: isValid
             }));
+            if( isValid ) {
+                dispatch(changePanelState(PANEL_STATE.VALID));
+            }
         }
     };
 }

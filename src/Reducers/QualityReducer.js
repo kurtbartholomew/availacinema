@@ -1,5 +1,6 @@
 import {
-    RATING_UPDATED
+    RATING_UPDATED,
+    RATING_TEXT_FIELD_TOGGLED
 } from '../Actions/types';
 
 const INITIAL_STATE = {
