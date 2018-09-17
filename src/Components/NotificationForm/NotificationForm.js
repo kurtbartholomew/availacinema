@@ -28,11 +28,13 @@ class NotificationForm extends React.Component {
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
                                 option={CONTACT_OPTIONS.EMAIL_DAILY}
+                                text={"Email Daily"}
                                 isSelected={EMAIL_DAILY}
                             />
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
                                 option={CONTACT_OPTIONS.EMAIL_WEEKLY}
+                                text={"Email Weekly"}
                                 isSelected={EMAIL_WEEKLY}
                             />
                             {(EMAIL_WEEKLY || EMAIL_WEEKLY) && 
@@ -53,11 +55,13 @@ class NotificationForm extends React.Component {
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
                                 option={CONTACT_OPTIONS.TEXT_DAILY}
+                                text={"Text Daily"}
                                 isSelected={TEXT_DAILY}
                             />
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
                                 option={CONTACT_OPTIONS.TEXT_WEEKLY}
+                                text={"Text Weekly"}
                                 isSelected={TEXT_WEEKLY}
                             />
                             {(TEXT_DAILY || TEXT_WEEKLY) &&
@@ -81,7 +85,7 @@ class NotificationForm extends React.Component {
 
 class NotificationOption extends React.Component {
     render() {
-        const { handleToggleOption, option, isSelected } = this.props;
+        const { handleToggleOption, option, isSelected, text } = this.props;
 
         return (
             <div
@@ -93,7 +97,7 @@ class NotificationOption extends React.Component {
                     size="2x"
                 />
                 <span className="notification__text">
-                    {option}
+                    {text}
                 </span>
             </div>
         )

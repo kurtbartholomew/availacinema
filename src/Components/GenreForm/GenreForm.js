@@ -8,7 +8,7 @@ import { PANEL_STATE } from '../../Constants';
 class GenreForm extends React.Component {
 
     componentWillMount() {
-        this.props.loadGenres("JIM");
+        this.props.loadGenres();
     }
 
     render() {
@@ -30,10 +30,12 @@ class GenreForm extends React.Component {
                         selected={ genre.selected }
                         handleClick={ () => {
                             handleGenreToggle( genre.id );
-                            let valid = true;
-                            for(let genre in genreList) {
-                                if( !genre.selected ) {
-                                    valid = false;
+                            let valid = false;
+                            for(let genreChoice of genreList) {
+                                let selected = genreChoice.selected;
+                                if(genreChoice.id === genre.id) { selected = !selected; }
+                                if( selected ) {
+                                    valid = true;
                                     break;
                                 }
                             }

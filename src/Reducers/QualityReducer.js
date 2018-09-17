@@ -12,7 +12,7 @@ const INITIAL_STATE = {
 export default ( state=INITIAL_STATE, action ) => {
     switch( action.type ) {
         case RATING_UPDATED:
-            return { ...state, ratingValue: action.payload, selected: true };
+            return { ...state, value: action.payload, selected: true };
         case RATING_TEXT_FIELD_TOGGLED:
             return { ...state, editable: !state.editable }
         default:

@@ -18,22 +18,23 @@ export const mapStateToProps = ( state ) => {
 }
 
 export const mapDispatchToProps = ( dispatch ) => {
+    const formId = 0; // hardcoded id from startReducer's formChoices
     return {
         handleGenreToggle: (genreId) => {
             dispatch( genreToggled(genreId) );
         },
         handleAllGenresSelected: () => {
             dispatch( allGenresSelected() );
-            dispatch( changePanelState(PANEL_STATE.VALID));
+            dispatch( changePanelState(formId, PANEL_STATE.VALID));
         },
         handleAllGenresDeselected: () => {
             dispatch( allGenresDeselected() );
-            dispatch( changePanelState(PANEL_STATE.INVALID));
+            dispatch( changePanelState(formId, PANEL_STATE.INVALID));
         },
         handlePanelStateChange: (panelState) => {
-            dispatch( changePanelState(panelState) );
+            dispatch( changePanelState(formId, panelState) );
         },
-        loadGenres: (name) => {
+        loadGenres: () => {
             dispatch( retrieveGenreList() )
         }
     }

@@ -19,6 +19,7 @@ const mapStateToProps = ( state ) => {
 }
 
 const mapDispatchToProps = ( dispatch ) => {
+    const formId = 2;
     return {
         handleToggleNotifyOption: ( option ) => {
             dispatch( contactOptionToggled( option ) );
@@ -38,7 +39,7 @@ const mapDispatchToProps = ( dispatch ) => {
                 valid: isValid
             }));
             if( isValid ) {
-                dispatch(changePanelState(PANEL_STATE.VALID));
+                dispatch(changePanelState( formId, PANEL_STATE.VALID ));
             }
         }
     };

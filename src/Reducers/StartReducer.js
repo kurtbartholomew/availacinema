@@ -51,10 +51,10 @@ export default ( state = INITIAL_STATE, action ) => {
             const { formId, panelState } = action.payload;
             const formIdx = state.formChoices.findIndex((form)=>form.id === formId);
             const newForm = {...state.formChoices[formIdx], condition: panelState};
-            const newFormChoices = [state.formChoices.slice(formIdx),
-                                 newForm,
-                                 state.formChoices.slice(formIdx+1)
-                                ];
+            const newFormChoices = state.formChoices.map( (form, index) => {
+                if(index !== formIdx) { return form; }
+                return { ...form, ...newForm };
+            })
             const allValid = newFormChoices.reduce(( current, next ) => {
                 return current && next.valid;
             }, true);

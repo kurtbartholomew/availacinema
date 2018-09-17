@@ -19,10 +19,10 @@ export default ( state = INITIAL_STATE, action ) => {
             const genreId = state.genreList.findIndex((genre) => genre.id === action.payload);
             const oldGenre = state.genreList[genreId];
             const newGenre = Object.assign({}, oldGenre, {selected: !oldGenre.selected});
-            newGenreList = [...state.genreList.slice(genreId),
-                                  newGenre,
-                                  ...state.genreList.slice(genreId+1)
-            ];
+            newGenreList = state.genreList.map( (genre, idx) => {
+                if(idx !== genreId) { return genre; }
+                return { ...genre, ...newGenre };
+            })
             return { ...state, genreList: newGenreList};
 
         case ALL_GENRES_SELECTED:

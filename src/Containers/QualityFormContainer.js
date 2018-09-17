@@ -15,13 +15,14 @@ const mapStateToProps = ( state ) => {
 }
 
 const mapDispatchToProps = ( dispatch ) => {
+    const formId = 1;
     return {
         handleRatingUpdated: (rating) => {
             if(rating !== "") {
                 rating = Math.max(Math.min(rating, 10),0);
             }
             dispatch(ratingUpdated(rating));
-            dispatch( changePanelState(PANEL_STATE.VALID) );
+            dispatch( changePanelState( formId, PANEL_STATE.VALID ) );
         },
         handleRatingTextFieldToggled: () => {
             dispatch(ratingTextFieldToggled());

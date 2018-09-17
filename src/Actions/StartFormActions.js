@@ -10,9 +10,12 @@ export const toggleSelectedForm = (formId) => {
     }
 }
 
-export const changePanelState = (panelState) => {
+export const changePanelState = (formId, panelState) => {
     return {
         type: CHANGE_PANEL_STATE,
-        payload: panelState
+        payload: {
+            formId,
+            panelState
+        }
     }
 }
