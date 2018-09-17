@@ -12,7 +12,7 @@ import { PANEL_STATE } from '../Constants';
 
 const mapStateToProps = ( state ) => {
     return {
-        contactOptions: state.notifications.contactOptions,
+        ...state.notifications.contactOptions,
         contactPhone: state.notifications.contactPhone,
         contactEmail: state.notifications.contactEmail
     };
@@ -31,6 +31,8 @@ const mapDispatchToProps = ( dispatch ) => {
                 value: phone,
                 valid: isValid
             }));
+            const newState = isValid ? PANEL_STATE.VALID : PANEL_STATE.INVALID;
+            dispatch(changePanelState( formId, newState ));
         },
         handleEmailChange: ( email ) => {
             const isValid = validator.isEmail( email );
@@ -38,9 +40,8 @@ const mapDispatchToProps = ( dispatch ) => {
                 value: email,
                 valid: isValid
             }));
-            if( isValid ) {
-                dispatch(changePanelState( formId, PANEL_STATE.VALID ));
-            }
+            const newState = isValid ? PANEL_STATE.VALID : PANEL_STATE.INVALID;
+            dispatch(changePanelState( formId, newState ));
         }
     };
 }

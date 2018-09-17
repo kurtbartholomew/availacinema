@@ -1,6 +1,8 @@
 @import '../../Assets/styles/common.scss';
 
 .genreform {
+    
+    overflow-y: scroll;
 
     &__buttons {
         width: 100%;

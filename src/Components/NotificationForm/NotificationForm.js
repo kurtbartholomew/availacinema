@@ -3,7 +3,6 @@ import './notificationform.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faSquare, faCheckSquare} from '@fortawesome/free-regular-svg-icons';
-import { CONTACT_OPTIONS} from '../../Constants';
 
 class NotificationForm extends React.Component {
     render() {
@@ -27,17 +26,17 @@ class NotificationForm extends React.Component {
                         <div className="notification__form">
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
-                                option={CONTACT_OPTIONS.EMAIL_DAILY}
+                                option={"EMAIL_DAILY"}
                                 text={"Email Daily"}
                                 isSelected={EMAIL_DAILY}
                             />
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
-                                option={CONTACT_OPTIONS.EMAIL_WEEKLY}
+                                option={"EMAIL_WEEKLY"}
                                 text={"Email Weekly"}
                                 isSelected={EMAIL_WEEKLY}
                             />
-                            {(EMAIL_WEEKLY || EMAIL_WEEKLY) && 
+                            {(EMAIL_DAILY || EMAIL_WEEKLY) && 
                                 <NotificationInput
                                     type="Email"
                                     value={contactEmail.value}
@@ -54,13 +53,13 @@ class NotificationForm extends React.Component {
                         <div className="notification__form">
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
-                                option={CONTACT_OPTIONS.TEXT_DAILY}
+                                option={"TEXT_DAILY"}
                                 text={"Text Daily"}
                                 isSelected={TEXT_DAILY}
                             />
                             <NotificationOption 
                                 handleToggleOption={handleToggleNotifyOption}
-                                option={CONTACT_OPTIONS.TEXT_WEEKLY}
+                                option={"TEXT_WEEKLY"}
                                 text={"Text Weekly"}
                                 isSelected={TEXT_WEEKLY}
                             />

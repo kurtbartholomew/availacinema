@@ -29,7 +29,8 @@ export default ( state=INITIAL_STATE, action) => {
             newOptions[option] = !newOptions[option];
             return  {...state, contactOptions: newOptions};
         case CONTACT_EMAIL_UPDATED:
-            const newContactEmail = { ...state.contactEmail, contactEmail: action.payload }
+            const { value, valid } = action.payload;
+            const newContactEmail = { ...state.contactEmail, value: value, valid: valid }
             return { ...state, contactEmail: newContactEmail };
         case CONTACT_PHONE_UPDATED:
             const newContactPhone = { ...state.contactPhone, contactPhone: action.payload }
