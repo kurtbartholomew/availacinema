@@ -2,7 +2,8 @@ import {
     genreToggled,
     allGenresSelected,
     allGenresDeselected,
-    changePanelState
+    changePanelState,
+    retrieveGenreList
 } from '../Actions';
 import { connect } from 'react-redux';
 import GenreForm from '../Components/GenreForm/GenreForm';
@@ -31,6 +32,9 @@ export const mapDispatchToProps = ( dispatch ) => {
         },
         handlePanelStateChange: (panelState) => {
             dispatch( changePanelState(panelState) );
+        },
+        loadGenres: (name) => {
+            dispatch( retrieveGenreList() )
         }
     }
 }

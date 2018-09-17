@@ -81,7 +81,7 @@ class PanelTitle extends React.Component {
                 iconType = faTimesCircle;
                 iconColor = "red";
                 break;
-            case(PANEL_STATE.IN_PROGRESS):
+            case(PANEL_STATE.UNTOUCHED):
                 iconType = faCircle;
                 iconColor = "black";
                 break;

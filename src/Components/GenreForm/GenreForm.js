@@ -4,12 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import classnames from 'classnames';
 import { PANEL_STATE } from '../../Constants';
-import { genreListRequest } from '../../Actions';
 
 class GenreForm extends React.Component {
 
     componentWillMount() {
-        this.props.dispatch(genreListRequest());
+        this.props.loadGenres("JIM");
     }
 
     render() {

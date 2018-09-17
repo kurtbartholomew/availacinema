@@ -29,12 +29,32 @@ export const allGenresDeselected = () => {
 }
 
 export const genreListRequest = () => {
+    return {
+        type: GENRES_LIST_REQUEST
+    }
+}
+
+export const genreListSuccess = (genres) => {
+    return {
+        type: GENRES_LIST_SUCCESS,
+        payload: genres
+    }
+}
+
+export const genreListFailure = (error) => {
+    return {
+        type: GENRES_LIST_FAILURE,
+        payload: error
+    }
+}
+
+export const retrieveGenreList = () => {
     return ( dispatch ) => {
-        dispatch( GENRES_LIST_REQUEST );
-        return ClientService.getGenres((genres)=>{
-            dispatch( GENRES_LIST_SUCCESS, genres );
+        dispatch( genreListRequest() );
+        ClientService.getGenres((genres)=>{
+            dispatch( genreListSuccess(genres) );
         }, (error)=>{
-            dispatch( GENRES_LIST_FAILURE, error );
+            dispatch(genreListFailure(error));
         });
     }
 }
