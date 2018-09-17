@@ -29,11 +29,12 @@ export default ( state=INITIAL_STATE, action) => {
             newOptions[option] = !newOptions[option];
             return  {...state, contactOptions: newOptions};
         case CONTACT_EMAIL_UPDATED:
-            const { value, valid } = action.payload;
-            const newContactEmail = { ...state.contactEmail, value: value, valid: valid }
+            const { evalue, evalid } = action.payload;
+            const newContactEmail = { ...state.contactEmail, value: evalue, valid: evalid }
             return { ...state, contactEmail: newContactEmail };
         case CONTACT_PHONE_UPDATED:
-            const newContactPhone = { ...state.contactPhone, contactPhone: action.payload }
+            const { pvalue, pvalid } = action.payload;
+            const newContactPhone = { ...state.contactPhone, value: pvalue, valid: pvalid }
             return { ...state, contactPhone: newContactPhone };
         default:
             return state;

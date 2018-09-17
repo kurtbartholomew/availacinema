@@ -8,10 +8,7 @@ class NotificationForm extends React.Component {
     render() {
 
         const {
-            EMAIL_DAILY,
-            EMAIL_WEEKLY,
-            TEXT_DAILY,
-            TEXT_WEEKLY,
+            contactOptions,
             handleToggleNotifyOption,
             handlePhoneChange,
             handleEmailChange,
@@ -19,28 +16,35 @@ class NotificationForm extends React.Component {
             contactPhone
         } = this.props;
 
+        const {
+            EMAIL_DAILY,
+            EMAIL_WEEKLY,
+            TEXT_DAILY,
+            TEXT_WEEKLY
+        } = contactOptions;
+
         return (
             <div className="notification">
                 <div className="notification__options">
                     <div className="notification__option notification__option--email">
                         <div className="notification__form">
                             <NotificationOption 
-                                handleToggleOption={handleToggleNotifyOption}
-                                option={"EMAIL_DAILY"}
-                                text={"Email Daily"}
-                                isSelected={EMAIL_DAILY}
+                                handleToggleOption={ handleToggleNotifyOption }
+                                option={ "EMAIL_DAILY" }
+                                text={ "Email Daily" }
+                                isSelected={ EMAIL_DAILY }
                             />
-                            <NotificationOption 
-                                handleToggleOption={handleToggleNotifyOption}
-                                option={"EMAIL_WEEKLY"}
-                                text={"Email Weekly"}
-                                isSelected={EMAIL_WEEKLY}
+                            <NotificationOption
+                                handleToggleOption={ handleToggleNotifyOption }
+                                option={ "EMAIL_WEEKLY" }
+                                text={ "Email Weekly" }
+                                isSelected={ EMAIL_WEEKLY }
                             />
                             {(EMAIL_DAILY || EMAIL_WEEKLY) && 
                                 <NotificationInput
                                     type="Email"
-                                    value={contactEmail.value}
-                                    valid={contactEmail.valid}
+                                    value={ contactEmail.value }
+                                    valid={ contactEmail.valid }
                                     onChange={ (e) => {
                                             handleEmailChange(e.target.value)
                                         }
@@ -52,16 +56,16 @@ class NotificationForm extends React.Component {
                     <div className="notification__option notification__option--text">
                         <div className="notification__form">
                             <NotificationOption 
-                                handleToggleOption={handleToggleNotifyOption}
-                                option={"TEXT_DAILY"}
-                                text={"Text Daily"}
-                                isSelected={TEXT_DAILY}
+                                handleToggleOption={ handleToggleNotifyOption }
+                                option={ "TEXT_DAILY" }
+                                text={ "Text Daily" }
+                                isSelected={ TEXT_DAILY }
                             />
                             <NotificationOption 
-                                handleToggleOption={handleToggleNotifyOption}
-                                option={"TEXT_WEEKLY"}
-                                text={"Text Weekly"}
-                                isSelected={TEXT_WEEKLY}
+                                handleToggleOption={ handleToggleNotifyOption }
+                                option={ "TEXT_WEEKLY" }
+                                text={ "Text Weekly" }
+                                isSelected={ TEXT_WEEKLY }
                             />
                             {(TEXT_DAILY || TEXT_WEEKLY) &&
                                 <NotificationInput
