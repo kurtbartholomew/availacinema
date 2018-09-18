@@ -14,14 +14,16 @@ describe('Start Form Actions', () => {
     });
 
     it('should create an action to validate or invalidate the state of a form', () => {
+        const formId = 2;
+        const panelState = PANEL_STATE.VALID;
         const formIdAndPanelState = {
-            formId: 2,
-            panelState: PANEL_STATE.VALID
+            formId: formId,
+            panelState: panelState
         }
         const expectedAction = {
             type: types.CHANGE_PANEL_STATE,
             payload: formIdAndPanelState
         };
-        expect(actions.changePanelState(formIdAndPanelState)).toEqual(expectedAction);
+        expect(actions.changePanelState(formId, panelState)).toEqual(expectedAction);
     });
 });

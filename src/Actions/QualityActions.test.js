@@ -6,7 +6,7 @@ describe('Quality Form Actions', () => {
     it('should create an action to update the rating', () => {
         const rating = 5.3;
         const expectedAction = {
-            type: types.CONTACT_OPTION_TOGGLED,
+            type: types.RATING_UPDATED,
             payload: rating
         };
         expect(actions.ratingUpdated(rating)).toEqual(expectedAction);
