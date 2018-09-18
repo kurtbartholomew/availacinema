@@ -51,10 +51,10 @@ export const genreListFailure = (error) => {
 export const retrieveGenreList = () => {
     return ( dispatch ) => {
         dispatch( genreListRequest() );
-        ClientService.getGenres((genres)=>{
+        return ClientService.getGenres((genres)=>{
             dispatch( genreListSuccess(genres) );
         }, (error)=>{
-            dispatch(genreListFailure(error));
+            dispatch( genreListFailure(error) );
         });
     }
 }

@@ -1,5 +1,5 @@
 function getGenres(successCb, errorCb) {
-    fetch("/api/genres",{
+    return fetch("/api/genres",{
         accept: 'application/json'
     })
     .then(checkForSuccess)

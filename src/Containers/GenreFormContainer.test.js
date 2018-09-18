@@ -34,6 +34,5 @@ describe('GenreFormContainer', () => {
             store
         )
         expect(component).toBeDefined();
-        console.log(component.text());
     });
 })

@@ -74,20 +74,44 @@ describe('Async actions', () => {
         fetchMock.restore();
     });
 
-    it.skip('creates GENRE_LIST_SUCCESS when fetching genres is finished', () => {
-        fetchMock.getOnce('/api/genres', { 
-            body: { todos: ['blah'] },
-            headers: { 'content-type': 'application/json' }
+    it('creates GENRE_LIST_SUCCESS when fetching genres is finished', () => {
+        fetchMock.getOnce('/api/genres', {
+            genres: []
         });
 
         const expectedActions = [
             { type: types.GENRES_LIST_REQUEST },
-            { type: types.GENRES_LIST_SUCCESS, body: { todos: ['blah']} }
+            { type: types.GENRES_LIST_SUCCESS, payload: { genres: []} }
         ];
 
-        const store = mockStore({ todos: [] });
+        const store = mockStore({
+            genres: {
+                genreList: []
+            }
+        });
+        store.dispatch(actions.retrieveGenreList()).then(()=> {
+            expect(store.getActions()).toEqual(expectedActions);
+        });
+    });
 
-        return store.dispatch(actions.retrieveGenreList()).then(() => {
+    it('creates GENRE_LIST_FAILURE when fetching genres doesnt succeed', () => {
+        fetchMock.getOnce('/api/genres', {
+            throws: {
+                error: new Error("bad stuff")
+            }
+        });
+
+        const expectedActions = [
+            { type: types.GENRES_LIST_REQUEST },
+            { type: types.GENRES_LIST_FAILURE, payload: { error: new Error("bad stuff") } }
+        ];
+
+        const store = mockStore({
+            genres: {
+                genreList: []
+            }
+        });
+        store.dispatch(actions.retrieveGenreList()).then(()=> {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });
