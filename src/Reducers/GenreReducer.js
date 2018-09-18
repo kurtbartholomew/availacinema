@@ -53,19 +53,3 @@ export default ( state = INITIAL_STATE, action ) => {
             return state;
     }
 }
-
-// const INITIAL_GENRE_STATE = {
-//     id: -1,
-//     name: "",
-//     selected: false
-// };
-
-// const GenreReducer = ( genre = INITIAL_GENRE_STATE, action ) => {
-//     switch(action.type) {
-//         case GENRE_TOGGLED:
-//             const newGenre = Object.assign({}, ...genre, { selected: true });
-//             return Object.assign({}, ...genre, { selected: true });
-//         default:
-//             return genre;
-//     }
-// }

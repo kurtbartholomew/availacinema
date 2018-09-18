@@ -56,7 +56,7 @@ export default ( state = INITIAL_STATE, action ) => {
                 return { ...form, ...newForm };
             })
             const allValid = newFormChoices.reduce(( current, next ) => {
-                return current && next.valid;
+                return current && (next.condition === PANEL_STATE.VALID);
             }, true);
             return { ...state, formChoices: newFormChoices, allFormsValid: allValid };
         default:
