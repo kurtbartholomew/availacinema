@@ -1,22 +1,33 @@
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({ adapter: new Adapter() });
-
 import React from 'react';
 import StartForm from './StartForm';
 
-describe('StartForm', () => {
+Enzyme.configure({ adapter: new Adapter() });
 
-    let startform;
+const setup = () => {
+    const props = {
+        activeIdx: 0,
+        formChoices: [
+            {
+                id: 0,
+                category: 'category',
+                title: 'Form Choice',
+                tooltip: 'Interesting tooltip',
+                childForm: () => '',
+                condition: 0,
+                invalidMessage: 'BAD STUFF'
+            }
+        ],
+        handleFormChoiceSelect: jest.fn()
+    }
 
-    beforeEach(() => {
-        startform = shallow(
-            <StartForm />
-        );
-    });
+    return mount(<StartForm {...props} />);
+}
+
+describe('Start Form', () => {
 
     it('should render properly',() => {
-        expect(startform).toBeDefined();
+        expect(setup()).toBeDefined();
     });
 });

@@ -1,22 +1,24 @@
-import Enzyme, { shallow } from 'enzyme';
+import Enzyme, { mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-
-Enzyme.configure({ adapter: new Adapter() });
-
 import React from 'react';
 import QualityForm from './QualityForm';
 
-describe('QualityForm', () => {
+Enzyme.configure({ adapter: new Adapter() });
 
-    let qualityform;
+const setup = () => {
+    const props = {
+        value: 5.3,
+        editable: false,
+        handleRatingUpdated: jest.fn(),
+        handleRatingTextFieldToggled: jest.fn()
+    }
 
-    beforeEach(() => {
-        qualityform = shallow(
-            <QualityForm />
-        );
-    });
+    return mount(<QualityForm {...props} />);
+}
+
+describe('Quality Form', () => {
 
     it('should render properly',() => {
-        expect(qualityform).toBeDefined();
+        expect(setup()).toBeDefined();
     });
 });

@@ -7,7 +7,7 @@ import {
     GENRES_LIST_FAILURE
 } from '../Actions/types';
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
     isFetching: false,
     genreList : []
 };
