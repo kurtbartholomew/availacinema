@@ -3,6 +3,7 @@ import {
     SUBSCRIPTION_SUBMIT_SUCCESS,
     SUBSCRIPTION_SUBMIT_FAILURE
 } from './types';
+import ClientService from '../Services/ClientService';
 
 
 export const subscriptionSubmitRequest = () => {
@@ -11,14 +12,28 @@ export const subscriptionSubmitRequest = () => {
     }
 }
 
-export const subscriptionSubmitSuccess = () => {
+// TODO: Figure how what the server will pass back
+export const subscriptionSubmitSuccess = (subscriptionInfo) => {
     return {
-        type: SUBSCRIPTION_SUBMIT_SUCCESS
+        type: SUBSCRIPTION_SUBMIT_SUCCESS,
+        payload: subscriptionInfo
     }
 }
 
-export const subscriptionSubmitFailure = () => {
+export const subscriptionSubmitFailure = (error) => {
     return {
-        type: SUBSCRIPTION_SUBMIT_FAILURE
+        type: SUBSCRIPTION_SUBMIT_FAILURE,
+        payload: error
+    }
+}
+
+export const submitSubscription = () => {
+    return ( dispatch ) => {
+        dispatch( subscriptionSubmitRequest() );
+        ClientService.submitSubscription( (subscriptionInfo) => {
+            dispatch( subscriptionSubmitSuccess(subscriptionInfo) );
+        }, (error) => {
+            dispatch( subscriptionSubmitFailure(error) );
+        })        
     }
 }
