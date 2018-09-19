@@ -11,7 +11,7 @@ class Start extends React.Component {
             <div className="startform__container">
                 <StartFormContainer />
                 <button type="submit"
-                    onSubmit={ handleOnSubmit }
+                    onClick={ handleOnSubmit }
                     disabled={ !allFormsValid }
                     className="startform__submit"
                 >

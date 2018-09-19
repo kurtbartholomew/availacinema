@@ -28,9 +28,16 @@ export const subscriptionSubmitFailure = (error) => {
 }
 
 export const submitSubscription = () => {
-    return ( dispatch ) => {
+    return ( dispatch, getState ) => {
+        const state = getState().notifications;
+        const contactMethods = {
+            phone: state.contactPhone.valid ?
+                state.contactPhone.value: undefined,
+            email: state.contactEmail.valid ?
+                state.contactEmail.value: undefined
+        }
         dispatch( subscriptionSubmitRequest() );
-        ClientService.submitSubscription( (subscriptionInfo) => {
+        ClientService.submitSubscription(contactMethods, (subscriptionInfo) => {
             dispatch( subscriptionSubmitSuccess(subscriptionInfo) );
         }, (error) => {
             dispatch( subscriptionSubmitFailure(error) );

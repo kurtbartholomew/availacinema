@@ -1,6 +1,6 @@
 import Start from '../Components/Start/Start';
-import { subscriptionSubmitRequest } from '../Actions/'
 import { connect } from 'react-redux';
+import { submitSubscription } from '../Actions/StartActions';
 
 const mapStateToProps = (state) => {
     return {
@@ -11,7 +11,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
     return {
         handleOnSubmit: () => {
-            dispatch(subscriptionSubmitRequest())
+            dispatch( submitSubscription() );
         }
     }
 }

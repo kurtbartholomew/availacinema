@@ -8,6 +8,18 @@ function getGenres(successCb, errorCb) {
     .catch((error) => errorCb(error));
 }
 
+function submitSubscription(contactOptions, successCb, errorCb) {
+    return fetch("/api/user",{
+        accept: 'application/json',
+        method: 'PUT',
+        body: contactOptions
+    })
+    .then(checkForSuccess)
+    .then((response)=>{return response.json()})
+    .then(successCb)
+    .catch((error) => errorCb(error));
+}
+
 function checkForSuccess(response) {
     if(response.status >= 200 || response <= 300) {
         return response;
@@ -19,5 +31,8 @@ function checkForSuccess(response) {
     }
 }
 
-const ClientService = { getGenres };
+const ClientService = {
+    getGenres,
+    submitSubscription 
+};
 export default ClientService;
