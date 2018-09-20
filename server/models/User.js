@@ -37,20 +37,23 @@ module.exports = {
         return db(tableName).insert(parameters);
     },
 
-    createTable() {
-        return db.schema.createTableIfNotExists(tableName, table => {
-            table.increments('id').primary();
-            table.string('username');
-            table.string('password');
-            table.string('salt');
-            table.string('phone');
-            table.boolean('is_phone_confirmed');
-            table.string('email');
-            table.boolean('is_email_confirmed');
-            table.boolean('text_daily');
-            table.boolean('text_weekly');
-            table.boolean('email_daily');
-            table.boolean('email_weekly');
-        });
+    async createTable() {
+        const exists = await db.schema.hasTable(tableName);
+        if(!exists) {
+            db.schema.createTable(tableName, table => {
+                table.increments('id').primary();
+                table.string('username');
+                table.string('password');
+                table.string('salt');
+                table.string('phone');
+                table.boolean('is_phone_confirmed');
+                table.string('email');
+                table.boolean('is_email_confirmed');
+                table.boolean('text_daily');
+                table.boolean('text_weekly');
+                table.boolean('email_daily');
+                table.boolean('email_weekly');
+            });
+        }
     }
 }

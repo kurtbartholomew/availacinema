@@ -23,14 +23,17 @@ module.exports = {
         return db(tableName).where('rating', '>=', rating);
     },
 
-    createTable() {
-        return db.schema.createTableIfNotExists(tableName, table => {
-            table.increments('id').primary();
-            table.string('title');
-            table.float('rating');
-            table.date('release_date');
-            table.string('tmdb_key');
-            table.string('omdb_key');
-        });
+    async createTable() {
+        const exists = await db.schema.hasTable(tableName);
+        if(!exists) {
+            return db.schema.createTable(tableName, table => {
+                table.increments('id').primary();
+                table.string('title');
+                table.float('rating');
+                table.date('release_date');
+                table.string('tmdb_key');
+                table.string('omdb_key');
+            });
+        }
     }
 }

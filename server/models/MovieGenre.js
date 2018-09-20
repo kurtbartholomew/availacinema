@@ -6,12 +6,15 @@ module.exports = {
         return db(tableName).where('id', id);
     },
 
-    createTable() {
-        return db.schema.createTableIfNotExists(tableName, table => {
-            table.increments('id').primary();
-            table.string('name');
-            table.integer('movie_id').unsigned();
-            table.foreign('movie_id').references('movies.id');
-        });
+    async createTable() {
+        const exists = await db.schema.hasTable(tableName);
+        if(!exists) {
+            return db.schema.createTable(tableName, table => {
+                table.increments('id').primary();
+                table.string('name');
+                table.integer('movie_id').unsigned();
+                table.foreign('movie_id').references('movies.id');
+            });
+        }
     }
 }

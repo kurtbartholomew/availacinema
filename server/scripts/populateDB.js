@@ -1,4 +1,6 @@
-const User = require('../models/Genre');
+require('dotenv').config();
+const db = require('../db');
+const User = require('../models/User');
 const Movie = require('../models/Movie');
 const Suggestion = require('../models/Suggestion');
 const Genre = require('../models/Genre');
@@ -12,7 +14,12 @@ const MovieGenre = require('../models/MovieGenre');
     await Suggestion.createTable();
     await Genre.createTable();
 
-    // join tables
+    // // join tables
     await UserFilter.createTable();
     await MovieGenre.createTable();
-})();
+})().then(()=> {
+    console.log("DB Population Finished");
+    db.destroy();
+}).catch((error)=> {
+    console.log(error);
+})

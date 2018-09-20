@@ -18,14 +18,17 @@ module.exports = {
         })
     },
 
-    createTable() {
-        return db.schema.createTableIfNotExists(tableName, table => {
-            table.increments('id').primary();
-            table.string('title');
-            table.float('rating');
-            table.date('send_date').defaultTo(db.raw('now()'));
-            table.integer('user_id').unsigned();
-            table.foreign('user_id').references('users.id');
-        });
+    async createTable() {
+        const exists = await db.schema.hasTable(tableName);
+        if(!exists) {
+            return db.schema.createTable(tableName, table => {
+                table.increments('id').primary();
+                table.string('title');
+                table.float('rating');
+                table.date('send_date').defaultTo(db.raw('now()'));
+                table.integer('user_id').unsigned();
+                table.foreign('user_id').references('users.id');
+            });
+        }
     }
 }
