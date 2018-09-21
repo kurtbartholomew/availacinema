@@ -22,4 +22,5 @@ const MovieGenre = require('../models/MovieGenre');
     db.destroy();
 }).catch((error)=> {
     console.log(error);
+    db.destroy();
 })

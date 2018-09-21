@@ -20,12 +20,15 @@ module.exports = {
 
     async createTable() {
         const exists = await db.schema.hasTable(tableName);
+        if(exists) {
+            await db.raw(`DROP TABLE ${tableName} CASCADE`);
+        }
         if(!exists) {
             return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
-                table.string('title');
-                table.float('rating');
-                table.date('send_date').defaultTo(db.raw('now()'));
+                table.string('title').notNullable();
+                table.float('rating').notNullable();
+                table.date('send_date').defaultTo(db.raw('now()')).notNullable();
                 table.integer('user_id').unsigned();
                 table.foreign('user_id').references('users.id');
             });
