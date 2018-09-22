@@ -1,6 +1,6 @@
 const db = require('../db');
 const tableName = 'users_filters';
-const type = {
+const TYPE = {
     RATING: 0,
     GENRE: 1
 };

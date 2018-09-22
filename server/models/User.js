@@ -12,13 +12,13 @@ module.exports = {
 
     async findByPhoneOrEmail( phone, email ) {
         if(phone && email) {
-            return db(tableName).where('phone', phone).orWhere('email', email);
+            return db(tableName).where('phone', phone.value).orWhere('email', email.value);
         }
         if(phone) {
-            return db(tableName).where('phone', phone);
+            return db(tableName).where('phone', phone.value);
         }
         if(email) {
-            return db(tableName).where('email', email);
+            return db(tableName).where('email', email.value);
         }
         throw new Error("Invalid arguments passed. Neither phone or email are defined");
     },

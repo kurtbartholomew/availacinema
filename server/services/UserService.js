@@ -3,9 +3,9 @@ const UserFilter = require('../models/UserFilter');
 
 module.exports = {
     async addUser(username, password, phone, email, filters) {
-        const results = await User.findByPhoneOrEmail( phone.value, email.value );
-        if(!results.isEmpty()) {
-            throw new Error(`User already exists with phone ${phone.value} or email ${email.value}`);
+        const results = await User.findByPhoneOrEmail( phone, email );
+        if(results.length) {
+            throw new Error(`User already exists with phone ${phone ? phone.value : "undefined"} or email ${email ? email.value : "undefined"}`);
         }
         // TODO: Make these two a transaction
         const userResult = await User.add(username, password, phone, email);
@@ -22,6 +22,6 @@ module.exports = {
         if(genreFilterCount === 0) {
             throw new Error('Cannot subscribe a user with no genre filters');
         }
-        await UserFilter.add(filtersWithId);
+        await UserFilter.add(filters);
     }
 }

@@ -35,7 +35,7 @@ router.post('/user', (req, res, next) => {
         res.status(200).json({success: "User created successfully"});
     })
     .catch((e) => {
-        logger.error(e);
+        logger.error(e.toString());
         let error = "User creation failed. Please try again later";
         res.status(400).json({error});
     });
