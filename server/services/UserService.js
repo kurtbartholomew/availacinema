@@ -9,9 +9,19 @@ module.exports = {
         }
         // TODO: Make these two a transaction
         const userResult = await User.add(username, password, phone, email);
-        const filtersWithId = filters.map((filter)=> {
-            return filter.user_id = userResult.id;
-        });
+        let genreFilterCount = 0;
+        let ratingFilter = false;
+        for(let filter of filters) {
+            filter.user_id = userResult.id;
+            if(filter.type == 0) { ratingFilter = true; }
+            if(filter.type == 1) { ++genreFilterCount; }
+        }
+        if(ratingFilter === false) {
+            throw new Error('Cannot subscribe a user with no rating filter');
+        }
+        if(genreFilterCount === 0) {
+            throw new Error('Cannot subscribe a user with no genre filters');
+        }
         await UserFilter.add(filtersWithId);
     }
 }

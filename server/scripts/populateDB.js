@@ -8,6 +8,13 @@ const UserFilter = require('../models/UserFilter');
 const MovieGenre = require('../models/MovieGenre');
 
 (async () => {
+    await User.dropTable();
+    await Movie.dropTable();
+    await Suggestion.dropTable();
+    await Genre.dropTable();
+    await UserFilter.dropTable();
+    await MovieGenre.dropTable();
+
     // main tables
     await User.createTable();
     await Movie.createTable();

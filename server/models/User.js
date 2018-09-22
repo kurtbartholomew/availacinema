@@ -48,13 +48,14 @@ module.exports = {
         return db(tableName).insert(parameters);
     },
 
+    async dropTable() {
+        await db.raw(`DROP TABLE IF EXISTS ${tableName} CASCADE`);
+    },
+
     async createTable() {
         const exists = await db.schema.hasTable(tableName);
-        if(exists) {
-            await db.raw(`DROP TABLE ${tableName} CASCADE`);
-        }
         if(!exists) {
-            db.schema.createTable(tableName, table => {
+            return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
                 table.string('username');
                 table.string('password');
