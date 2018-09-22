@@ -19,8 +19,8 @@ function decorateAndCheckFilters(filters, userId) {
     let ratingFilter = false;
     for(let filter of filters) {
         filter.user_id = userId;
-        if(filter.type === 0) { ratingFilter = true; }
-        if(filter.type === 1) { ++genreFilterCount; }
+        if(filter.type === UserFilter.TYPE.RATING) { ratingFilter = true; }
+        if(filter.type === UserFilter.TYPE.GENRE) { ++genreFilterCount; }
     }
     if(ratingFilter === false) {
         throw new Error('Cannot subscribe a user with no rating filter');

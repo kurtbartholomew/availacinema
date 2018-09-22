@@ -41,4 +41,19 @@ router.post('/user', (req, res, next) => {
     });
 });
 
+router.get('/confirm/:guid', (req, res, next) => {
+    const guid = request.params.guid;
+    if(!guid) {
+        let error = "Invalid confirmation token";
+        res.status(400).json({error});
+    }
+    ConfirmationService.confirmValidUserSubscription(guid)
+    .then(() => {
+        res.redirect(301, '/confirmation');
+    })
+    .catch((e)=> {
+        res.status(400,{error:"Unable to confirm method of notification"});
+    });
+});
+
 module.exports = router;

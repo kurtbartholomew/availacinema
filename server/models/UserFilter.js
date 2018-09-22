@@ -6,6 +6,7 @@ const TYPE = {
 };
 
 module.exports = {
+    TYPE,
     findByUserId(id) {
         return db(tableName).where('user_id', id);
     },
