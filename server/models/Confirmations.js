@@ -32,7 +32,6 @@ module.exports = {
             return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
                 table.integer('type').notNullable();
-                table.string('value').notNullable();
                 table.string('guid').notNullable();
                 table.integer('user_id').unsigned();
                 table.foreign('user_id').references('users.id');

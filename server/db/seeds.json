@@ -1,0 +1,51 @@
+{
+    "users": [
+        {
+            "phone": 9204571094,
+            "is_phone_confirmed": false,
+            "text_daily": true
+        },
+        {
+            "email": "kurt@gmail.com",
+            "is_email_confirmed": true,
+            "email_weekly": true
+        }
+    ],
+    "movies": [
+        {
+            "title": "Honey, I Shrunk the Kids",
+            "rating": 9.2,
+            "release_date": "03 02 1997",
+            "tmdb_key": "02oi3nrfsdkjf3043",
+            "omdb_key": "02nklsfnau b4tksgnsdf"
+        },
+        {
+            "title": "American Ninja",
+            "rating": 0.3,
+            "release_date": "05 12 2013",
+            "tmdb_key": "02oi3920inskdfsd",
+            "omdb_key": "0fgns9238"
+        },
+        {
+            "title": "Angels in the Outfield",
+            "rating": 10,
+            "release_date": "03 02 1954",
+            "tmdb_key": "73jfys83jfus73",
+            "omdb_key": "8743hungdjg834gf"
+        }
+    ],
+    "genres": [
+        {
+            "name": "Comedy",
+            "tmdb_id": 38
+        },
+        {
+            "name": "Drama",
+            "tmdb_id": 74
+        },
+        {
+            "name": "Dance",
+            "tmdb_id": 145
+        }
+    ]
+}
