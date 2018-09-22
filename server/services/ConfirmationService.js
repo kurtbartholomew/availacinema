@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const Confirmations = require('../models/Confirmations');
+const logger = require('../config/logger');
 
 module.exports = {
     async confirmValidUserSubscription(guid) {
@@ -13,6 +14,28 @@ module.exports = {
         if(result.type === Confirmations.TYPE.EMAIL) {
             await User.confirmUserEmail(result.user_id);
         }
-        
+    },
+    async sendConfirmations(userId, phone, email) {
+        const existingConfirmations = await Confirmations.findByUserId(userId);
+        // if(phone) {
+        //     const existingPhoneConfirm = existingConfirmations.reduce((accum, current)=>{
+        //         return accum || current.type === Confirmations.TYPE.PHONE;
+        //     }, false);
+        //     if(!existingPhoneConfirm) {
+        //         await PhoneMessageService.sendConfirmationText();
+        //     } else {
+        //         // Throw Error? Inform User?
+        //     }
+        // }
+        if(email) {
+            const existingEmailConfirm = existingConfirmations.reduce((accum, current)=>{
+                return accum || current.type === Confirmations.TYPE.EMAIL;
+            }, false);
+            if(!existingEmailConfirm) {
+                await EmailMessageService.sendConfirmationEmail();
+            } else {
+               // Throw Error? Inform User? 
+            }
+        }
     }
 }

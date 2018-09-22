@@ -11,6 +11,7 @@ module.exports = {
         const userResult = await User.add(username, password, phone, email);
         decorateAndCheckFilters(filters, userResult.id);
         await UserFilter.add(filters);
+        return userResult;
     }
 }
 
