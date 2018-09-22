@@ -7,21 +7,25 @@ module.exports = {
         if(results.length) {
             throw new Error(`User already exists with phone ${phone ? phone.value : "undefined"} or email ${email ? email.value : "undefined"}`);
         }
-        // TODO: Make these two a transaction
+        // TODO: The two model calls a transaction
         const userResult = await User.add(username, password, phone, email);
-        let genreFilterCount = 0;
-        let ratingFilter = false;
-        for(let filter of filters) {
-            filter.user_id = userResult.id;
-            if(filter.type == 0) { ratingFilter = true; }
-            if(filter.type == 1) { ++genreFilterCount; }
-        }
-        if(ratingFilter === false) {
-            throw new Error('Cannot subscribe a user with no rating filter');
-        }
-        if(genreFilterCount === 0) {
-            throw new Error('Cannot subscribe a user with no genre filters');
-        }
+        decorateAndCheckFilters(filters, userResult.id);
         await UserFilter.add(filters);
+    }
+}
+
+function decorateAndCheckFilters(filters, userId) {
+    let genreFilterCount = 0;
+    let ratingFilter = false;
+    for(let filter of filters) {
+        filter.user_id = userId;
+        if(filter.type === 0) { ratingFilter = true; }
+        if(filter.type === 1) { ++genreFilterCount; }
+    }
+    if(ratingFilter === false) {
+        throw new Error('Cannot subscribe a user with no rating filter');
+    }
+    if(genreFilterCount === 0) {
+        throw new Error('Cannot subscribe a user with no genre filters');
     }
 }
