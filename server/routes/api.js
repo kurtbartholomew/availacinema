@@ -1,17 +1,20 @@
-const express = require('express');
-const router = express.Router();
+const router = require('express-promise-router')();
 const tmdb = require('../services/tmdb');
 const UserService = require('../services/UserService');
 const logger = require('../config/logger');
 
 
-router.get('/genres', (req, res, next) => {
-    tmdb.getGenres((genres)=>{
-        res.json(genres);
-    });
+router.get('/genres', async (req, res, next) => {
+    try {
+       const genres = tmdb.getGenres(); 
+       res.json(genres);
+    } catch(e) {
+        logger.error(error.stack);
+        res.json({error: "Unable to retrieve genres"})
+    }
 });
 
-router.post('/user', (req, res, next) => {
+router.post('/user', async (req, res, next) => {
     const {
         username,
         password,
@@ -30,15 +33,14 @@ router.post('/user', (req, res, next) => {
         logger.error(error);
         return res.status(400).json({error});
     }
-    UserService.addUser(username, password, phone, email, filters)
-    .then(()=>{
+    try {
+        await UserService.addUser(username, password, phone, email, filters);
         res.status(200).json({success: "User created successfully"});
-    })
-    .catch((e) => {
-        logger.error(e.toString());
+    } catch(e) {
+        logger.error(e.stack);
         let error = "User subscription failed. Please try again later";
         res.status(400).json({error});
-    });
+    }
 });
 
 router.get('/confirm/:guid', (req, res, next) => {

@@ -4,7 +4,7 @@ const TMDB_API_KEY = process.env.API_KEY;
 
 const TMDB_BASE_URI = 'https://api.themoviedb.org/3';
 
-function getGenres(cb) {
+function getGenres() {
     const options = {
         uri: `${TMDB_BASE_URI}/genre/movie/list?language=en-US`,
         qs: {
@@ -12,13 +12,9 @@ function getGenres(cb) {
         },
         json: true
     }
-    rp(options)
+    return rp(options)
     .then((genreResponse) => {
         return genreResponse.genres;
-    })
-    .then(cb)
-    .catch((error) => {
-        throw error;
     });
 }
 
