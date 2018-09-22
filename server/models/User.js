@@ -10,7 +10,7 @@ module.exports = {
         return db(tableName).where('id', id);
     },
 
-    async findByPhoneOrEmail( phone, email ) {
+    findByPhoneOrEmail( phone, email ) {
         if(phone && email) {
             return db(tableName).where('phone', phone.value).orWhere('email', email.value);
         }

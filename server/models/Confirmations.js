@@ -1,8 +1,9 @@
 const db = require('../db');
-const tableName = 'users_filters';
+const tableName = 'confirmations';
+const uuid = require('uuid/v4');
 const TYPE = {
-    RATING: 0,
-    GENRE: 1
+    PHONE: 0,
+    EMAIL: 1
 };
 
 module.exports = {
@@ -10,8 +11,13 @@ module.exports = {
         return db(tableName).where('user_id', id);
     },
 
-    add(filters) {
-        return db(tableName).insert(filters);
+    findByGuid(guid) {
+        return db(tableName).where('guid', guid);
+    },
+
+    add(confirmation) {
+        confirmation.guid = uuid();
+        return db(tableName).insert(confirmation);
     },
 
     async dropTable() {
@@ -25,6 +31,7 @@ module.exports = {
                 table.increments('id').primary();
                 table.integer('type').notNullable();
                 table.string('value').notNullable();
+                table.string('guid').notNullable();
                 table.integer('user_id').unsigned();
                 table.foreign('user_id').references('users.id');
             });

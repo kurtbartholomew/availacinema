@@ -7,7 +7,7 @@ module.exports = {
         if(results.length) {
             throw new Error(`User already exists with phone ${phone ? phone.value : "undefined"} or email ${email ? email.value : "undefined"}`);
         }
-        // TODO: The two model calls a transaction
+        // TODO: Make the two model calls a transaction
         const userResult = await User.add(username, password, phone, email);
         decorateAndCheckFilters(filters, userResult.id);
         await UserFilter.add(filters);

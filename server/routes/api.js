@@ -36,7 +36,7 @@ router.post('/user', (req, res, next) => {
     })
     .catch((e) => {
         logger.error(e.toString());
-        let error = "User creation failed. Please try again later";
+        let error = "User subscription failed. Please try again later";
         res.status(400).json({error});
     });
 });
