@@ -2,6 +2,8 @@ const db = require('../db');
 const tableName = 'movies';
 
 module.exports = {
+    TABLE: tableName,
+
     all() {
         return db.select().table(tableName);
     },
@@ -10,13 +12,15 @@ module.exports = {
         return db(tableName).where('id', id);
     },
 
-    add(title, rating, tmdbKey, omdbKey) {
-        return db(tableName).insert({
+    add(title, rating, releaseDate, tmdbKey, omdbKey) {
+        const parameters = {
             title,
             rating,
             tmdb_key: tmdbKey,
-            omdb_key: omdbKey
-        });
+            release_date: releaseDate
+        };
+        if(omdbKey) { parameters['omdb_key'] = omdbKey; }
+        return db(tableName).insert(parameters).returning('id');
     },
 
     findMatchingUserFilters(genreFilters, ratingFilter, isDaily) {
@@ -35,7 +39,7 @@ module.exports = {
                 table.string('title').notNullable();
                 table.float('rating').notNullable();
                 table.date('release_date').notNullable();
-                table.string('tmdb_key').notNullable();
+                table.string('tmdb_key').notNullable().unique();
                 table.string('omdb_key');
             });
         }
