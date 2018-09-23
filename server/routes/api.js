@@ -1,6 +1,7 @@
 const router = require('express-promise-router')();
 const tmdb = require('../services/tmdb');
 const UserService = require('../services/UserService');
+const ConfirmationService = require('../services/ConfirmationService');
 const logger = require('../config/logger');
 
 
@@ -34,8 +35,8 @@ router.post('/user', async (req, res, next) => {
         return res.status(400).json({error});
     }
     try {
-        const user = await UserService.addUser(username, password, phone, email, filters);
-        await ConfirmationService.sendConfirmations(user.id, phone, email);
+        const userId = await UserService.addUser(username, password, phone, email, filters);
+        await ConfirmationService.sendConfirmations(userId, phone, email);
         res.status(200).json({success: "User created successfully"});
     } catch(e) {
         logger.error(e.stack);
@@ -52,7 +53,7 @@ router.get('/confirm/:guid', (req, res, next) => {
     }
     ConfirmationService.confirmValidUserSubscription(guid)
     .then(() => {
-        res.redirect(301, '/confirmation');
+        res.redirect(301, '/confirmed');
     })
     .catch((e)=> {
         res.status(400,{error:"Unable to confirm method of notification"});

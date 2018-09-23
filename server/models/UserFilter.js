@@ -22,6 +22,10 @@ module.exports = {
         return db(tableName).insert(parameters).returning('id');
     },
 
+    addAll(filters) {
+        return db(tableName).insert(filters).returning('id');
+    },
+
     async dropTable() {
         await db.raw(`DROP TABLE IF EXISTS ${tableName} CASCADE`);
     },

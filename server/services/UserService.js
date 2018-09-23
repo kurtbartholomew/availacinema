@@ -9,8 +9,8 @@ module.exports = {
         }
         // TODO: Make the two model calls a transaction
         const userResult = await User.add(username, password, phone, email);
-        decorateAndCheckFilters(filters, userResult.id);
-        await UserFilter.add(filters);
+        decorateAndCheckFilters(filters, userResult[0]);
+        await UserFilter.addAll(filters);
         return userResult;
     }
 }

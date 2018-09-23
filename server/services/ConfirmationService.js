@@ -1,22 +1,24 @@
 const User = require('../models/User');
-const Confirmations = require('../models/Confirmations');
+const Confirmation = require('../models/Confirmation');
+const EmailMessageService = require('../services/EmailMessageService');
 const logger = require('../config/logger');
 
 module.exports = {
     async confirmValidUserSubscription(guid) {
-        const result = await Confirmations.findByGuid( guid );
-        if(!result.length) {
+        const results = await Confirmation.findByGuid( guid );
+        if(!results.length) {
             throw new Error(`Confirmation guid does not exist: `+guid);
         }
-        if(result.type === Confirmations.TYPE.PHONE) {
-            await User.confirmUserPhone(result.user_id);
+        const confirmation = results[0];
+        if(confirmation.type === Confirmation.TYPE.PHONE) {
+            await User.confirmUserPhone(confirmation.user_id);
         }
-        if(result.type === Confirmations.TYPE.EMAIL) {
-            await User.confirmUserEmail(result.user_id);
+        if(confirmation.type === Confirmation.TYPE.EMAIL) {
+            await User.confirmUserEmail(confirmation.user_id);
         }
     },
     async sendConfirmations(userId, phone, email) {
-        const existingConfirmations = await Confirmations.findByUserId(userId);
+        const existingConfirmations = await Confirmation.findByUserId(userId);
         // if(phone) {
         //     const existingPhoneConfirm = existingConfirmations.reduce((accum, current)=>{
         //         return accum || current.type === Confirmations.TYPE.PHONE;
@@ -29,12 +31,13 @@ module.exports = {
         // }
         if(email) {
             const existingEmailConfirm = existingConfirmations.reduce((accum, current)=>{
-                return accum || current.type === Confirmations.TYPE.EMAIL;
+                return accum || current.type === Confirmation.TYPE.EMAIL;
             }, false);
+            // prevent email spam if confirmation already sent
             if(!existingEmailConfirm) {
                 await EmailMessageService.sendConfirmationEmail();
             } else {
-               // Throw Error? Inform User? 
+               // Throw Error? Inform User?
             }
         }
     }
