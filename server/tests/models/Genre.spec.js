@@ -5,7 +5,7 @@ const Genre = require('../../models/Genre');
 
 describe('Genre Data Model', () => {
     afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${Genre.TABLE} RESTART IDENTITY`);
+        await db.raw(`TRUNCATE ${Genre.TABLE} RESTART IDENTITY CASCADE`);
     });
 
     describe('add', () => {

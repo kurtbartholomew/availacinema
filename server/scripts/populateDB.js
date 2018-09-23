@@ -6,7 +6,7 @@ const Suggestion = require('../models/Suggestion');
 const Genre = require('../models/Genre');
 const UserFilter = require('../models/UserFilter');
 const MovieGenre = require('../models/MovieGenre');
-const Confirmations = require('../models/Confirmations');
+const Confirmations = require('../models/Confirmation');
 
 (async () => {
     await User.dropTable();
