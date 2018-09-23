@@ -1,4 +1,3 @@
-require('dotenv').config();
 const chai = require('chai');
 const assert = chai.assert;
 const db = require('../../db');
@@ -7,10 +6,6 @@ const Genre = require('../../models/Genre');
 describe('Genre Data Model', () => {
     afterEach( async ()=> {
         await db.raw(`TRUNCATE ${Genre.TABLE} RESTART IDENTITY`);
-    });
-
-    after(()=> {
-        // db.destroy();
     });
 
     describe('add', () => {

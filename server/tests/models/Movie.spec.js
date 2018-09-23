@@ -1,4 +1,3 @@
-require('dotenv').config();
 const chai = require('chai');
 const assert = chai.assert;
 const db = require('../../db');
@@ -8,10 +7,6 @@ const date = new Date();
 describe('Movie Data Model', () => {
     afterEach( async ()=> {
         await db.raw(`TRUNCATE ${Movie.TABLE} RESTART IDENTITY CASCADE`);
-    });
-
-    after(()=> {
-        // db.destroy();
     });
 
     describe('add', () => {
