@@ -7,12 +7,19 @@ const TYPE = {
 
 module.exports = {
     TYPE,
+    TABLE: tableName,
+
     findByUserId(id) {
         return db(tableName).where('user_id', id);
     },
 
-    add(filters) {
-        return db(tableName).insert(filters);
+    add(type, value, userId) {
+        const parameters = {
+            type,
+            value,
+            user_id: userId
+        };
+        return db(tableName).insert(parameters).returning('id');
     },
 
     async dropTable() {

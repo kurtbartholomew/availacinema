@@ -2,9 +2,7 @@ const db = require('../db');
 const tableName = 'suggestions';
 
 module.exports = {
-    all() {
-        return db.select().table(tableName);
-    },
+    TABLE: tableName,
 
     findByUserId(id) {
         return db(tableName).where('user_id', id);
@@ -15,7 +13,7 @@ module.exports = {
             title,
             rating,
             user_id: userId
-        })
+        }).returning('id');
     },
 
     async dropTable() {
