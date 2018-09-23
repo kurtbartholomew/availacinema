@@ -2,6 +2,8 @@ const db = require('../db');
 const tableName = 'users';
 
 module.exports = {
+    TABLE: tableName,
+
     all() {
         return db.select().table(tableName);
     },
@@ -68,9 +70,9 @@ module.exports = {
                 table.string('username');
                 table.string('password');
                 table.string('salt');
-                table.string('phone');
+                table.string('phone').unique();
                 table.boolean('is_phone_confirmed');
-                table.string('email');
+                table.string('email').unique();
                 table.boolean('is_email_confirmed');
                 table.boolean('text_daily').defaultTo(false);
                 table.boolean('text_weekly').defaultTo(false);

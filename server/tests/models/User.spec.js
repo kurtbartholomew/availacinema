@@ -5,7 +5,11 @@ const db = require('../../db');
 const User = require('../../models/User');
 
 describe('User Data Model', () => {
-    it('should return true', async () => {
-        
+    beforeEach(()=> {
+        db(User.TABLE).truncate();
+    });
+
+    it('should create a user without needing username and password', async () => {
+        await User.add(undefined,undefined,{value:"9204571093",weekly:false,daily:true},undefined);
     });
 });

@@ -24,3 +24,4 @@ src/**/*.css
 .env
 .vscode
 *.log
+.env
