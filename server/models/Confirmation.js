@@ -8,6 +8,7 @@ const TYPE = {
 
 module.exports = {
     TYPE,
+    TABLE: tableName,
 
     findByUserId(id) {
         return db(tableName).where('user_id', id);
@@ -17,9 +18,13 @@ module.exports = {
         return db(tableName).where('guid', guid);
     },
 
-    add(confirmation) {
-        confirmation.guid = uuid();
-        return db(tableName).insert(confirmation);
+    add(type, userId) {
+        const parameters = {
+            type,
+            user_id: userId
+        };
+        parameters.guid = uuid();
+        return db(tableName).insert(parameters).returning('guid');
     },
 
     async dropTable() {
