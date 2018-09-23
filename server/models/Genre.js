@@ -2,6 +2,8 @@ const db = require('../db');
 const tableName = 'genres';
 
 module.exports = {
+    TABLE: tableName,
+
     all() {
         return db.select().table(tableName);
     },
@@ -14,7 +16,7 @@ module.exports = {
         return db(tableName).insert({
             name,
             tmdb_id: tmdbId
-        });
+        }).returning('id');
     },
 
     update(name, tmdbId) {
@@ -33,7 +35,7 @@ module.exports = {
             return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
                 table.string('name').notNullable();
-                table.integer('tmdb_id').notNullable();
+                table.integer('tmdb_id').notNullable().unique();
             });
         }
     }

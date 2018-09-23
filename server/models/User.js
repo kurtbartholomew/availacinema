@@ -55,7 +55,7 @@ module.exports = {
             parameters['email_daily'] = email.daily;
             parameters['email_weekly'] = email.weekly;
         }
-        return db(tableName).insert(parameters);
+        return db(tableName).insert(parameters).returning('id');
     },
 
     async dropTable() {
@@ -67,7 +67,7 @@ module.exports = {
         if(!exists) {
             return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
-                table.string('username');
+                table.string('username').unique();
                 table.string('password');
                 table.string('salt');
                 table.string('phone').unique();
