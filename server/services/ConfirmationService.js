@@ -35,7 +35,7 @@ module.exports = {
             }, false);
             // prevent email spam if confirmation already sent
             if(!existingEmailConfirm) {
-                await EmailMessageService.sendConfirmationEmail();
+                await EmailMessageService.sendConfirmationEmail(email.value);
             } else {
                // Throw Error? Inform User?
             }

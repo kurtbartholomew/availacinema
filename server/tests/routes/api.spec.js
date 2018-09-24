@@ -87,12 +87,12 @@ describe('API endpoints', () => {
             assert.match(body.error, /User subscription failed/);
         });
 
-        it.skip('should return 200 and trigger confirmation email', async () => {
+        it('should return 200 and trigger confirmation email', async () => {
             await request(app)
             .post('/api/user')
             .send({
-                phone: {
-                    value:"5555555556",
+                email: {
+                    value:"someone@gmail.com",
                     daily:true,
                     weekly:false
                 },
