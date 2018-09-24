@@ -1,5 +1,4 @@
 const mailer = require('../config/mailer');
-const logger = require('../config/logger');
 
 const FROM_LINE = 'admin@availacinema.io';
 const SUBJECT  = 'Email Confirmation for AvailaCinema';
