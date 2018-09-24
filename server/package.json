@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "node ./test.js",
+    "test": "NODE_ENV='test' node ./test.js",
     "watch": "mocha --recursive --watch tests",
-    "createdb": "node ./scripts/populateDB.js"
+    "createdb": "node ./scripts/createDB.js",
+    "seed": "npm run createdb && node ./scripts/seedDB.js"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

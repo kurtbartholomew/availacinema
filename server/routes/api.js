@@ -7,8 +7,8 @@ const logger = require('../config/logger');
 
 router.get('/genres', async (req, res, next) => {
     try {
-       const genres = tmdb.getGenres(); 
-       res.json(genres);
+        const genres = await tmdb.getGenres(); 
+        res.json(genres);
     } catch(e) {
         logger.error(error.stack);
         res.json({error: "Unable to retrieve genres"})

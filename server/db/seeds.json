@@ -47,5 +47,35 @@
             "name": "Dance",
             "tmdb_id": 145
         }
+    ],
+    "users_filters": [
+        {
+            "type": 0,
+            "value": 8.3
+        },
+        {
+            "type": 1,
+            "value": "74"
+        },
+        {
+            "type": 1,
+            "value": "38"
+        }
+    ],
+    "confirmations": [
+        {
+            "type": 0,
+            "guid": "02hnfskdafn02inf0wnf"
+        }
+    ],
+    "suggestions": [
+        {
+            "title": "Honey, I Shrunk the Kids",
+            "rating": 9.2
+        },
+        {
+            "title": "American Ninja",
+            "rating": 0.3
+        }
     ]
 }

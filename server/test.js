@@ -12,7 +12,6 @@ switch(args[0]) {
         break;
 }
 
-
 function runTests() {
     // mocha.run uses node require cache. clear this to prevent stale tests
     Object.keys(require.cache).forEach(function(key) { delete require.cache[key] });
