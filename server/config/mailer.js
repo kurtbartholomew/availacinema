@@ -4,12 +4,19 @@ const logger = require('../config/logger');
 module.exports = {
     async sendMail(from, to, subject, text) {
         const transporter = await assignTransporter();
-        return transporter.sendMail({
-            from,
-            to,
-            subject,
-            text
-        });
+        try {
+            const response = await transporter.sendMail({
+                from,
+                to,
+                subject,
+                text
+            });
+            if(process.env.NODE_ENV === 'test'){
+                logger.info(nodemailer.getTestMessageUrl(response));
+            }
+        } catch(e) {
+            logger.error("An error occurred while trying to send a test email: "+e.message);
+        }
     },
     mailDaemon: nodemailer
 }
@@ -27,21 +34,9 @@ async function assignTransporter() {
             }
         };
     } else {
-        config = await createTestAccountAsync();
-    }
-    return nodemailer.createTransport(config);
-}
-
-function createTestAccountAsync() {
-    return new Promise(function(resolve, reject) {
-        nodemailer.createTestAccount((err, account) => {
-            if(err) {
-                reject(err);
-                logger.error('Failed to create a test account: '+ err.message);
-                return;
-            }
-    
-            resolve({
+        try {
+            const account = await nodemailer.createTestAccount();
+            config = {
                 host: account.smtp.host,
                 port : account.smtp.port,
                 secure: account.smtp.secure,
@@ -49,7 +44,10 @@ function createTestAccountAsync() {
                     user: account.user,
                     pass: account.pass
                 }
-            });
-        });
-    });
+            };
+        } catch(e) {
+            logger.error('Failed to create a test account: ' + err.message);
+        }
+    }
+    return nodemailer.createTransport(config);
 }

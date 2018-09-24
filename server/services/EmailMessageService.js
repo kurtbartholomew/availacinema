@@ -9,14 +9,7 @@ module.exports = {
         if(recipientEmail === undefined) {
             throw new Error("Recipient email was undefined or not passed");
         }
-        try {
-            response = await mailer.sendMail(FROM_LINE, recipientEmail, SUBJECT, "Hello");
-            if(process.env.NODE_ENV === 'test'){
-                logger.info(mailer.mailDaemon.getTestMessageUrl(response));
-            }
-        } catch (e) {
-            logger.error(e);
-        }
+        await mailer.sendMail(FROM_LINE, recipientEmail, SUBJECT, "Hello");
         return true;
     }
 };
