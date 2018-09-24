@@ -2,30 +2,34 @@ const nodemailer = require('nodemailer');
 const logger = require('../config/logger');
 
 module.exports = {
-    async sendMail(from, to, subject, text, cb) {
+    async sendMail(from, to, subject, text) {
         const transporter = await assignTransporter();
-        transporter.sendMail({
+        return transporter.sendMail({
             from,
             to,
             subject,
             text
-        }, cb);
+        });
     },
     mailDaemon: nodemailer
 }
 
 async function assignTransporter() {
-    let transporter;
-    if(process.env.NODE_ENV === 'test') {
-        transporter = await createTestAccountAsync();
+    let config;
+    if(process.env.NODE_ENV === 'production') {
+        config = {
+            host: 'smtp.sendgrid.net',
+            port: 587,
+            auth: {
+                type: 'login',
+                user: 'apikey',
+                pass: process.env.SENDGRID_API_KEY
+            }
+        };
     } else {
-        transporter = nodemailer.createTransport({
-            sendmail: true,
-            newline: 'unix',
-            path: '/usr/sbin/sendmail'
-        });
+        config = await createTestAccountAsync();
     }
-    return transporter;
+    return nodemailer.createTransport(config);
 }
 
 function createTestAccountAsync() {
@@ -37,7 +41,7 @@ function createTestAccountAsync() {
                 return;
             }
     
-            resolve(nodemailer.createTransport({
+            resolve({
                 host: account.smtp.host,
                 port : account.smtp.port,
                 secure: account.smtp.secure,
@@ -45,7 +49,7 @@ function createTestAccountAsync() {
                     user: account.user,
                     pass: account.pass
                 }
-            }));
+            });
         });
     });
 }

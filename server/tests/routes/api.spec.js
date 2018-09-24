@@ -88,7 +88,7 @@ describe('API endpoints', () => {
         });
 
         it('should return 200 and trigger confirmation email', async () => {
-            await request(app)
+            const response = await request(app)
             .post('/api/user')
             .send({
                 email: {
@@ -99,7 +99,10 @@ describe('API endpoints', () => {
                 filters: validFilters
             })
             .expect(200);
-        });
+            const body = response.body;
+            assert.isDefined(body.success);
+            assert.match(body.success, /User created/);
+        }).timeout(4000);
     });
     // TODO: Make clearing and seeding of db for e2e tests more programmatic and less fragile
 });
