@@ -7,7 +7,8 @@
     "test": "NODE_ENV='test' node ./test.js",
     "watch": "mocha --recursive --watch tests",
     "createdb": "node ./scripts/createDB.js",
-    "seed": "npm run createdb && node ./scripts/seedDB.js"
+    "seed": "npm run createdb && node ./scripts/seedDB.js",
+    "teste2e": "npm run seed && npm run test -- --e2e"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",

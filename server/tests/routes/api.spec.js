@@ -43,15 +43,15 @@ describe('API endpoints', () => {
             assert.match(body.error, /Missing valid filters/);
         });
 
-        // it('should return error and 400 error code if no valid phone or email address', async () => {
-        //     const response = await request(app)
-        //     .post('/api/user')
-        //     .send({phone:{value:"3042030434",daily:true,weekly:false}})
-        //     .expect(400);
-        //     const body = response.body;
-        //     assert.isDefined(body.error);
-        //     assert.match(body.error, /Missing valid filters/);
-        // });
+        it('should return error and 400 error code if user with same phone or email exists', async () => {
+            const response = await request(app)
+            .post('/api/user')
+            .send({phone:{value:"3042030434",daily:true,weekly:false}})
+            .expect(400);
+            const body = response.body;
+            assert.isDefined(body.error);
+            assert.match(body.error, /Missing valid filters/);
+        });
     });
     
 });
