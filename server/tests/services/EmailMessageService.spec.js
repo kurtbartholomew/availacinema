@@ -4,7 +4,7 @@ const sinon = require('sinon');
 const EmailMessageService = require('../../services/EmailMessageService');
 
 describe('Email Message Service', () => {
-    describe('sendConfirmationEmail', () => {
+    describe.skip('sendConfirmationEmail', () => {
         beforeEach(() => {
             this.sandbox = sinon.createSandbox();
         });

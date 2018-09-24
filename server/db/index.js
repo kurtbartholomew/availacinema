@@ -9,7 +9,9 @@ const db = knex({
         database: process.env.DBDATABASE,
         port: process.env.DBPORT
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
+    asyncStackTraces: true,
+    // debug: true
 });
 
 module.exports = db;

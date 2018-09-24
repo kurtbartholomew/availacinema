@@ -35,7 +35,8 @@ router.post('/user', async (req, res, next) => {
         return res.status(400).json({error});
     }
     try {
-        const userId = await UserService.addUser(username, password, phone, email, filters);
+        const userIdArr = await UserService.addUser(username, password, phone, email, filters);
+        const userId = userIdArr[0];
         await ConfirmationService.sendConfirmations(userId, phone, email);
         res.status(200).json({success: "User created successfully"});
     } catch(e) {

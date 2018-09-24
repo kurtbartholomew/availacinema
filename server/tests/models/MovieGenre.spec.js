@@ -1,15 +1,17 @@
 const chai = require('chai');
 const assert = chai.assert;
-const db = require('../../db');
 const MovieGenre = require('../../models/MovieGenre');
 const Movie = require('../../models/Movie');
 const Genre = require('../../models/Genre');
+const dbUtils = require('../../scripts/dbUtils');
 
 describe('MovieGenre Data Model', () => {
-    afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${MovieGenre.TABLE} RESTART IDENTITY CASCADE`);
-        await db.raw(`TRUNCATE ${Movie.TABLE} RESTART IDENTITY CASCADE`); 
-        await db.raw(`TRUNCATE ${Genre.TABLE} RESTART IDENTITY CASCADE`); 
+    beforeEach( async ()=> {
+        await dbUtils.clearTables(MovieGenre.TABLE, Movie.TABLE, Genre.TABLE);
+    });
+
+    beforeEach( async ()=> {
+        await dbUtils.clearTables(MovieGenre.TABLE, Movie.TABLE, Genre.TABLE);
     });
 
     describe('add', () => {
@@ -24,8 +26,9 @@ describe('MovieGenre Data Model', () => {
             assert.equal(results.length, 1);
         });
     });
+
     describe('findByMovieId', () => {
-        it('should create genre entry for a movie', async () => {
+        it('should should find a movie\'s genres by their id', async () => {
             const newMovie = await Movie.add("Dracula",8.3,new Date(),"20323432");
             const newGenre = await Genre.add("Comedy",8234);
             await MovieGenre.add( newMovie[0], newGenre[0]);

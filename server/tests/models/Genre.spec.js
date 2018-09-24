@@ -1,14 +1,19 @@
 const chai = require('chai');
 const assert = chai.assert;
-const db = require('../../db');
 const Genre = require('../../models/Genre');
+const dbUtils = require('../../scripts/dbUtils');
 
 describe('Genre Data Model', () => {
     afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${Genre.TABLE} RESTART IDENTITY CASCADE`);
+        await dbUtils.clearTables(Genre.TABLE);
     });
 
     describe('add', () => {
+
+        beforeEach( async ()=> {
+            await dbUtils.clearTables(Genre.TABLE);
+        });
+
         it('should create genre', async () => {
             const results = await Genre.add("Comedy",8234);
             assert.isArray(results);

@@ -1,13 +1,12 @@
 const chai = require('chai');
 const assert = chai.assert;
-const db = require('../../db');
 const Suggestion = require('../../models/Suggestion');
 const User = require('../../models/User');
+const dbUtils = require('../../scripts/dbUtils');
 
 describe('Suggestion Data Model', () => {
     afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${Suggestion.TABLE} RESTART IDENTITY CASCADE`);
-        await db.raw(`TRUNCATE ${User.TABLE} RESTART IDENTITY CASCADE`); 
+        await dbUtils.clearTables(Suggestion.TABLE,User.TABLE);
     });
 
     describe('add', () => {

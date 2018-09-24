@@ -1,12 +1,12 @@
 const chai = require('chai');
 const assert = chai.assert;
-const db = require('../../db');
 const Movie = require('../../models/Movie');
 const date = new Date();
+const dbUtils = require('../../scripts/dbUtils');
 
 describe('Movie Data Model', () => {
     afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${Movie.TABLE} RESTART IDENTITY CASCADE`);
+        await dbUtils.clearTables(Movie.TABLE);
     });
 
     describe('add', () => {

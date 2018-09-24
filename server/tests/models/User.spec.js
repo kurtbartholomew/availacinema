@@ -1,11 +1,11 @@
 const chai = require('chai');
 const assert = chai.assert;
-const db = require('../../db');
 const User = require('../../models/User');
+const dbUtils = require('../../scripts/dbUtils');
 
 describe('User Data Model', () => {
     afterEach( async ()=> {
-        await db.raw(`TRUNCATE ${User.TABLE} RESTART IDENTITY CASCADE`);
+        await dbUtils.clearTables(User.TABLE);
     });
 
     describe('add', () => {
