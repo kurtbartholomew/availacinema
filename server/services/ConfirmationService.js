@@ -35,7 +35,8 @@ module.exports = {
             }, false);
             // prevent email spam if confirmation already sent
             if(!existingEmailConfirm) {
-                await EmailMessageService.sendConfirmationEmail(email.value);
+                const guids = await Confirmation.add(Confirmation.TYPE.EMAIL, userId);
+                await EmailMessageService.sendConfirmationEmail(email.value, guids[0]);
             } else {
                // Throw Error? Inform User?
             }

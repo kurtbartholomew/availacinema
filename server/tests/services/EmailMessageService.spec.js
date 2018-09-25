@@ -29,9 +29,21 @@ describe('Email Message Service', () => {
             const sendMailFake = sinon.fake.returns(true);
             this.sandbox.replace(mailer, 'sendMail', sendMailFake);
             
-            await EmailMessageService.sendConfirmationEmail("someone@gmail.com");
+            await EmailMessageService.sendConfirmationEmail("someone@gmail.com","09iwn209ngsfi0adnfg09e23");
             
             assert.equal(sendMailFake.callCount, 1);
+        });
+
+        it('should throw an error if no confirmation guid is provided', async () => {
+            this.sandbox.replace(mailer, 'sendMail', () => true);
+            let error;
+            try {
+                await EmailMessageService.sendConfirmationEmail("someone@gmail.com");
+            } catch(e) {
+                error = e;
+            }
+            assert.isDefined(error);
+            assert.match(error, /guid was undefined or not passed/);
         });
     });
 });

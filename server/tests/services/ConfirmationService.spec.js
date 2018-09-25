@@ -33,6 +33,7 @@ describe('Confirmation Service', () => {
         it('should call email service if no outstanding confirmations', async () => {
             const sendConfirmationEmailFake = sinon.fake.returns(true)
             this.sandbox.replace(Confirmation, 'findByUserId', () => []);
+            this.sandbox.replace(Confirmation, 'add', () => ['02nfioasf093nt90ian09fdns9f']);
             this.sandbox.replace(EmailMessageService, 'sendConfirmationEmail', sendConfirmationEmailFake);
 
             await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
@@ -40,12 +41,22 @@ describe('Confirmation Service', () => {
         });
 
         it('should not call email service if confirmation exists', async () => {
-            const sendConfirmationEmailFake = sinon.fake.returns(true)
+            const sendConfirmationEmailFake = sinon.fake.returns(true);
             this.sandbox.replace(Confirmation, 'findByUserId', () => [validConfirmations[0]]);
             this.sandbox.replace(EmailMessageService, 'sendConfirmationEmail', sendConfirmationEmailFake);
 
             await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
             assert.equal(sendConfirmationEmailFake.callCount, 0);
+        });
+
+        it('should add a new email confirmation if none exists', async () => {
+            const addConfirmationFake = sinon.fake.returns(true)
+            this.sandbox.replace(Confirmation, 'findByUserId', () => []);
+            this.sandbox.replace(Confirmation, 'add', addConfirmationFake);
+            this.sandbox.replace(EmailMessageService, 'sendConfirmationEmail', () => []);
+
+            await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
+            assert.equal(addConfirmationFake.callCount, 1);
         });
     });
 
@@ -91,5 +102,7 @@ describe('Confirmation Service', () => {
             assert.isDefined(error);
             assert.match(error.toString(), /does not exist/);
         });
+
+        
     });
 });
