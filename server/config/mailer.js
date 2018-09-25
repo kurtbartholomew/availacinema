@@ -2,14 +2,14 @@ const nodemailer = require('nodemailer');
 const logger = require('../config/logger');
 
 module.exports = {
-    async sendMail(from, to, subject, text) {
+    async sendMail(from, to, subject, html) {
         const transporter = await assignTransporter();
         try {
             const response = await transporter.sendMail({
                 from,
                 to,
                 subject,
-                text
+                html
             });
             if(process.env.NODE_ENV === 'test'){
                 logger.info(nodemailer.getTestMessageUrl(response));

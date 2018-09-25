@@ -45,5 +45,14 @@ describe('Email Message Service', () => {
             assert.isDefined(error);
             assert.match(error, /guid was undefined or not passed/);
         });
+
+        it('should properly render confirmation email from template', async () => {
+            const sendMailFake = sinon.fake.returns(true);
+            this.sandbox.replace(mailer, 'sendMail', sendMailFake); 
+            
+            await EmailMessageService.sendConfirmationEmail("someone@gmail.com","09iwn209ngsfi0adnfg09e23");
+            
+            assert.match(sendMailFake.lastCall.lastArg, /Thanks for subscribing/);
+        });
     });
 });
