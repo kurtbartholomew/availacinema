@@ -15,4 +15,12 @@ if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
     }));
 }
 
+if (process.env.NODE_ENV === 'test') {
+    logger.add(new winston.transports.File({
+        filename: 'test.log',
+        level: 'debug',
+        format: winston.format.simple()
+    }));
+}
+
 module.exports = logger;
