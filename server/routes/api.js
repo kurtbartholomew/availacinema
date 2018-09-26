@@ -24,15 +24,9 @@ router.post('/user', async (req, res, next) => {
         filters
     } = req.body;
 
-    if(phone === undefined && email === undefined) {
-        let error = "Missing either a valid phone or email address";
-        logger.error(error);
-        return res.status(400).json({error});
-    }
-    if(filters === undefined) {
-        let error  = "Missing valid filters for genres or ratings";
-        logger.error(error);
-        return res.status(400).json({error});
+    const errors = validateUserDetails(phone, email, filters);
+    if(errors.length) {
+        res.status(400).json({errors});
     }
     try {
         const userIdArr = await UserService.addUser(username, password, phone, email, filters);
@@ -60,5 +54,22 @@ router.get('/confirm/:guid', (req, res, next) => {
         res.status(400,{error:"Unable to confirm method of notification"});
     });
 });
+
+function validateUserDetails(phone, email, filters) {
+    const errors = [];
+    if(phone === undefined && email === undefined) {
+        errors.push("Invalid subscription: A phone number or email must be provided");
+    }
+    if(filters === undefined) {
+        errors.push("Invalid filters: Missing valid filters for genres or ratings");
+    }
+    if(phone && (phone.daily === false && phone.weekly === false)) {
+        errors.push("Invalid phone subscription: daily or weekly must be set to true");
+    }
+    if(email && (email.daily === false && email.weekly === false)) {
+        errors.push("Invalid email subscription: daily or weekly must be set to true");
+    }
+    return errors;
+}
 
 module.exports = router;

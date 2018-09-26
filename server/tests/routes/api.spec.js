@@ -55,18 +55,18 @@ describe('API endpoints', () => {
             .send({})
             .expect(400);
             const body = response.body;
-            assert.isDefined(body.error);
-            assert.match(body.error, /Missing either a valid phone/);
+            assert.isDefined(body.errors);
+            assert.match(body.errors.toString(), /phone number or email must be provided/);
         });
 
-        it('should return error and 400 error code if no valid phone or email address', async () => {
+        it('should return error and 400 status code if no valid filters', async () => {
             const response = await request(app)
             .post('/api/user')
             .send({phone:{value:"3042030434",daily:true,weekly:false}})
             .expect(400);
             const body = response.body;
-            assert.isDefined(body.error);
-            assert.match(body.error, /Missing valid filters/);
+            assert.isDefined(body.errors);
+            assert.match(body.errors.toString(), /Missing valid filters/);
         });
 
         // Once I can actually seed the db properly during tests, I'll reenable this
@@ -84,7 +84,7 @@ describe('API endpoints', () => {
             .expect(400);
             const body = response.body;
             assert.isDefined(body.error);
-            assert.match(body.error, /User subscription failed/);
+            assert.match(body.error.toString(), /User subscription failed/);
         });
 
         it('should return 200 and trigger confirmation email', async () => {
