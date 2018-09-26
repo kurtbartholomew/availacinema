@@ -7,7 +7,8 @@ import StartForm from '../Components/StartForm/StartForm';
 const mapStateToProps = ( state ) => {
     return {
         activeIdx: state.start.activeIdx,
-        formChoices: state.start.formChoices
+        formChoices: state.start.formChoices,
+        isSubmitting: state.start.isSubmitting
     };
 }
 

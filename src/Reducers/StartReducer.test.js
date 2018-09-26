@@ -64,6 +64,41 @@ describe('Start Reducer', () => {
         });
     });
 
+    it('should handle SUBSCRIPTION_SUBMIT_REQUEST action', () => {
+        expect(StartReducer(startState, {
+            type: types.SUBSCRIPTION_SUBMIT_REQUEST
+        })).toEqual({
+            allFormsValid: false,
+            activeIdx: 0,
+            isSubmitting: true,
+            formChoices: expect.any(Array)
+        });
+    });
+
+    it('should handle SUBSCRIPTION_SUBMIT_FAILURE action', () => {
+        expect(StartReducer(startState, {
+            type: types.SUBSCRIPTION_SUBMIT_FAILURE,
+            payload: "Error"
+        })).toEqual({
+            allFormsValid: false,
+            activeIdx: 0,
+            isSubmitting: false,
+            formChoices: expect.any(Array)
+        });
+    });
+
+    it('should handle SUBSCRIPTION_SUBMIT_SUCCESS action', () => {
+        expect(StartReducer(startState, {
+            type: types.SUBSCRIPTION_SUBMIT_SUCCESS,
+            payload: "info"
+        })).toEqual({
+            allFormsValid: false,
+            activeIdx: 0,
+            isSubmitting: false,
+            formChoices: expect.any(Array)
+        });
+    });
+
     it('should handle CHANGE_PANEL_STATE action', () => {
         expect(StartReducer(startState, {
             type: types.CHANGE_PANEL_STATE,

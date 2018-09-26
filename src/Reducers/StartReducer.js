@@ -1,6 +1,9 @@
 import {
     TOGGLE_SELECTED_FORM,
-    CHANGE_PANEL_STATE
+    CHANGE_PANEL_STATE,
+    SUBSCRIPTION_SUBMIT_REQUEST,
+    SUBSCRIPTION_SUBMIT_SUCCESS,
+    SUBSCRIPTION_SUBMIT_FAILURE
 } from "../Actions/types";
 import GenreFormContainer from '../Containers/GenreFormContainer';
 import QualityFormContainer from '../Containers/QualityFormContainer';
@@ -60,6 +63,11 @@ export default ( state = INITIAL_STATE, action ) => {
                 return current && (next.condition === PANEL_STATE.VALID);
             }, true);
             return { ...state, formChoices: newFormChoices, allFormsValid: allValid };
+        case SUBSCRIPTION_SUBMIT_REQUEST:
+            return { ...state, isSubmitting: true };
+        case SUBSCRIPTION_SUBMIT_SUCCESS:
+        case SUBSCRIPTION_SUBMIT_FAILURE:
+            return { ...state, isSubmitting: false };
         default:
             return state;
     }
