@@ -1,0 +1,12 @@
+@import '../../Assets/styles/variables.scss';
+
+
+.notfound {
+    height: 20rem;
+    width: 40rem;
+    margin: 3rem auto 0;
+    background-color: lighten($bgColor,10%);
+    border-radius: 0.5rem;
+    color: white;
+    padding: 3rem;
+}
