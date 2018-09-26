@@ -9,10 +9,13 @@ function getGenres(successCb, errorCb) {
 }
 
 function submitSubscription(contactOptions, successCb, errorCb) {
+    const headers = new Headers();
+    headers.append('Content-Type','application/json');
     return fetch("/api/user",{
         accept: 'application/json',
-        method: 'PUT',
-        body: contactOptions
+        method: 'POST',
+        headers,
+        body: JSON.stringify(contactOptions)
     })
     .then(checkForSuccess)
     .then((response)=>{return response.json()})

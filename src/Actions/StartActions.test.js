@@ -16,12 +16,9 @@ describe('Start Actions', () => {
         expect(actions.subscriptionSubmitRequest()).toEqual(expectedAction);
     });
 
-    // TODO: Figure out what to return on submission success and test
     it('should create an action to return subscription info on submission success', () => {
         const subscriptionInfo = {
-            id: 1823,
-            email: "jim@gmail.com",
-            phone: undefined
+            success: true
         }
         const expectedAction = {
             type: types.SUBSCRIPTION_SUBMIT_SUCCESS,
@@ -48,13 +45,13 @@ describe('Async actions', () => {
 
     it.skip('creates SUBSCRIPTION_SUBMIT_SUCCESS when finished creating submission', () => {
         fetchMock.putOnce('/api/user', { 
-            body: { user: { email: "jim@gmail.com", phone: "9234929535" } },
+            body: { success: true },
             headers: { 'content-type': 'application/json' }
         });
 
         const expectedActions = [
             { type: types.SUBSCRIPTION_SUBMIT_REQUEST },
-            { type: types.SUBSCRIPTION_SUBMIT_SUCCESS, body: { user: { email: "jim@gmail.com", phone: "9234929535" } } }
+            { type: types.SUBSCRIPTION_SUBMIT_SUCCESS, body: { success: true } }
         ];
 
         const store = mockStore({ start: {} });

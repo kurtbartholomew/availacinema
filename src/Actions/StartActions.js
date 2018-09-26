@@ -29,18 +29,63 @@ export const subscriptionSubmitFailure = (error) => {
 
 export const submitSubscription = () => {
     return ( dispatch, getState ) => {
-        const state = getState().notifications;
-        const contactMethods = {
-            phone: state.contactPhone.valid ?
-                state.contactPhone.value: undefined,
-            email: state.contactEmail.valid ?
-                state.contactEmail.value: undefined
-        }
+        const state = getState();
+        const genreFilters = extractGenreFilters(state.genres);
+        const ratingFilter = extractRatingFilter(state.quality);
+        const notifications = extractNotificationMethods(state.notifications);
+        const payload = {
+            filters: [...genreFilters, ratingFilter],
+            ...notifications
+        };
         dispatch( subscriptionSubmitRequest() );
-        ClientService.submitSubscription(contactMethods, (subscriptionInfo) => {
+        ClientService.submitSubscription(payload, (subscriptionInfo) => {
             dispatch( subscriptionSubmitSuccess(subscriptionInfo) );
         }, (error) => {
             dispatch( subscriptionSubmitFailure(error) );
         })        
     }
+}
+
+function extractGenreFilters (genreState) {
+    const genreFilters = [];
+    genreState.genreList.forEach((genre)=>{
+        if(genre.selected && genre.selected === true) {
+            genreFilters.push({
+                type: 0,
+                value: genre.id
+            });
+        }
+    });
+    return genreFilters;
+}
+
+function extractRatingFilter (ratingState) {
+    return {
+        type: 1,
+        value: ratingState.value
+    };
+}
+
+function extractNotificationMethods (notifications) {
+    const {
+        contactEmail,
+        contactOptions,
+        contactPhone
+    } = notifications;
+    const notificationChoices = {};
+    if(contactPhone.value !== "") {
+        notificationChoices['phone'] = {
+            value: contactPhone.value,
+            daily: contactOptions.TEXT_DAILY,
+            weekly: contactOptions.TEXT_WEEKLY
+        }
+    }
+    if(contactEmail.value !== "") {
+        notificationChoices['email'] = {
+            value: contactEmail.value,
+            daily: contactOptions.EMAIL_DAILY,
+            weekly: contactOptions.EMAIL_WEEKLY
+        }
+    }
+    return notificationChoices;
 }

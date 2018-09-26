@@ -26,7 +26,7 @@ router.post('/user', async (req, res, next) => {
 
     const errors = validateUserDetails(phone, email, filters);
     if(errors.length) {
-        res.status(400).json({errors});
+        return res.status(400).json({errors});
     }
     try {
         const userIdArr = await UserService.addUser(username, password, phone, email, filters);
