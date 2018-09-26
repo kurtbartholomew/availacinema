@@ -22,7 +22,7 @@ class App extends React.Component {
                             <Route exact path="/start" component={StartContainer} />
                             <Route exact path="/confirm" component={Confirm} />
                             <Route exact path="/verified" component={Verified} />
-                            <Route component={NotFound} />
+                            <Route path="*" component={NotFound} />
                         </Switch>
                     </div>
                 </Router>

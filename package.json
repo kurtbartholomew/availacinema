@@ -36,7 +36,7 @@
     "build-css": "node-sass-chokidar src/ -o src/",
     "watch-css": "npm run build-css && node-sass-chokidar src/ -o src/ --watch --recursive",
     "start": "concurrently \"npm run server\" \"npm run watch-css\" \"react-scripts start\"",
-    "build": "npm build-css && react-scripts build",
+    "build": "npm run build-css && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
     "server": "nodemon ./server/bin/www"

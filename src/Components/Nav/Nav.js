@@ -11,7 +11,7 @@ class Nav extends React.Component {
                     <div className="navbar__name">AvailaCinema</div>
                 </Link>
                 <div className="navbar__options">
-                    <Link to={"/login"} className="navbar__option option__login">Login</Link>
+                    {/* <Link to={"/login"} className="navbar__option option__login">Login</Link> */}
                     <Link to={"/about"}  className="navbar__option option__about">About</Link>
                     <Link to={"/contact"}  className="navbar__option option__contact">Contact</Link>
                 </div>

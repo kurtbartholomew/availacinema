@@ -1,11 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import './main.css';
 
 class Main extends React.Component {
     render() {
+        // TODO: Figure out a better way to redirect
+        const qs = new URLSearchParams(window.location.search);
+        let redirectToVerify = false;
+        if(qs && qs.get('confirm') === 'true') {
+            redirectToVerify = true;
+        }
         return (
             <div className="main">
+                {redirectToVerify && <Redirect to="/verified" />}
                 <div className="main__left">
                     <div className="main__description">
                         <div className="main__title">
