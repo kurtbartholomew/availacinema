@@ -1,6 +1,10 @@
 @import '../../Assets/styles/variables.scss';
 @import '../../Assets/styles/common.scss';
 
-.confirm {
+.verified {
     @extend %hero;
+
+    p {
+        color: $fadedFont;
+    }
 }
