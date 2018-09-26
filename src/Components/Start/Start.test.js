@@ -16,7 +16,7 @@ describe('Start', () => {
         );
     });
 
-    it.skip('should render properly',() => {
+    it('should render properly',() => {
         expect(start).toBeDefined();
     });
 });

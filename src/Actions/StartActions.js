@@ -12,7 +12,6 @@ export const subscriptionSubmitRequest = () => {
     }
 }
 
-// TODO: Figure how what the server will pass back
 export const subscriptionSubmitSuccess = (subscriptionInfo) => {
     return {
         type: SUBSCRIPTION_SUBMIT_SUCCESS,
@@ -27,7 +26,7 @@ export const subscriptionSubmitFailure = (error) => {
     }
 }
 
-export const submitSubscription = () => {
+export const submitSubscription = (RouterProps) => {
     return ( dispatch, getState ) => {
         const state = getState();
         const genreFilters = extractGenreFilters(state.genres);
@@ -38,8 +37,9 @@ export const submitSubscription = () => {
             ...notifications
         };
         dispatch( subscriptionSubmitRequest() );
-        ClientService.submitSubscription(payload, (subscriptionInfo) => {
+        return ClientService.submitSubscription(payload, (subscriptionInfo) => {
             dispatch( subscriptionSubmitSuccess(subscriptionInfo) );
+            RouterProps.history.push('/confirm');
         }, (error) => {
             dispatch( subscriptionSubmitFailure(error) );
         })        

@@ -27,7 +27,7 @@ const testState = {
 }
 
 describe('GenreFormContainer', () => {
-    it.skip('should render correctly', () => {
+    it('should render correctly', () => {
         const store = mockStore(testState);
         const component = shallowRenderWithStore(
             <GenreFormContainer />,

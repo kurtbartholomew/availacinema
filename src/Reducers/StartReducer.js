@@ -10,6 +10,7 @@ import { PANEL_STATE } from '../Constants';
 const INITIAL_STATE = {
     allFormsValid: false,
     activeIdx: 0,
+    isSubmitting: false,
     formChoices : [
         {
             id: 0,

@@ -46,8 +46,16 @@ class GenreForm extends React.Component {
 
         return (
             <div className="genreform">
-                {isFetching ? 
-                    <FontAwesomeIcon icon={ faSpinner } spin={true} />
+                {isFetching ?
+                    <div className="genreform__loading">
+                        <FontAwesomeIcon 
+                            className="genreform__loading-icon"
+                            icon={ faSpinner }
+                            spin={true}
+                            size="6x"
+                        />
+                        <span>Loading Genres...</span>
+                    </div>
                     :
                     <React.Fragment>
                         <div className="genreform__buttons">

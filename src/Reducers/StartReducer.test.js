@@ -10,6 +10,7 @@ describe('Start Reducer', () => {
         startState = {
             allFormsValid: false,
             activeIdx: 0,
+            isSubmitting: false,
             formChoices: [
                 {
                     id: 0,
@@ -32,6 +33,7 @@ describe('Start Reducer', () => {
             {
                 allFormsValid: false,
                 activeIdx: 0,
+                isSubmitting: false,
                 formChoices: [
                     expect.objectContaining({
                         id: 0,
@@ -57,6 +59,7 @@ describe('Start Reducer', () => {
         })).toEqual({
             allFormsValid: false,
             activeIdx: 1,
+            isSubmitting: false,
             formChoices: expect.any(Array)
         });
     });
@@ -71,6 +74,7 @@ describe('Start Reducer', () => {
         })).toEqual({
             allFormsValid: false,
             activeIdx: 0,
+            isSubmitting: false,
             formChoices: [
                 expect.objectContaining({
                     id: 0,

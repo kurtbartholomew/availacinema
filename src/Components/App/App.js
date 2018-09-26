@@ -16,6 +16,8 @@ class App extends React.Component {
                         <Nav />
                         <Route exact path="/" component={Main} />
                         <Route path="/start" component={StartContainer} />
+                        
+                        {/* <Route path="/confirm" component={Confirmation} /> */}
                     </div>
                 </Router>
             </Provider>

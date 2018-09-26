@@ -8,10 +8,10 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, routeProps) => {
     return {
         handleOnSubmit: () => {
-            dispatch( submitSubscription() );
+            dispatch( submitSubscription(routeProps) );
         }
     }
 }

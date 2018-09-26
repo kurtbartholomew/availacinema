@@ -43,20 +43,68 @@ describe('Async actions', () => {
         fetchMock.restore();
     });
 
-    it.skip('creates SUBSCRIPTION_SUBMIT_SUCCESS when finished creating submission', () => {
-        fetchMock.putOnce('/api/user', { 
+    it('creates SUBSCRIPTION_SUBMIT_SUCCESS when finished creating submission', () => {
+        fetchMock.postOnce('/api/user', { 
             body: { success: true },
             headers: { 'content-type': 'application/json' }
         });
 
         const expectedActions = [
             { type: types.SUBSCRIPTION_SUBMIT_REQUEST },
-            { type: types.SUBSCRIPTION_SUBMIT_SUCCESS, body: { success: true } }
+            { type: types.SUBSCRIPTION_SUBMIT_SUCCESS, payload: { success: true } }
         ];
 
-        const store = mockStore({ start: {} });
+        const store = mockStore({
+            notifications: {
+                contactOptions: {
+                    EMAIL_DAILY: true,
+                    EMAIL_WEEKLY: false,
+                    TEXT_DAILY: false,
+                    TEXT_WEEKLY: true
+                },
+                contactPhone: {
+                    value: "5555555555",
+                    valid: true
+                },
+                contactEmail: {
+                    value: "",
+                    valid: false
+                }
+            },
+            quality : {
+                selected: true,
+                value: 5.6,
+                editable: false
+            },
+            genres: {
+                genreList: [
+                    {
+                        id: 12,
+                        name: "Adventure",
+                        selected: true
+                    },
+                    {
+                        id: 14,
+                        name: "Fantasy",
+                        selected: true
+                    },
+                    {
+                        id: 878,
+                        name: "Science Fiction"
+                    }
+                ]
+            }
+        });
 
-        return store.dispatch(actions.submitSubscription()).then(() => {
+        var routerMock = {
+            history: {
+                push(str) {
+                    return true;
+                }
+            }
+        };
+
+        return store.dispatch(actions.submitSubscription(routerMock)).then(() => {
             expect(store.getActions()).toEqual(expectedActions);
         });
     });

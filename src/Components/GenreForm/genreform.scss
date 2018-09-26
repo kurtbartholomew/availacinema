@@ -1,13 +1,29 @@
 @import '../../Assets/styles/common.scss';
 
 .genreform {
-    
-    overflow-y: scroll;
+    position: relative;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
 
     &__buttons {
         width: 100%;
         display: flex;
         justify-content: center;
+    }
+    
+    &__loading {
+        height: 100%;
+        width: 100%;
+        background-color: rgba(0,0,0,0.4);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        span {
+            margin-top: 2rem;
+        }
     }
 
     &__inputs {
