@@ -1,8 +1,8 @@
 const mailer = require('../config/mailer');
 const templater = require('pug');
 const path = require('path');
-const confirmTemplateRelative = 'server/config/templates/confirmation.pug';
-const confirmationTemplatePath = path.join(process.cwd(),confirmTemplateRelative);
+const confirmTemplateRelative = '../config/templates/confirmation.pug';
+const confirmationTemplatePath = path.resolve(__dirname,confirmTemplateRelative);
 const confirmationTemplateLoader = templater.compileFile(confirmationTemplatePath);
 
 
