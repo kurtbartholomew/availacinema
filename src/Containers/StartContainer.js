@@ -4,7 +4,8 @@ import { submitSubscription } from '../Actions/StartActions';
 
 const mapStateToProps = (state) => {
     return {
-        allFormsValid: state.start.allFormsValid
+        allFormsValid: state.start.allFormsValid,
+        isSubmitting: state.start.isSubmitting
     }
 }
 

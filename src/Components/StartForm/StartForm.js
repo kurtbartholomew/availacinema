@@ -14,7 +14,8 @@ class StartForm extends React.Component {
         const {
             activeIdx,
             formChoices,
-            handleFormChoiceSelect
+            handleFormChoiceSelect,
+            isSubmitting
         } = this.props;
 
         const panels = formChoices.map((form) => {
@@ -43,8 +44,11 @@ class StartForm extends React.Component {
         });
 
         return (
-            <ul className="startform__choices">
+            <ul className={`startform__choices${isSubmitting ? " startform--submitting": ""}`}>
                 { panels }
+                { isSubmitting && 
+                    <div className="startform__overlay"></div>
+                }
             </ul>
         );
     }

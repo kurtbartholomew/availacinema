@@ -9,7 +9,6 @@
         color: white;
         font-family: $font;
         position: relative;
-        // box-shadow: 0 0 2rem -1rem rgba(0,0,0,0.5);
     }
 
     &__submit {
@@ -17,5 +16,11 @@
         position: absolute;
         right: 0;
         bottom: -4rem;
+    }
+
+    &__submitting-icon {
+        position: absolute;
+        left: 3rem;
+        top: 0.5rem;
     }
 }

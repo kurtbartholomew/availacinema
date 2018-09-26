@@ -1,10 +1,23 @@
 @import '../../Assets/styles/variables.scss';
 
 .startform {
+    height: 100%;
+    width: 100%;
+    position: relative;
 
     &__choices {
         margin: 0;
         padding: 0;
+    }
+
+    &--submitting &__overlay {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        background-color: rgba(0,0,0,0.5);
     }
     
     &__choice {
@@ -20,9 +33,9 @@
         flex-direction: row;
         align-items: center;
         background: linear-gradient(to bottom, #fff 1%, #eaeaea 100%);
-        box-shadow: 0 0 0 1px rgba(155,155,155,0.3),
-                    1px 0 0 0 rgba(255,255,255,0.9),
-                    0 2px 2px rgba(0,0,0,0.1);
+        // box-shadow: 0 0 0 1px rgba(155,155,155,0.3),
+        //             1px 0 0 0 rgba(255,255,255,0.9),
+        //             0 2px 2px rgba(0,0,0,0.1);
         color: rgba(0,0,0,0.6);
         cursor: pointer;
         &:hover {
