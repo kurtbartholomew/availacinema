@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
+import Confirm from '../Confirm/Confirm';
 import StartContainer from '../../Containers/StartContainer';
 import store from '../../Stores';
 import './app.css';
@@ -15,9 +16,9 @@ class App extends React.Component {
                     <div className="container">
                         <Nav />
                         <Route exact path="/" component={Main} />
-                        <Route path="/start" component={StartContainer} />
+                        <Route exact path="/start" component={StartContainer} />
                         
-                        {/* <Route path="/confirm" component={Confirmation} /> */}
+                        <Route exact path="/confirm" component={Confirm} />
                     </div>
                 </Router>
             </Provider>
