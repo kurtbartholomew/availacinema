@@ -11,7 +11,7 @@ module.exports = {
                 subject,
                 html
             });
-            if(process.env.NODE_ENV === 'test'){
+            if(process.env.NODE_ENV !== 'production'){
                 logger.info(nodemailer.getTestMessageUrl(response));
             }
         } catch(e) {
