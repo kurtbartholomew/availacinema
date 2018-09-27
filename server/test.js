@@ -8,8 +8,6 @@ args.forEach((arg, idx, argsArr) => {
     switch(arg) {
         case "--grep":
         case "-g":
-            // grep pattern doesn't work?
-            // always undefined
             grepPattern = argsArr[idx+1];
             break;
         default:

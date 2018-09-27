@@ -36,10 +36,12 @@ async function retrieveEnglishMoviesReleasedDaily() {
             if(found.length === 0) {
                 const details = await TmdbService.getMovieDetails(movie.id);
                 const movieIds = await Movie.add(movie.title,movie.vote_average,new Date(),movie.id,details.imdb_id);
-                for(let genre of details.genres) {
-                    const genreArr = await Genre.findByTMDBId(genre.id);
-                    if(genreArr.length) {
-                        await MovieGenre.add(movieIds[0],genreArr[0].id);
+                if(details.genres) {
+                    for(let genre of details.genres) {
+                        const genreArr = await Genre.findByTMDBId(genre.id);
+                        if(genreArr.length) {
+                            await MovieGenre.add(movieIds[0],genreArr[0].id);
+                        }
                     }
                 }
             }
@@ -50,3 +52,8 @@ async function retrieveEnglishMoviesReleasedDaily() {
     db.destroy();
 }
 
+const TmdbWorker = {
+    retrieveGenresForUpdate,
+    retrieveEnglishMoviesReleasedDaily
+};
+module.exports = TmdbWorker;

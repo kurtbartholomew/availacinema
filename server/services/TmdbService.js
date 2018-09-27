@@ -31,8 +31,8 @@ function getEnglishMoviesReleasedToday() {
             region: 'US',
             include_adult: false, // keeps adult videos out of results
             include_video: false, // keeps random videos out of results
-            'release_date.gte': moment().utc().subtract(2, 'days').format('YYYY-MM-DD'),
-            'release_date.lte': moment().utc().subtract(2, 'days').format('YYYY-MM-DD'), // videos released later than date in form of YYYY-MM-DD
+            'release_date.gte': moment().utc().format('YYYY-MM-DD'),
+            'release_date.lte': moment().utc().format('YYYY-MM-DD'), // videos released later than date in form of YYYY-MM-DD
             'vote_count.gte': 10, // keeps videos with greater than this threshold of ratings
             'vote_average.gte': 1, // keeps videos with greater than 0-10 (actually represents a 0-100 rating)
             with_release_type: 4 // Escaped 4|5 (meaning only digital (4) and physical release (5))
