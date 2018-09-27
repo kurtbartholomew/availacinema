@@ -1,5 +1,5 @@
 const router = require('express-promise-router')();
-const tmdb = require('../services/tmdb');
+const tmdb = require('../services/TmdbService');
 const UserService = require('../services/UserService');
 const ConfirmationService = require('../services/ConfirmationService');
 const logger = require('../config/logger');

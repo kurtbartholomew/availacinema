@@ -12,6 +12,10 @@ module.exports = {
         return db(tableName).where('id', id);
     },
 
+    findByTmdbKey(tmdbKey) {
+        return db(tableName).where('tmdb_key', tmdbKey);
+    },
+
     add(title, rating, releaseDate, tmdbKey, omdbKey) {
         const parameters = {
             title,
