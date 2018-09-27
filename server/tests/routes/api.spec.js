@@ -102,7 +102,7 @@ describe('API endpoints', () => {
             const body = response.body;
             assert.isDefined(body.success);
             assert.match(body.success, /User created/);
-        }).timeout(4000);
+        }).timeout(10000);
     });
     // TODO: Make clearing and seeding of db for e2e tests more programmatic and less fragile
 });

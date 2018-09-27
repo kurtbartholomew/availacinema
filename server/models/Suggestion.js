@@ -8,12 +8,25 @@ module.exports = {
         return db(tableName).where('user_id', id);
     },
 
-    add(title, rating, userId) {
+    add(title, rating, userId, movieId) {
         return db(tableName).insert({
             title,
             rating,
-            user_id: userId
+            user_id: userId,
+            movie_id: movieId
         }).returning('id');
+    },
+
+    addAll(suggestions) {
+        const formatted = suggestions.map((suggestion) => {
+            return {
+                title: suggestion.title,
+                rating: suggestion.rating,
+                user_id: suggestion.userId,
+                movie_id: suggestion.movieId
+            };
+        });
+        return db(tableName).insert(formatted).returning('id');
     },
 
     async dropTable() {
@@ -30,6 +43,8 @@ module.exports = {
                 table.date('send_date').defaultTo(db.raw('now()')).notNullable();
                 table.integer('user_id').unsigned();
                 table.foreign('user_id').references('users.id');
+                table.integer('movie_id').unsigned();
+                table.foreign('movie_id').references('movies.id');
             });
         }
     }

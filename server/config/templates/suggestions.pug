@@ -1,0 +1,8 @@
+p Hello from AvailaCinema!
+p 
+  = 'Here are the suggestions of movies to check out ' + ( isDaily ? 'that were released today, ': 'in the week of ' + date)
+ul
+  each suggestion in suggestions
+    li= `Title: ${suggestion.title} Rating: ${suggestion.rating}`
+    
+//- a(href="#{unsubscribeLink}") Click to Unsubscribe
