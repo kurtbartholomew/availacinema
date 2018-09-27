@@ -49,9 +49,19 @@ describe('Movie Data Model', () => {
         });
     });
 
-    describe.skip('findMatchingUserFilters', () => {
-        it('should return movies matching user genre and quality filters', async () => {
-            await Movie.findMatchingUserFilters();
+    describe('findByTmdbKey', () => {
+        it('should return a movie with the associated Tmdb key', async () => {
+            await Movie.add("Dracula", 8.3, date, 9327);
+            const results = await Movie.findByTmdbKey(9327);
+            assert.isArray(results);
+            assert.equal(results.length, 1);
+            assert.equal(results[0].tmdb_key, 9327);
         });
-    });
+    })
+
+    // describe.skip('findMatchingUserFilters', () => {
+    //     it('should return movies matching user genre and quality filters', async () => {
+    //         await Movie.findMatchingUserFilters();
+    //     });
+    // });
 });
