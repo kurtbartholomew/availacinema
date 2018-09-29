@@ -6,13 +6,13 @@ const Movie = require('../models/Movie');
 const MovieGenre = require('../models/MovieGenre');
 const TmdbService = require('../services/TmdbService');
 const logger = require('../config/logger');
-const rule = new schedule.RecurrenceRule();
-rule.hour = 12;
 
 async function retrieveGenresForUpdate() {
+    logger.info("Retrieve Genres for Update Job Running");
     try {
         const currentGenres = await Genre.all();
         const genres = await TmdbService.getGenres();
+        logger.info(`Retrieved ${genres.length} genres from Tmdb`);
         if(currentGenres.length === 0) {
             for(let genre of genres) {
                 await Genre.add(genre.name,genre.id);
@@ -22,15 +22,17 @@ async function retrieveGenresForUpdate() {
                 await Genre.update(genre.name,genre.id);
             }
         }
+        logger.info('Updated or added genres to database');
     } catch(e) {
         logger.error(e);
     }
-    db.destroy();
 }
 
 async function retrieveEnglishMoviesReleasedDaily() {
+    logger.info("Retrieve English Movies Released Today Job Running");
     try {
         const movies = await TmdbService.getEnglishMoviesReleasedToday();
+        logger.info(`Retrieved ${movies.length} movies released today`);
         for(let movie of movies) {
             const found = await Movie.findByTmdbKey(movie.id);
             if(found.length === 0) {
@@ -46,10 +48,10 @@ async function retrieveEnglishMoviesReleasedDaily() {
                 }
             }
         }
+        logger.info(`Incorporated movies into database`);
     } catch(e) {
         logger.error(e);
     }
-    db.destroy();
 }
 
 const TmdbWorker = {
@@ -57,3 +59,8 @@ const TmdbWorker = {
     retrieveEnglishMoviesReleasedDaily
 };
 module.exports = TmdbWorker;
+
+schedule.scheduleJob({hour: 13, minute: 0}, async function(){
+    await retrieveGenresForUpdate();
+    await retrieveEnglishMoviesReleasedDaily();
+});
