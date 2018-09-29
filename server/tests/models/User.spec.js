@@ -89,4 +89,18 @@ describe('User Data Model', () => {
         });
     });
 
+    describe('findUsersWithConfirmedEmail', async () => {
+        it('should retrieve all users with confirmed emails', async () => {
+            const usIdsOne = await User.add(undefined, undefined, undefined, {value:"james@gmail.com",weekly:true,daily:false});
+            const usIdsTwo = await User.add(undefined, undefined, undefined, {value:"jim@gmail.com",weekly:true,daily:false});
+            const usIdsThree = await User.add(undefined, undefined, undefined, {value:"jimmy@gmail.com",weekly:true,daily:false});
+            await User.confirmUserEmail(usIdsOne[0]);
+            await User.confirmUserEmail(usIdsTwo[0]);
+
+            const results = await User.findUsersWithConfirmedEmail();
+            assert.isArray(results);
+            assert.equal(results.length,2);
+        });
+    });
+
 });

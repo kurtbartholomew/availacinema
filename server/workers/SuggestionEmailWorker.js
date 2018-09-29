@@ -1,13 +1,11 @@
 require('dotenv').config();
 const db = require('../db');
 const schedule = require('node-schedule');
-const Genre = require('../models/Genre');
+const User = require('../models/User');
 const Movie = require('../models/Movie');
 const MovieGenre = require('../models/MovieGenre');
 const TmdbService = require('../services/TmdbService');
 const logger = require('../config/logger');
-const rule = new schedule.RecurrenceRule();
-rule.hour = 13;
 
 async function queueEmailsForUsers() {
     logger.info("Queue Suggestion Emails For Users Job Running");
@@ -37,6 +35,8 @@ const SuggestionEmailWorker = {
 };
 module.exports = SuggestionEmailWorker;
 
-// schedule.scheduleJob(rule, async function(){
-
-// });
+if(process.env.NODE_ENV === 'production') {
+    schedule.scheduleJob({hour: 13, minute: 0}, async function(){
+        
+    });
+}

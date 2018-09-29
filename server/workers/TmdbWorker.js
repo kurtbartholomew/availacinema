@@ -60,7 +60,9 @@ const TmdbWorker = {
 };
 module.exports = TmdbWorker;
 
-schedule.scheduleJob({hour: 13, minute: 0}, async function(){
-    await retrieveGenresForUpdate();
-    await retrieveEnglishMoviesReleasedDaily();
-});
+if(process.env.NODE_ENV === 'production') {
+    schedule.scheduleJob({hour: 13, minute: 0}, async function(){
+        await retrieveGenresForUpdate();
+        await retrieveEnglishMoviesReleasedDaily();
+    });
+}

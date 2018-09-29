@@ -20,6 +20,10 @@ module.exports = {
         return db(tableName).where('id', id).update({is_email_confirmed: true});
     },
 
+    findUsersWithConfirmedEmail() {
+        return db(tableName).where('is_email_confirmed',true);
+    },
+
     findByPhoneOrEmail( phone, email ) {
         if(phone && email) {
             return db(tableName).where('phone', phone.value).orWhere('email', email.value);
