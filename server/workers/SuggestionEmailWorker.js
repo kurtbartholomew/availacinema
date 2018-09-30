@@ -2,27 +2,40 @@ require('dotenv').config();
 const db = require('../db');
 const schedule = require('node-schedule');
 const User = require('../models/User');
-const Movie = require('../models/Movie');
-const MovieGenre = require('../models/MovieGenre');
-const TmdbService = require('../services/TmdbService');
+const SuggestionService = require('../services/SuggestionService');
 const logger = require('../config/logger');
 
-async function queueEmailsForUsers() {
-    logger.info("Queue Suggestion Emails For Users Job Running");
+async function queueEmailsForUsers(users, isDaily) {
     try {
-        const currentGenres = await Genre.all();
-        const genres = await TmdbService.getGenres();
-        logger.info(`Retrieved ${genres.length} genres from Tmdb`);
-        if(currentGenres.length === 0) {
-            for(let genre of genres) {
-                await Genre.add(genre.name,genre.id);
-            }
-        } else {
-            for(let genre of genres) {
-                await Genre.update(genre.name,genre.id);
-            }
+        for(let user of users) {
+            await SuggestionService.getAndSendSuggestionsToUser(user.id,user.email, isDaily);
         }
-        logger.info('Updated or added genres to database');
+    } catch(e) {
+        logger.error(e);
+    }
+}
+
+async function queueDailyEmailsForUsers() {
+    logger.info("Queue Suggestion Emails For Users Daily Job Running");
+    try {
+        const usersToQueryFor = await User.findUsersWithConfirmedEmail();
+        let dailyUsers = usersToQueryFor.filter((user)=> {
+            return user.email_daily === true;
+        });
+        await queueEmailsForUsers(dailyUsers, true);
+    } catch(e) {
+        logger.error(e);
+    }
+}
+
+async function queueWeeklyEmailsForUsers() {
+    logger.info("Queue Suggestion Emails For Users Weekly Job Running");
+    try {
+        const usersToQueryFor = await User.findUsersWithConfirmedEmail();
+        let weeklyUsers = usersToQueryFor.filter((user)=> {
+            return user.email_weekly === true;
+        });
+        await queueEmailsForUsers(weeklyUsers, true); 
     } catch(e) {
         logger.error(e);
     }
@@ -36,7 +49,10 @@ const SuggestionEmailWorker = {
 module.exports = SuggestionEmailWorker;
 
 if(process.env.NODE_ENV === 'production') {
-    schedule.scheduleJob({hour: 13, minute: 0}, async function(){
-        
+    schedule.scheduleJob({hour: 13, minute: 0, dayOfWeek: 2}, function weeklySuggestionEmailJob(){
+        queueWeeklyEmailsForUsers();
+    });
+    schedule.scheduleJob({hour: 13, minute: 0}, function dailySuggestionEmailJob(){
+        queueDailyEmailsForUsers();
     });
 }
