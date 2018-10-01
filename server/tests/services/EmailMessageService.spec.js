@@ -3,6 +3,7 @@ const assert = chai.assert;
 const sinon = require('sinon');
 const EmailMessageService = require('../../services/EmailMessageService');
 const mailer = require('../../config/mailer');
+const kue = require('kue');
 
 const validSuggestions = [
     {
@@ -117,5 +118,51 @@ describe('Email Message Service', () => {
 
             assert.match(sendMailFake.lastCall.lastArg, /Here are the suggestions of movies/);
         });
+    });
+
+    describe('queueSuggestionsEmail', () => {
+        
+        let queue;
+
+        before(function() {
+            queue = kue.createQueue();
+            queue.testMode.enter();
+        });
+
+        afterEach(function() {
+            queue.testMode.clear();
+        });
+
+        after(function() {
+            queue.testMode.exit();
+            queue.shutdown(1,()=>{});
+        });
+
+        it('should queue a suggestions email properly', async () => {
+            await EmailMessageService.queueSuggestionsEmail(
+                "someone@gmail.com",
+                [
+                    {
+                        title: "Dracula",
+                        rating: 8.3,
+                        userId: 832,
+                        movieId: 94031
+                    },
+                    {
+                        title: "Honey I Shrunk The Kids",
+                        rating: 6.7,
+                        userId: 832,
+                        movieId: 8343
+                    }
+                ],
+                true,
+                queue
+            );
+            assert.equal(queue.testMode.jobs.length, 1);
+            assert.equal(queue.testMode.jobs[0].type, 'email');
+            assert.equal(queue.testMode.jobs[0].data.suggestions[0].title, "Dracula");
+        });
+
+        
     });
 });

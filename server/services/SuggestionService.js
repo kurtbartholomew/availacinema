@@ -54,7 +54,7 @@ const utils = {
     }
 };
 
-async function getAndSendSuggestionsToUser(userId, email, isDaily) {
+async function getAndSendSuggestionsToUser(userId, email, isDaily, emailQueue) {
     if(userId === undefined) {
         throw new Error("Missing user id: Cannot send email to undefined user");
     }
@@ -72,7 +72,7 @@ async function getAndSendSuggestionsToUser(userId, email, isDaily) {
             });
         }
         await Suggestion.addAll(suggestions);
-        await EmailMessageService.sendSuggestionsEmail(email, suggestions, isDaily);
+        await EmailMessageService.queueSuggestionsEmail(email, suggestions, isDaily, emailQueue);
     }
 }
 

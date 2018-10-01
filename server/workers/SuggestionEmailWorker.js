@@ -4,12 +4,15 @@ const schedule = require('node-schedule');
 const User = require('../models/User');
 const SuggestionService = require('../services/SuggestionService');
 const logger = require('../config/logger');
+const kue = require('kue');
 
 async function queueEmailsForUsers(users, isDaily) {
     try {
+        const queue = kue.createQueue();
         for(let user of users) {
-            await SuggestionService.getAndSendSuggestionsToUser(user.id,user.email, isDaily);
+            await SuggestionService.getAndSendSuggestionsToUser(user.id, user.email, isDaily, queue);
         }
+        queue.shutdown(60000);
     } catch(e) {
         logger.error(e);
     }

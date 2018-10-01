@@ -77,13 +77,13 @@ describe('Suggestion Service', () => {
             this.sandbox.replace(SuggestionService.utils, 'findMoviesMatchingUserFilters', findMoviesMatchingUserFiltersFake);
             const addAllFake = sinon.fake.returns(true);
             this.sandbox.replace(Suggestion, 'addAll', addAllFake);
-            const sendSuggestionsEmailFake = sinon.fake.returns(true);
-            this.sandbox.replace(EmailMessageService, 'sendSuggestionsEmail', sendSuggestionsEmailFake);
+            const queueSuggestionsEmailFake = sinon.fake.returns(true);
+            this.sandbox.replace(EmailMessageService, 'queueSuggestionsEmail', queueSuggestionsEmailFake);
 
             await SuggestionService.getAndSendSuggestionsToUser(72,'someone@gmail.com',true);
 
             assert.equal(addAllFake.callCount, 0);
-            assert.equal(sendSuggestionsEmailFake.callCount, 0);
+            assert.equal(queueSuggestionsEmailFake.callCount, 0);
         });
 
         
@@ -100,13 +100,13 @@ describe('Suggestion Service', () => {
             this.sandbox.replace(SuggestionService.utils, 'findMoviesMatchingUserFilters', findMoviesMatchingUserFiltersFake);
             const addAllFake = sinon.fake.returns(true);
             this.sandbox.replace(Suggestion, 'addAll', addAllFake);
-            const sendSuggestionsEmailFake = sinon.fake.returns(true);
-            this.sandbox.replace(EmailMessageService, 'sendSuggestionsEmail', sendSuggestionsEmailFake);
+            const queueSuggestionsEmailFake = sinon.fake.returns(true);
+            this.sandbox.replace(EmailMessageService, 'queueSuggestionsEmail', queueSuggestionsEmailFake);
 
             await SuggestionService.getAndSendSuggestionsToUser(72,'someone@gmail.com',true);
 
             assert.equal(addAllFake.callCount, 1);
-            assert.equal(sendSuggestionsEmailFake.callCount, 1);
+            assert.equal(queueSuggestionsEmailFake.callCount, 1);
         });
     });
 });

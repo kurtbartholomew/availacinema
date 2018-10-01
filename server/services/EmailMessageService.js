@@ -50,5 +50,17 @@ module.exports = {
     },
     async sendSuggestionsText(recipientPhoneNumber, suggestions) {
         return true;
+    },
+    async queueSuggestionsEmail(email, suggestions, isDaily, queue) {
+        queue.create('email', {
+            email,
+            suggestions,
+            isDaily
+        })
+        .attempts(3)
+        .backoff({delay: 5000, type:'exponential'})
+        .removeOnComplete( true )
+        .ttl(30000)
+        .save();
     }
 };
