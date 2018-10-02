@@ -46,9 +46,6 @@ async function queueWeeklyEmailsForUsers() {
     }
 }
 
-
-
-
 const SuggestionEmailWorker = {
     utils,
     queueDailyEmailsForUsers,
