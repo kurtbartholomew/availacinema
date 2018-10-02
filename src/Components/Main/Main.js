@@ -2,14 +2,20 @@ import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import './main.css';
 
+// TODO: Move redirection logic to main component container when created
+function isRedirectionNecessary() {
+    if(window && window.URLSearchParams) {
+        const qs = new URLSearchParams(window.location.search);
+    
+        if(qs && qs.get('confirm') === 'true') {
+            return true;
+        }
+    }
+    return false;
+}
 class Main extends React.Component {
     render() {
-        // TODO: Figure out a better way to redirect
-        const qs = new URLSearchParams(window.location.search);
-        let redirectToVerify = false;
-        if(qs && qs.get('confirm') === 'true') {
-            redirectToVerify = true;
-        }
+        let redirectToVerify = isRedirectionNecessary();
         return (
             <div className="main">
                 {redirectToVerify && <Redirect to="/verified" />}
