@@ -15,7 +15,7 @@ const suggestionsTemplateLoader = templater.compileFile(suggestionsTemplatePath)
 
 const FROM_LINE = 'admin@availacinema.com';
 const SUBJECT  = 'Email Confirmation for AvailaCinema';
-const DOMAIN = 'http://availacinema.com';
+const DOMAIN = process.env.DOMAIN || 'https://availacinema.com';
 
 module.exports = {
     async sendConfirmationEmail(recipientEmail, confirmationGuid) {
