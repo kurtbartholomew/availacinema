@@ -6,19 +6,24 @@ import './main.css';
 function isRedirectionNecessary() {
     if(window && window.URLSearchParams) {
         const qs = new URLSearchParams(window.location.search);
-    
         if(qs && qs.get('confirm') === 'true') {
-            return true;
+            return "/verified";
+        }
+        if(qs && qs.get('notFound') === 'true') {
+            return "/404";
+        }
+        if(qs && qs.get('unsubscribed') === 'true') {
+            return "/unsubscribe";
         }
     }
-    return false;
+    return undefined;
 }
 class Main extends React.Component {
     render() {
-        let redirectToVerify = isRedirectionNecessary();
+        let redirect = isRedirectionNecessary();
         return (
             <div className="main">
-                {redirectToVerify && <Redirect to="/verified" />}
+                {redirect && <Redirect to={redirect} />}
                 <div className="main__left">
                     <div className="main__description">
                         <div className="main__title">

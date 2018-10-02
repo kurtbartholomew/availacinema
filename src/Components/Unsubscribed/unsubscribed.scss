@@ -1,0 +1,10 @@
+@import '../../Assets/styles/variables.scss';
+@import '../../Assets/styles/common.scss';
+
+.unsubscribed {
+    @extend %hero;
+
+    p {
+        color: $fadedFont;
+    }
+}
