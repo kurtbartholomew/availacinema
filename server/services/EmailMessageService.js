@@ -26,7 +26,8 @@ module.exports = {
             throw new Error("Confirmation guid was undefined or not passed");
         }
         const body = confirmationTemplateLoader({
-            notificationLink: `${DOMAIN}/api/confirm/${confirmationGuid}`
+            notificationLink: `${DOMAIN}/api/confirm/${confirmationGuid}`,
+            unsubscribeLink: `${DOMAIN}/api/unsubscribe/${confirmationGuid}`
         });
 
         await mailer.sendMail(FROM_LINE, recipientEmail, SUBJECT, body);

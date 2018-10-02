@@ -15,7 +15,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, '../build')))
 app.use('/api', apiRouter);
 app.use('*', (req, res, next) => {
-    res.redirect(301, '/404');
+    res.redirect(301, '/?notFound=true');
 });
 
 module.exports = app;

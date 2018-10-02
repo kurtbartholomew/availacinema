@@ -16,6 +16,10 @@ module.exports = {
         return db(tableName).where('id', id).update({is_phone_confirmed: true});
     },
 
+    deleteUser(id) {
+        return db(tableName).where('id', id).del();
+    },
+
     confirmUserEmail(id) {
         return db(tableName).where('id', id).update({is_email_confirmed: true});
     },

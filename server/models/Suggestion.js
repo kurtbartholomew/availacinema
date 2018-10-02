@@ -42,9 +42,9 @@ module.exports = {
                 table.float('rating').notNullable();
                 table.date('send_date').defaultTo(db.raw('now()')).notNullable();
                 table.integer('user_id').unsigned();
-                table.foreign('user_id').references('users.id');
+                table.foreign('user_id').references('users.id').onDelete("CASCADE");
                 table.integer('movie_id').unsigned();
-                table.foreign('movie_id').references('movies.id');
+                table.foreign('movie_id').references('movies.id').onDelete("CASCADE");
             });
         }
     }

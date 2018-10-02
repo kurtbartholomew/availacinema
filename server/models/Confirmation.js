@@ -39,7 +39,7 @@ module.exports = {
                 table.integer('type').notNullable();
                 table.string('guid').notNullable();
                 table.integer('user_id').unsigned();
-                table.foreign('user_id').references('users.id');
+                table.foreign('user_id').references('users.id').onDelete("CASCADE");
             });
         }
     }

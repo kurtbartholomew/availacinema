@@ -26,9 +26,9 @@ module.exports = {
             return db.schema.createTable(tableName, table => {
                 table.increments('id').primary();
                 table.integer('movie_id').unsigned();
-                table.foreign('movie_id').references('movies.id');
+                table.foreign('movie_id').references('movies.id').onDelete("CASCADE");
                 table.integer('genre_id').unsigned();
-                table.foreign('genre_id').references('genres.id');
+                table.foreign('genre_id').references('genres.id').onDelete("CASCADE");
             });
         }
     }

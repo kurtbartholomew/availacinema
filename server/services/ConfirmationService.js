@@ -41,5 +41,13 @@ module.exports = {
                // Throw Error? Inform User?
             }
         }
+    },
+    async unsubscribeFromSubscription(guid) {
+        const results = await Confirmation.findByGuid( guid );
+        if(!results.length) {
+            throw new Error(`Confirmation guid does not exist: `+guid);
+        }
+        const confirmation = results[0];
+        await User.deleteUser(confirmation.user_id);
     }
 }

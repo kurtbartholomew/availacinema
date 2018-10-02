@@ -55,6 +55,21 @@ router.get('/confirm/:guid', (req, res, next) => {
     });
 });
 
+router.get('/unsubscribe/:guid', (req, res, next) => {
+    const guid = req.params.guid;
+    if(!guid) {
+        let error = "Invalid token to unsubscribe with";
+        res.status(400).json({error});
+    }
+    ConfirmationService.unsubscribeFromSubscription(guid)
+    .then(() => {
+        res.redirect(301, '/?unsubscribed=true');
+    })
+    .catch((e)=> {
+        res.status(400,{error: "Unable to remove subscription with that id"});
+    });
+});
+
 function validateUserDetails(phone, email, filters) {
     const errors = [];
     if(phone === undefined && email === undefined) {
