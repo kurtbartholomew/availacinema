@@ -7,7 +7,7 @@ module.exports = {
     async confirmValidUserSubscription(guid) {
         const results = await Confirmation.findByGuid( guid );
         if(!results.length) {
-            throw new Error(`Confirmation guid does not exist: `+guid);
+            throw new Error(`Confirmation guid does not exist: ${guid}`);
         }
         const confirmation = results[0];
         if(confirmation.type === Confirmation.TYPE.PHONE) {
@@ -45,7 +45,7 @@ module.exports = {
     async unsubscribeFromSubscription(guid) {
         const results = await Confirmation.findByGuid( guid );
         if(!results.length) {
-            throw new Error(`Confirmation guid does not exist: `+guid);
+            throw new Error(`Subscription guid does not exist: `+guid);
         }
         const confirmation = results[0];
         await User.deleteUser(confirmation.user_id);

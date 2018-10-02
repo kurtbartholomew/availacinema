@@ -43,6 +43,17 @@ describe('User Data Model', () => {
         });
     });
 
+    describe('del', () => {
+        it('should delete a user in the database', async () => {
+            await User.add(undefined,undefined,{value:"5555555555",weekly:false,daily:true},undefined);
+            const results = await User.add(undefined,undefined,{value:"5555555556",weekly:false,daily:true},undefined);
+            await User.deleteUser(results[0]);
+            const remainingUsers = await User.all();
+            assert.isArray(remainingUsers);
+            assert.equal(remainingUsers.length, 1);
+        });
+    });
+
     describe('findById', () => {
         it('should return a user by their id', async () => {
             await User.add(undefined,undefined,{value:"5555555555",weekly:false,daily:true},undefined);

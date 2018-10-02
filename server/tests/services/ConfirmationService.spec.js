@@ -18,7 +18,7 @@ const validConfirmations = [
         guid: '2309j2ogsdmn29fjsd0oimnv2',
         user_id: userId
     }
-]
+];
 
 describe('Confirmation Service', () => {
     describe('sendConfirmations', () => {
@@ -57,6 +57,40 @@ describe('Confirmation Service', () => {
 
             await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
             assert.equal(addConfirmationFake.callCount, 1);
+        });
+    });
+
+    describe('unsubscribeFromSubscription', () => {
+        beforeEach(() => {
+            this.sandbox = sinon.createSandbox();
+        });
+    
+        afterEach(() => {
+            this.sandbox.restore();
+        });
+
+        it('should throw an error with an invalid guid', async () => {
+            this.sandbox.replace(Confirmation, 'findByGuid', () => []);
+
+            let error;
+            try {
+                await ConfirmationService.unsubscribeFromSubscription(validConfirmations[0].type);
+            } catch(e) {
+                error = e;
+            }
+            
+            assert.isDefined(error);
+            assert.match(error.toString(), /does not exist/);
+        });
+
+        it('should attempt to unsubscribe user by deleting it', async () => {
+            const deleteUserFake = sinon.fake.returns(true);
+            this.sandbox.replace(Confirmation, 'findByGuid', () => [validConfirmations[1]]);
+            this.sandbox.replace(User, 'deleteUser', deleteUserFake);
+            
+            await ConfirmationService.unsubscribeFromSubscription(validConfirmations[1].guid);
+            
+            assert.equal(deleteUserFake.callCount, 1);
         });
     });
 
