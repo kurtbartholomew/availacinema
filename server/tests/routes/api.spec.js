@@ -22,7 +22,7 @@ const validFilters = [
 
 describe('API endpoints', () => {
 
-    describe.skip('GET /genres', () => {
+    describe('GET /genres', () => {
         it('should respond with json and status code 200', async () => {
             await request(app)
             .get('/api/genres')
@@ -67,24 +67,6 @@ describe('API endpoints', () => {
             const body = response.body;
             assert.isDefined(body.errors);
             assert.match(body.errors.toString(), /Missing valid filters/);
-        });
-
-        // Once I can actually seed the db properly during tests, I'll reenable this
-        it.skip('should return error and 400 error code if user with same phone or email exists', async () => {
-            const response = await request(app)
-            .post('/api/user')
-            .send({
-                phone: {
-                    value:"5555555555",
-                    daily:true,
-                    weekly:false
-                },
-                filters: validFilters
-            })
-            .expect(400);
-            const body = response.body;
-            assert.isDefined(body.error);
-            assert.match(body.error.toString(), /User subscription failed/);
         });
 
         it('should return 200 and trigger confirmation email', async () => {
