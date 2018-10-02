@@ -5,6 +5,7 @@ import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
 import Confirm from '../Confirm/Confirm';
 import Verified from '../Verified/Verified';
+import Unsubscribed from '../Unsubscribed/Unsubscribed';
 import NotFound from '../NotFound/NotFound';
 import StartContainer from '../../Containers/StartContainer';
 import store from '../../Stores';
