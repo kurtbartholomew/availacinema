@@ -6,15 +6,17 @@ const SuggestionService = require('../services/SuggestionService');
 const logger = require('../config/logger');
 const kue = require('kue');
 
-async function queueEmailsForUsers(users, isDaily) {
-    try {
-        const queue = kue.createQueue();
-        for(let user of users) {
-            await SuggestionService.getAndSendSuggestionsToUser(user.id, user.email, isDaily, queue);
+const utils = {
+    async queueEmailsForUsers(users, isDaily) {
+        try {
+            const queue = kue.createQueue();
+            for(let user of users) {
+                await SuggestionService.getAndSendSuggestionsToUser(user.id, user.email, isDaily, queue);
+            }
+            queue.shutdown(60000);
+        } catch(e) {
+            logger.error(e);
         }
-        queue.shutdown(60000);
-    } catch(e) {
-        logger.error(e);
     }
 }
 
@@ -25,7 +27,7 @@ async function queueDailyEmailsForUsers() {
         let dailyUsers = usersToQueryFor.filter((user)=> {
             return user.email_daily === true;
         });
-        await queueEmailsForUsers(dailyUsers, true);
+        await utils.queueEmailsForUsers(dailyUsers, true);
     } catch(e) {
         logger.error(e);
     }
@@ -38,7 +40,7 @@ async function queueWeeklyEmailsForUsers() {
         let weeklyUsers = usersToQueryFor.filter((user)=> {
             return user.email_weekly === true;
         });
-        await queueEmailsForUsers(weeklyUsers, true); 
+        await utils.queueEmailsForUsers(weeklyUsers, true); 
     } catch(e) {
         logger.error(e);
     }
@@ -46,8 +48,11 @@ async function queueWeeklyEmailsForUsers() {
 
 
 
+
 const SuggestionEmailWorker = {
-    queueEmailsForUsers
+    utils,
+    queueDailyEmailsForUsers,
+    queueWeeklyEmailsForUsers
 };
 module.exports = SuggestionEmailWorker;
 

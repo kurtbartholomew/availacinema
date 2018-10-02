@@ -38,6 +38,9 @@ const utils = {
             genreFilters
         };
     },
+    // TODO: Figure out a way to reduce coupling
+    // The other option was put it in the model but I'm not sure its any
+    // better to hardcode so much business logic in the data models
     async findMoviesMatchingUserFilters(genreFilters, ratingFilter, isDaily) {
         const genreIds = genreFilters.map((filter)=> filter.value);
         let date = isDaily ? moment().utc() : moment().utc().subtract(7,'days');
@@ -75,13 +78,6 @@ async function getAndSendSuggestionsToUser(userId, email, isDaily, emailQueue) {
         await EmailMessageService.queueSuggestionsEmail(email, suggestions, isDaily, emailQueue);
     }
 }
-
-// TODO: Figure out a way to reduce coupling
-// The other option was put it in the model but I'm not sure its any
-// better to hardcode so much business logic in the data models
-
-
-
 
 module.exports = {
     getAndSendSuggestionsToUser,
