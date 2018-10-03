@@ -12,8 +12,8 @@ class Nav extends React.Component {
                 </Link>
                 <div className="navbar__options">
                     {/* <Link to={"/login"} className="navbar__option option__login">Login</Link> */}
-                    <Link to={"/about"}  className="navbar__option option__about">About</Link>
-                    <Link to={"/contact"}  className="navbar__option option__contact">Contact</Link>
+                    {/* <Link to={"/about"}  className="navbar__option option__about">About</Link> */}
+                    {/* <Link to={"/contact"}  className="navbar__option option__contact">Contact</Link> */}
                 </div>
             </div>
         );
