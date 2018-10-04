@@ -48,7 +48,7 @@ router.get('/confirm/:guid', (req, res, next) => {
     }
     ConfirmationService.confirmValidUserSubscription(guid)
     .then(() => {
-        res.redirect(301, '/?confirm=true');
+        res.redirect(301, '/verified');
     })
     .catch((e)=> {
         res.status(400,{error:"Unable to confirm method of notification"});
@@ -63,7 +63,7 @@ router.get('/unsubscribe/:guid', (req, res, next) => {
     }
     ConfirmationService.unsubscribeFromSubscription(guid)
     .then(() => {
-        res.redirect(301, '/?unsubscribed=true');
+        res.redirect(301, '/unsubscribed');
     })
     .catch((e)=> {
         res.status(400,{error: "Unable to remove subscription with that id"});

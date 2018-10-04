@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import Nav from '../Nav/Nav';
 import Main from '../Main/Main';
@@ -24,7 +24,8 @@ class App extends React.Component {
                             <Route exact path="/confirm" component={Confirm} />
                             <Route exact path="/verified" component={Verified} />
                             <Route exact path="/unsubscribed" component={Unsubscribed} />
-                            <Route path="*" component={NotFound} />
+                            <Route path="/404" component={NotFound} />
+                            <Redirect to="/404" />
                         </Switch>
                     </div>
                 </Router>
