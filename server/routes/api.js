@@ -3,11 +3,20 @@ const tmdb = require('../services/TmdbService');
 const UserService = require('../services/UserService');
 const ConfirmationService = require('../services/ConfirmationService');
 const logger = require('../config/logger');
+const cache = require('../db/cache');
 
 
 router.get('/genres', async (req, res, next) => {
     try {
-        const genres = await tmdb.getGenres(); 
+        let genres = await cache.getFromCache('genres');
+        logger.info(genres);
+        if(!genres) {
+            logger.info("NOT CACHED");
+            genres = await tmdb.getGenres();
+            cache.putInCacheWithExpiration('genres', 360, genres);
+        } else {
+            logger.info("CACHED");
+        }
         res.json(genres);
     } catch(e) {
         logger.error(error.stack);
