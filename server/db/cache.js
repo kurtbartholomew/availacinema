@@ -67,7 +67,7 @@ function getSingleFromCache(group, uniqueKey) {
 }
 
 function getGroupFromCache(group) {
-    return cacheRetrieveSetAsPromise(`${group}`)
+    return cacheRetrieveSetAsPromise(group)
            .then((results) => {
                 return _getGroupFromSetResults(results);
            });

@@ -8,12 +8,12 @@ const cache = require('../db/cache');
 
 router.get('/genres', async (req, res, next) => {
     try {
-        let genres = await cache.getFromCache('genres');
+        let genres = await cache.getGroupFromCache('genres');
         logger.info(genres);
-        if(!genres) {
+        if(!genres || genres.length === 0) {
             logger.info("NOT CACHED");
             genres = await tmdb.getGenres();
-            cache.putInCacheWithExpiration('genres', 360, genres);
+            cache.putInCache('genres', 'id', genres, 360);
         } else {
             logger.info("CACHED");
         }
