@@ -66,6 +66,7 @@ export default ( state = INITIAL_STATE, action ) => {
         case SUBSCRIPTION_SUBMIT_REQUEST:
             return { ...state, isSubmitting: true };
         case SUBSCRIPTION_SUBMIT_SUCCESS:
+            return INITIAL_STATE;
         case SUBSCRIPTION_SUBMIT_FAILURE:
             return { ...state, isSubmitting: false };
         default:

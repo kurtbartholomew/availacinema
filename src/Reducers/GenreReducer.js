@@ -4,7 +4,8 @@ import {
     ALL_GENRES_DESELECTED,
     GENRES_LIST_REQUEST,
     GENRES_LIST_SUCCESS,
-    GENRES_LIST_FAILURE
+    GENRES_LIST_FAILURE,
+    SUBSCRIPTION_SUBMIT_SUCCESS
 } from '../Actions/types';
 
 export const INITIAL_STATE = {
@@ -48,6 +49,9 @@ export default ( state = INITIAL_STATE, action ) => {
         // TODO: Deal with failure
         case GENRES_LIST_FAILURE:
             return { ...state, isFetching: false };
+
+        case SUBSCRIPTION_SUBMIT_SUCCESS:
+            return INITIAL_STATE;
 
         default:
             return state;

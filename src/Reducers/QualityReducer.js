@@ -1,6 +1,7 @@
 import {
     RATING_UPDATED,
-    RATING_TEXT_FIELD_TOGGLED
+    RATING_TEXT_FIELD_TOGGLED,
+    SUBSCRIPTION_SUBMIT_SUCCESS
 } from '../Actions/types';
 
 const INITIAL_STATE = {
@@ -15,6 +16,8 @@ export default ( state=INITIAL_STATE, action ) => {
             return { ...state, value: action.payload, selected: true };
         case RATING_TEXT_FIELD_TOGGLED:
             return { ...state, editable: !state.editable }
+        case SUBSCRIPTION_SUBMIT_SUCCESS:
+            return INITIAL_STATE;
         default:
             return state;
     }

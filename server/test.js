@@ -22,6 +22,7 @@ function runTests() {
     // populate env data for database connection used by models that are tested
     require('dotenv').config();
     const db = require('./db');
+    const cache = require('./db/cache');
 
     // Instantiate a Mocha instance.
     var mocha = new Mocha();
@@ -38,6 +39,7 @@ function runTests() {
         process.exitCode = failures ? -1 : 0;  // exit with non-zero status if there were failures
         // drains connection pool for database and closes connection
         db.destroy();
+        cache.conn.quit();
     });
 }
 

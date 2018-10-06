@@ -1,7 +1,8 @@
 import {
     CONTACT_OPTION_TOGGLED,
     CONTACT_EMAIL_UPDATED,
-    CONTACT_PHONE_UPDATED
+    CONTACT_PHONE_UPDATED,
+    SUBSCRIPTION_SUBMIT_SUCCESS
 } from '../Actions/types';
 import { CONTACT_OPTIONS } from '../Constants';
 
@@ -36,6 +37,8 @@ export default ( state=INITIAL_STATE, action) => {
             const { pvalue, pvalid } = action.payload;
             const newContactPhone = { ...state.contactPhone, value: pvalue, valid: pvalid }
             return { ...state, contactPhone: newContactPhone };
+        case SUBSCRIPTION_SUBMIT_SUCCESS:
+            return INITIAL_STATE;
         default:
             return state;
     }

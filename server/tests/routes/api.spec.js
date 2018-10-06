@@ -2,6 +2,7 @@ const request = require('supertest');
 const chai = require('chai');
 const assert = chai.assert;
 const dbUtils = require('../../scripts/dbUtils');
+const cache = require('../../db/cache');
 
 const app = require('../../app');
 
@@ -21,8 +22,17 @@ const validFilters = [
 ];
 
 describe('API endpoints', () => {
+    
 
     describe('GET /genres', () => {
+        beforeEach(async function() {
+            await cache.invalidateGroupInCache('genres');
+        });
+
+        afterEach(async function() {
+            await cache.invalidateGroupInCache('genres');
+        });
+
         it('should respond with json and status code 200', async () => {
             await request(app)
             .get('/api/genres')

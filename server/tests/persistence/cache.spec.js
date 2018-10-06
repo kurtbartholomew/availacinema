@@ -39,10 +39,12 @@ describe('Cache', () => {
 
     after(function() {
         clearCache();
-        cache.conn.quit();
     });
 
     describe('getSingleFromCache', () => {
+        beforeEach(function() {
+            clearCache();
+        });
 
         it('should return null if no key exists', async () => {
             const result = await cache.getSingleFromCache(testGroup, testObjs[0].id);
@@ -78,6 +80,9 @@ describe('Cache', () => {
     });
 
     describe('getGroupFromCache', () => {
+        beforeEach(function() {
+            clearCache();
+        });
 
         it('should return an empty array if no objects exist', async () => {
             const result = await cache.getGroupFromCache(testGroup);
@@ -95,6 +100,9 @@ describe('Cache', () => {
     });
 
     describe('invalidateGroupInCache', () => {
+        beforeEach(function() {
+            clearCache();
+        });
 
         it('should remove the passed set from the cache', async () => {
             await cache.putInCache(testGroup, uniqueKeyField, testObjs);
@@ -106,6 +114,9 @@ describe('Cache', () => {
     });
 
     describe('invalidateSingleInCache', () => {
+        beforeEach(function() {
+            clearCache();
+        });
 
         it('should remove the cached object', async () => {
             await cache.putInCache(testGroup, uniqueKeyField, testObjs[0]);
