@@ -32,31 +32,35 @@ function cacheMiddleware(expireTime, key) {
 }
 
 function putInCache(group, uniquePropKey, payload, expiration) {
+    const promises = [];
     if(Array.isArray(payload)) {
         for(let obj of payload) {
             if(obj[uniquePropKey] === undefined) {
                 throw new Error(`Caching Error: ${uniquePropKey} does not exist in object to be cached`);
             }
             let str = JSON.stringify(obj);
+            let key =`${group}_${obj[uniquePropKey]}`;
             if(expiration !== undefined ) {
-                cacheSetWithExpirationAsPromise(`${group}_${obj[uniquePropKey]}`, expiration, JSON.stringify(obj));
+                promises.push(cacheSetWithExpirationAsPromise(key, expiration, JSON.stringify(obj)));
             } else {
-                cacheSetAsPromise(`${group}_${obj[uniquePropKey]}`, str); 
+                promises.push(cacheSetAsPromise(key, str));
             }
-            cacheAddToSetAsPromise(group, str);
+            promises.push(cacheAddToSetAsPromise(group, key));
         }
     } else {
         if(payload[uniquePropKey] === undefined) {
             throw new Error(`Caching Error: ${uniquePropKey} does not exist in object to be cached`);
         }
-        let str = JSON.stringify(obj);
+        let str = JSON.stringify(payload);
+        let key = `${group}_${payload[uniquePropKey]}`;
         if(expiration !== undefined ) {
-            cacheSetWithExpirationAsPromise(`${group}_${payload[uniquePropKey]}`, expiration, JSON.stringify(payload));
+            promises.push(cacheSetWithExpirationAsPromise(key, expiration, JSON.stringify(payload)));
         } else {
-            cacheSetAsPromise(`${group}_${obj[uniquePropKey]}`, str); 
+            promises.push(cacheSetAsPromise(key, str));
         }
-        cacheAddToSetAsPromise(group, str);
+        promises.push(cacheAddToSetAsPromise(group, key));
     }
+    return Promise.all(promises);
 }
 
 function getSingleFromCache(group, uniqueKey) {
@@ -68,14 +72,12 @@ function getSingleFromCache(group, uniqueKey) {
 
 function getGroupFromCache(group) {
     return cacheRetrieveSetAsPromise(group)
-           .then((results) => {
-                return _getGroupFromSetResults(results);
-           });
+           .then(_getGroupFromSetResults);
 }
 
 function _getGroupFromSetResults(results) {
-    if(results.length !== 0) { return results; }
-    const promises = [];                
+    if(results.length === 0) { return results; }
+    const promises = [];
     for(let key of results) {
         let promise = cacheGetAsPromise(key)
         .then((result) => {
@@ -91,10 +93,9 @@ function _getGroupFromSetResults(results) {
 
 function invalidateGroupInCache(group) {
     return cacheRetrieveSetAsPromise(group)
-           .then((results) => {
-               return _deleteGroupFromSetResults(results)
-           }).then(()=> {
-               return cacheDelAsPromise(group);
+           .then(_deleteGroupFromSetResults)
+           .then(()=> {
+                return cacheDelAsPromise(group);
            });
 }
 
@@ -127,7 +128,8 @@ const Cache = {
     getSingleFromCache,
     getGroupFromCache,
     invalidateGroupInCache,
-    invalidateSingleInCache
+    invalidateSingleInCache,
+    conn: client
 };
 
 module.exports = Cache;
