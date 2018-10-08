@@ -18,28 +18,42 @@ if(process.env.NODE_ENV === 'production') {
 
 const client = twilio(accountSid, authToken);
 
-function sendTextMessage(message, targetNumber) {
+function sendTextMessage(targetNumber, message) {
     return client.messages
     .create({
         body: message,
         from: phoneNumber,
+        // TODO: Change if/when international is supported
         to: `+1${targetNumber}`
     });
 }
 
-function processResponseTextMessage(responseBody) {
+/**
+ * 
+ * @param {Express request} request 
+ * @param {Object - Keys are text to look for, Values are response text messages and functions to fire off in response} textContentsHandlers 
+ */
+function processResponseTextMessage(request, textContentsHandlers) {
     const msgRes = new MessagingResponse();
 
-    if(responseBody.indexOf('confirm')) {
-        msgRes.message('Thank you for confirming your subscription');
-    }
-    if(responseBody.indexOf('unsubscribe')) {
-        msgRes.message('Sorry to see you go. Have a good day!');
+    bodyOfText = request.body.Body;
+    fromNumber = request.body.From;
+
+    if(bodyOfText !== undefined) {
+        for(let targetText in textContentsHandlers) {
+            if(bodyOfText.indexOf(targetText) !== -1) {
+                const compositeHandler = textContentsHandlers[targetText];
+                compositeHandler.handler(fromNumber);
+                msgRes.message(compositeHandler.responseText);
+                break;
+            }
+        }
     }
 
-    // res.writeHead(200, { 'Content-Type': 'text/xml' });
-    // res.end(mgsRes.toString());
-    return mgsRes.toString();
+    return {
+        responseHeaders: {'Content-Type': 'text/xml'},
+        responseBody: msgRes.toString()
+    };
 }
 
 
