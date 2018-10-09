@@ -44,7 +44,7 @@ module.exports = {
         return true;
     },
     async queueSuggestionsText(phoneNumber, suggestions, isDaily, queue) {
-        queue.create('text', {
+        queue.create('phoneText', {
             phoneNumber,
             suggestions,
             isDaily
