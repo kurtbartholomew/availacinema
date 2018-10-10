@@ -33,22 +33,9 @@ function sendTextMessage(targetNumber, message) {
  * @param {Express request} request 
  * @param {Object - Keys are text to look for, Values are response text messages and functions to fire off in response} textContentsHandlers 
  */
-function processResponseTextMessage(request, textContentsHandlers) {
+function processResponseTextMessage(responseText) {
     const msgRes = new MessagingResponse();
-
-    bodyOfText = request.body.Body;
-    fromNumber = request.body.From;
-
-    if(bodyOfText !== undefined) {
-        for(let targetText in textContentsHandlers) {
-            if(bodyOfText.indexOf(targetText) !== -1) {
-                const compositeHandler = textContentsHandlers[targetText];
-                compositeHandler.handler(fromNumber);
-                msgRes.message(compositeHandler.responseText);
-                break;
-            }
-        }
-    }
+    msgRes.message(responseText);
 
     return {
         responseHeaders: {'Content-Type': 'text/xml'},
