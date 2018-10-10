@@ -13,21 +13,7 @@ async function sendConfirmationText(recipientPhoneNumber) {
     if(recipientPhoneNumber === undefined) {
         throw new Error("Recipient phone number was undefined or not passed");
     }
-    if(confirmationGuid === undefined) {
-        throw new Error("Confirmation guid was undefined or not passed");
-    }
     const body = textMessageTemplates.createConfirmationTemplate(CONFIRM_KEYWORD, UNSUSCRIBE_KEYWORD);
-    await textUtil.sendTextMessage(recipientPhoneNumber, body);
-    return true;
-}
-async function sendVerificationText(recipientPhoneNumber) {
-    if(recipientPhoneNumber === undefined) {
-        throw new Error("Recipient phone number was undefined or not passed");
-    }
-    if(confirmationGuid === undefined) {
-        throw new Error("Confirmation guid was undefined or not passed");
-    }
-    const body = textMessageTemplates.createVerificationTemplate(UNSUSCRIBE_KEYWORD);
     await textUtil.sendTextMessage(recipientPhoneNumber, body);
     return true;
 }
@@ -39,8 +25,10 @@ async function sendSuggestionsText(recipientPhoneNumber, suggestions, isDaily) {
         throw new Error(`No suggestions passed for phone number ${recipientPhoneNumber}`);
     }
     const date = moment().utc().format('LL');
-    const body = textMessageTemplates.createSuggestionsTemplate(isDaily, date, suggestions, UNSUSCRIBE_KEYWORD);
-    await textUtil.sendTextMessage(recipientPhoneNumber, body)
+    const textBodies = textMessageTemplates.createSuggestionsTemplate(isDaily, date, suggestions, UNSUSCRIBE_KEYWORD);
+    for(let text of textBodies) {
+        await textUtil.sendTextMessage(recipientPhoneNumber, text);
+    }
     return true;
 }
 async function queueSuggestionsText(phoneNumber, suggestions, isDaily, queue) {
@@ -56,21 +44,30 @@ async function queueSuggestionsText(phoneNumber, suggestions, isDaily, queue) {
     .save();
 }
 
-function handleUserTextMessage(bodyOfText, fromNumber) {
-    if(bodyOfText !== undefined) {
-        for(let targetText in textContentsHandlers) {
-            if(bodyOfText.indexOf(targetText) !== -1) {
-                // call some action method
-                // fire a response text if applicable
-            }
-        }
+async function handleUserTextMessage(request) {
+    const { textBody, phoneNumber } = textUtils.extractTextBodyAndPhoneNumber(request);
+    if(textBody === undefined) {
+        throw new Error("Unable to process text message: No body contained in text");
+    }
+    if(phoneNumber === undefined) {
+        throw new Error("Unable to process text message: No phone number contained in text");
+    }
+    if(textBody.indexOf(CONFIRM_KEYWORD) !== -1){
+        await ConfirmationService.confirmUserByPhoneNumber(phoneNumber);
+        let responseText = textMessageTemplates.createVerificationTemplate(UNSUSCRIBE_KEYWORD); 
+        return textUtil.processResponseTextMessage(responseText);
+    } else if(textBody.indexOf(UNSUSCRIBE_KEYWORD) !== -1) {
+        await ConfirmationService.unsubscribeUserByPhoneNumber(phoneNumber);
+        let responseText = textMessageTemplates.createUnsubscribeTemplate(); 
+        return textUtil.processResponseTextMessage(responseText);
+    } else {
+        return false;
     }
 }
 
 module.exports = {
     sendConfirmationText,
-    sendVerificationText,
     sendSuggestionsText,
     queueSuggestionsText,
-    createTextMessageContentHandlers
+    handleUserTextMessage
 }

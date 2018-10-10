@@ -12,12 +12,26 @@ module.exports = {
     },
     createSuggestionsTemplate(isDaily, date, suggestions, unsubscribeKeyword) {
         const dateStr = (isDaily ? 'released today, ': 'in the week of ') + date;
-        const suggestionsText = suggestions.reduce((currentSuggestions, suggestion)=>{
-            currentSuggestions+=` - Title: ${suggestion.title} Rating: ${suggestion.rating}`;
+        const introString = `Suggestions of movies to check out ${dateStr}.\n`;
+        const textBodies = suggestions.reduce((currentSuggestions, suggestion)=>{
+            let suggestionText = ` - Title: ${suggestion.title} Rating: ${suggestion.rating}`;
+            currentSuggestions = _concatenateOrAppendIfOver140Characters(currentSuggestions, suggestionText)
             return currentSuggestions;
-        },"");
-        return `Suggestions of movies to check out ${dateStr}.
-                ${suggestionsText}
-                Respond with ${unsubscribeKeyword} to unsubscribe.`
+        }, [introString]);
+
+        const unsubscribeText = `\nRespond with ${unsubscribeKeyword} to unsubscribe.`;
+        textBodies = _concatenateOrAppendIfOver140Characters(textBodies, unsubscribeText);
+        return textBodies;
     }
+}
+
+function _concatenateOrAppendIfOver140Characters(textArr, additionalText) {
+    const lastEntryIdx = textArr.length - 1;
+    const latestTextBody = textArr[lastEntryIdx];
+    if((latestTextBody.length + additionalText.length) > 140) {
+        textArr.push(additionalText);
+    } else {
+        textArr[lastEntryIdx] = latestTextBody + additionalText;
+    }
+    return textArr;
 }

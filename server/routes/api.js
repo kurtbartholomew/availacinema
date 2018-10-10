@@ -2,6 +2,7 @@ const router = require('express-promise-router')();
 const tmdb = require('../services/TmdbService');
 const UserService = require('../services/UserService');
 const ConfirmationService = require('../services/ConfirmationService');
+const TextMessageService = require('../services/TextMessageService');
 const logger = require('../config/logger');
 const cache = require('../db/cache');
 
@@ -16,7 +17,21 @@ router.get('/genres', async (req, res, next) => {
         res.json(genres);
     } catch(e) {
         logger.error(e.stack);
-        res.json({error: "Unable to retrieve genres"})
+        res.json({error: "Unable to retrieve genres"});
+    }
+});
+
+router.post('/sms', async (req, res, next) => {
+    try {
+        const response = await TextMessageService.handleUserTextMessage(req);
+        if(response !== undefined) {
+            const { responseHeaders, responseBody } = response;
+            res.set(responseHeaders);
+            res.status(200).send(responseBody);
+        }
+    } catch(e) {
+        logger.error("Error occurred while processing user text message");
+        logger.error(e.stack);
     }
 });
 

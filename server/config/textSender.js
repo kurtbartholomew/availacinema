@@ -18,14 +18,20 @@ if(process.env.NODE_ENV === 'production') {
 
 const client = twilio(accountSid, authToken);
 
-function sendTextMessage(targetNumber, message) {
-    return client.messages
-    .create({
-        body: message,
-        from: phoneNumber,
-        // TODO: Change if/when international is supported
-        to: `+1${targetNumber}`
-    });
+async function sendTextMessage(targetNumber, message) {
+    try {
+        await client.messages.create({
+            body: message,
+            from: phoneNumber,
+            // TODO: Change if/when international is supported
+            to: `+1${targetNumber}`
+        });
+        return true;
+    } catch (e) {
+        logger.error(`Error ocurred while attempting to send a text to ${targetNumber}`);
+        logger.error(e.stack);
+        return false;
+    }
 }
 
 /**
@@ -43,8 +49,16 @@ function processResponseTextMessage(responseText) {
     };
 }
 
+function extractTextBodyAndPhoneNumber(request) {
+    return {
+        textBody: request.body.Body,
+        phoneNumber: request.body.From
+    };
+}
+
 
 module.exports = {
     processResponseTextMessage,
-    sendTextMessage 
+    sendTextMessage,
+    extractTextBodyAndPhoneNumber
 }
