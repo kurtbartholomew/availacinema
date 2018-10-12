@@ -49,9 +49,6 @@ module.exports = {
         await mailer.sendMail(FROM_LINE, recipientEmail, SUBJECT, body);
         return true;
     },
-    async sendSuggestionsText(recipientPhoneNumber, suggestions) {
-        return true;
-    },
     async queueSuggestionsEmail(email, suggestions, isDaily, queue) {
         queue.create('email', {
             email,
