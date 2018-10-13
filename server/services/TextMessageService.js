@@ -45,7 +45,7 @@ async function queueSuggestionsText(phoneNumber, suggestions, isDaily, queue) {
 }
 
 async function handleUserTextMessage(request) {
-    const { textBody, phoneNumber } = textUtils.extractTextBodyAndPhoneNumber(request);
+    const { textBody, phoneNumber } = textUtil.extractTextBodyAndPhoneNumber(request);
     if(textBody === undefined) {
         throw new Error("Unable to process text message: No body contained in text");
     }
