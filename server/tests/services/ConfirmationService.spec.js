@@ -58,6 +58,35 @@ describe('Confirmation Service', () => {
             await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
             assert.equal(addConfirmationFake.callCount, 1);
         });
+
+        it('should call text message service if no outstanding confirmations', async () => {
+            const sendConfirmationTextFake = sinon.fake.returns(true)
+            this.sandbox.replace(Confirmation, 'findByUserId', () => []);
+            this.sandbox.replace(Confirmation, 'add', () => ['02nfioasf093nt90ian09fdns9f']);
+            this.sandbox.replace(TextMessageService, 'sendConfirmationText', sendConfirmationTextFake);
+
+            await ConfirmationService.sendConfirmations(userId, undefined, "jim@gmail.com");
+            assert.equal(sendConfirmationTextFake.callCount, 1);
+        });
+
+        it('should not call text message service if confirmation exists', async () => {
+            const sendConfirmationTextFake = sinon.fake.returns(true);
+            this.sandbox.replace(Confirmation, 'findByUserId', () => [validConfirmations[1]]);
+            this.sandbox.replace(TextMessageService, 'sendConfirmationText', sendConfirmationTextFake);
+
+            await ConfirmationService.sendConfirmations(userId, "5555555555", undefined);
+            assert.equal(sendConfirmationTextFake.callCount, 0);
+        });
+
+        it('should add a new text confirmation if none exists', async () => {
+            const addConfirmationFake = sinon.fake.returns(true)
+            this.sandbox.replace(Confirmation, 'findByUserId', () => []);
+            this.sandbox.replace(Confirmation, 'add', addConfirmationFake);
+            this.sandbox.replace(TextMessageService, 'sendConfirmationText', () => []);
+
+            await ConfirmationService.sendConfirmations(userId, "5555555555", undefined);
+            assert.equal(addConfirmationFake.callCount, 1);
+        });
     });
 
     describe('unsubscribeFromSubscription', () => {
